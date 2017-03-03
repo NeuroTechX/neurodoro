@@ -85,12 +85,17 @@ def enableProguardInReleaseBuilds = false
 
 
 android {
+
+    lintOptions {
+        abortOnError false
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.tfreactnative"
-        minSdkVersion 16
+        applicationId "com.neurodoro"
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"

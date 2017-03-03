@@ -4,6 +4,8 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.neurodoro.muse.ConnectorModule;
+import com.neurodoro.muse.MuseListener;
 import com.neurodoro.tensorflow.TensorFlowModule;
 
 import java.util.Arrays;
@@ -14,12 +16,14 @@ import java.util.List;
  * Created by dano on 01/03/17.
  */
 
-public class TensorPackage implements com.facebook.react.ReactPackage {
+public class NeurodoroPackage implements com.facebook.react.ReactPackage {
     @Override
     // Register Native Modules to JS
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
         return Arrays.<NativeModule>asList(
-                new TensorFlowModule(reactApplicationContext)
+                new TensorFlowModule(reactApplicationContext),
+                new ConnectorModule(reactApplicationContext),
+                new MuseListener(reactApplicationContext)
         );
     }
 

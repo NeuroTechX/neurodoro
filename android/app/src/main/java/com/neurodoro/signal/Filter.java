@@ -115,17 +115,12 @@ public class Filter {
     public static double[] extractFilteredSamples(double[][] z) {
         // Utility function to extract the filtered samples from the returned array
         // of transform()
-        
+
         double[] filtSignal = new double[z.length];
         for (int i = 0; i < z.length; i++) {
             filtSignal[i] = z[i][z[0].length - 1];
         }
         return filtSignal;
-    }
-
-    public static double extractFilteredSamples(double[] z) {
-        // Utility function to extract last value from array
-        return z[z.length - 1];
     }
 
     public int getNB() {
