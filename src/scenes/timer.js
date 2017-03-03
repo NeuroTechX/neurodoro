@@ -40,7 +40,6 @@ class Timer extends Component {
       <View style={styles.container}>
 
         <View style={styles.timerContainer}>
-          <Button onPress={() => MuseListener.initListener()}>Init Muse Listeners</Button>
           <Button onPress={() => MuseListener.startListening()}>Start Listening</Button>
           <Button onPress={() => MuseListener.stopListening()}>Stop Listening</Button>
         </View>
