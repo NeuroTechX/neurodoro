@@ -1,14 +1,14 @@
 # NEURODORO
 
 <p align="center">
-    <img alt="babel" src="images/logo_final.png/" width="300">
+    <img alt="babel" src="images/logo_final.png/" width="150">
 </p>
 
 A brain-responsive Pomodoro timer for maximum productivity.
 
 ## Overview
 
-Neurodoro is still entirely in development. We are working on creating a reliable, no-training-required concentration classifier in Tensorflow. We hope to improve the efficiency of the [http://lifehacker.com/productivity-101-a-primer-to-the-pomodoro-technique-1598992730](Pomodoro Technique) by allowing work sessions to be dynamically increased or decreased based on how absorbed the user is in their work.
+Neurodoro is still entirely in development. We are working on creating a reliable, concentration classifier in Tensorflow that will run on Android. We hope to improve the efficiency of the (http://lifehacker.com/productivity-101-a-primer-to-the-pomodoro-technique-1598992730)[Pomodoro Technique] by allowing work sessions to be dynamically increased or decreased based on how absorbed the user is in their work.
 
 ## Setup
 
