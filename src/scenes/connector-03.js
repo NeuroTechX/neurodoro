@@ -9,9 +9,10 @@ import{
 }from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { MediaQueryStyleSheet }  from 'react-native-responsive';
+import * as colors from '../styles/colors';
 
 // Components. For JS UI elements
-import WhiteButton from '../components/WhiteButton';
+import Button from '../components/Button';
 
  export default class ConnectorThree extends Component {
   constructor(props) {
@@ -21,14 +22,13 @@ import WhiteButton from '../components/WhiteButton';
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBox}>
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>Step 3</Text>
-          <Text style={styles.instructions}>Make sure the Muse is properly fit to your head</Text>
-          <Text style={styles.body}>Fit the earpieces snugly behind your ears and adjust the headband so that it rests mid forehead. Clear any hair that might prevent the device from making contact with your skin.</Text>
+          <Text style={styles.body}>Make sure the Muse is properly fit to your head</Text>
         </View>
-
+        <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <WhiteButton onPress={Actions.Timer}>GO TO TIMER</WhiteButton>
+          <Button onPress={Actions.Timer}>Okay</Button>
         </View>
       </View>
     );
@@ -36,73 +36,59 @@ import WhiteButton from '../components/WhiteButton';
 }
 
 const styles = MediaQueryStyleSheet.create(
-  // Base styles
   {
+    // Base styles
     body: {
-      fontFamily: 'Roboto-Light',
-      fontSize: 15,
-      marginLeft: 40,
-      marginRight: 40,
-      color: '#ff6347',
-      textAlign: 'center'
-    },
-
-    instructions: {
-      fontFamily: 'Roboto-Bold',
-      fontSize: 18,
+      fontFamily: 'OpenSans-Regular',
+      fontSize: 25,
       margin: 20,
-      color: '#ff6347',
-      textAlign: 'center',
-    },
-
-    container: {
-      flex: 1,
-      justifyContent: 'space-around',
-      alignItems: 'stretch',
-      width: null,
-      height: null,
-      backgroundColor: '#ffffff',
-    },
-
-    buttonContainer: {
-      flex: 1,
-      margin: 40,
-      justifyContent: 'center',
-
-    },
-
-    logo: {
-      width: 50,
-      height: 50,
+      color: colors.grey,
+      textAlign: 'center'
     },
 
     title: {
       textAlign: 'center',
       margin: 15,
       lineHeight: 50,
-      color: '#ff6347',
-      fontFamily: 'Roboto-Black',
-      fontSize: 48,
-        },
+      color: colors.tomato,
+      fontFamily: 'YanoneKaffeesatz-Regular',
+      fontSize: 50,
+    },
 
-    titleBox: {
-      flex: 4,
-      alignItems: 'center',
+    container: {
+      flex: 1,
       justifyContent: 'center',
+      alignItems: 'center',
+      margin: 50,
+    },
+
+    titleContainer: {
+      flex: 2,
+      justifyContent: 'center',
+    },
+
+    spacerContainer: {
+      justifyContent: 'center',
+      flex: 1,
+    },
+
+    buttonContainer: {
+      justifyContent: 'center',
+      flex: 1,
+    },
+
+    logo: {
+      width: 200,
+      height: 200,
     },
   },
   // Responsive styles
   {
     "@media (min-device-height: 700)": {
       body: {
-        fontSize: 20,
+        fontSize: 30,
         marginLeft: 50,
         marginRight: 50
-      },
-
-      instructions: {
-        fontSize: 30
-      },
+      }
     }
-  }
-);
+  });
