@@ -2,7 +2,8 @@
 
 <p align="center">
     <img alt="babel" src="images/logo_final.png/" width="150">
-
+</p>
+<p align="center">
 A brain-responsive Pomodoro timer for maximum productivity.
 </p>
 
