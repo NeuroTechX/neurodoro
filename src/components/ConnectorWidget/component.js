@@ -8,14 +8,12 @@ import {
   StyleSheet,
   PermissionsAndroid
 } from 'react-native';
+import * as colors from '../../styles/colors';
 import Button from '../Button';
 
 import config from '../../redux/config'
 
 import Connector from '../../modules/Connector';
-
-import WhiteButton from '../WhiteButton'
-
 
 export default class ConnectorWidget extends Component {
   constructor(props) {
@@ -31,7 +29,7 @@ export default class ConnectorWidget extends Component {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
         {
-          'title': 'EEG 101 needs your permission',
+          'title': 'Neurodoro needs your permission',
           'message': 'This app requires coarse location permission in order to discover and connect to the 2016 Muse'
         }
       );
@@ -86,10 +84,8 @@ export default class ConnectorWidget extends Component {
       case config.connectionStatus.NO_MUSES:
         dynamicTextStyle = styles.noMuses;
         return(
-          <View style={styles.container}>
-            <Text style={dynamicTextStyle}>No Muses were detected.</Text>
-            <Text style={styles.body}>If you don't own a Muse, don't worry! We are working on an offline mode that should be avaible in early 2017!</Text>
-            <WhiteButton onPress={()=>this.props.getAndConnectToDevice()}>SEARCH AGAIN</WhiteButton>
+          <View style={styles.textContainer}>
+            <Button onPress={()=>this.props.getAndConnectToDevice()}>Search Again</Button>
           </View>
         );
       case config.connectionStatus.CONNECTING:
@@ -111,70 +107,31 @@ export default class ConnectorWidget extends Component {
 
 const styles = StyleSheet.create({
 
- 	container: {
- 		flex: 2.5,
- 		flexDirection: 'column',
- 		justifyContent: 'space-around',
-    alignItems: 'stretch',
-    marginLeft: 50,
-    marginRight: 50,
- 	},
-  active: {
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    height: 50,
-    margin: 5,
-    padding: 5,
-    alignItems: 'center',
-  },
-
-  buttonContainer: {
-    flex: 1,
-    margin: 40,
-    justifyContent: 'center',
-  },
-
   textContainer: {
+    marginTop: 40,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
-    margin: 40,
-    padding: 5,
-    backgroundColor: '#ffffff',
   },
 
-  body: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 15,
-    marginBottom: 5,
-    color: '#ffffff',
+  connected: {
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 22,
+    color: colors.green,
     textAlign: 'center'
   },
 
- 	connected: {
- 		fontFamily: 'Roboto-Light',
- 		fontSize: 20,
- 		color: '#0ef357',
- 	},
-
  	disconnected: {
- 		fontFamily: 'Roboto-Light',
- 		fontSize: 20,
- 		color: '#f3410e',
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 22,
+ 		color: colors.lightGrey,
     textAlign: 'center',
  	},
-
-  noMuses: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 20,
-    color: '#ffffff',
-    textAlign: 'center',
-  },
 
   connecting: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 20,
-    color: '#42f4d9',
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 22,
+    color: colors.tomato,
   }
 
 

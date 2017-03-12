@@ -257,7 +257,7 @@ public class  MuseListener extends ReactContextBaseJavaModule {
         {
             for(int i = 0; i < array.length; i++) if(array[i]) {
                 Log.w("Listener", "Noise detected in electrode " + (i + 1) );
-                return true;
+                return false;
             }
             return true;
         }

@@ -1,5 +1,5 @@
 // Button.js
-// A blue, square button with white text that can be created with both onPress and disabled props
+// An orange, rounded-square button with white text that can be created with both onPress and disabled props
 // onPress is an arrow function that can be pretty much anything
 // disabled is a boolean that is passed to TouchableOpacity's built in disabled prop.
 
@@ -11,6 +11,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { MediaQueryStyleSheet } from 'react-native-responsive';
+import * as colors from '../styles/colors';
 
 export default class Button extends Component{
   constructor(props){
@@ -23,7 +24,7 @@ export default class Button extends Component{
 		return(
 		<TouchableOpacity onPress={this.props.onPress} disabled={this.props.disabled}> 
 			<View style={dynamicStyle}>
-          		<Text style={{color: 'white', fontFamily: 'Roboto-Bold', fontSize: 15}}>{this.props.children}</Text>
+          		<Text style={{color: 'white', fontFamily: 'OpenSans-Regular', fontSize: 25}}>{this.props.children}</Text>
         	</View>
 		</TouchableOpacity>
 		)
@@ -36,23 +37,22 @@ const styles = MediaQueryStyleSheet.create(
   // Base styles
   active: {
     justifyContent: 'center',
-    backgroundColor: '#94DAFA',
-    height: 50,
-    margin: 5,
-    padding: 5,
-    borderRadius: 10,
+    backgroundColor: colors.tomato,
+    borderRadius: 8,
     alignItems: 'center',
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     },
 
   disabled: {
     justifyContent: 'center',
-    backgroundColor: '#b6bfcb',
-    height: 50,
-    margin: 5,
-    padding: 5,
-    padding: 5,
-    borderRadius: 10,
+    backgroundColor: colors.lightGrey,
+    borderRadius: 8,
     alignItems: 'center',
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     }
   },
   // Responsive styles
