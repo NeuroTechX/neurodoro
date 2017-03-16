@@ -1,54 +1,63 @@
 import React, { Component } from 'react';
 import {
-  Animated,
   StyleSheet,
   Text,
   View,
   Image,
-  StatusBar
 } from 'react-native';
 import{
   Actions,
 }from 'react-native-router-flux';
-import { MediaQueryStyleSheet } from 'react-native-responsive';
+import { connect } from 'react-redux';
+import config from '../redux/config';
+import Button from '../components/Button';
+import { MediaQueryStyleSheet} from 'react-native-responsive';
 import * as colors from '../styles/colors';
 
+// Modules for bridged Java methods
+import TensorFlowModule from '../modules/TensorFlow';
+import MuseListener from '../modules/MuseListener';
 
-// Components. For JS UI elements
-import Button from '../components/Button';
+// Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
+function  mapStateToProps(state) {
+  return {
+    connectionStatus: state.connectionStatus,
+  };
+}
 
-export default class Landing extends Component {
+class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
 
   render() {
     return (
-      <View style={styles.container} resizeMode='stretch'>
-        <StatusBar backgroundColor={colors.tomato}/>
+      <View style={styles.container}>
+
         <View style={styles.titleContainer}>
-          <Image source={require('../assets/logo_final.png')} style={styles.logo} resizeMode='stretch'/>
-          <Text style={styles.title}>NEURODORO</Text>
+          <Text style={styles.title}>Temporary Classifier Testing Data Collection Screen</Text>
+          <Text style={styles.body}>Data stored as .csv in /Main Storage/Android/data/com.neurodoro/files/Download</Text>
         </View>
-        <View style={styles.spacerContainer}/>
+        <View style={styles.spacerContainer}>
+          <Button onPress={() => MuseListener.startListening()}>Start recording</Button>
+        </View>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.Timer}>Get Started!</Button>
+          <Button onPress={() => MuseListener.stopListening()}>Stop recording</Button>
         </View>
       </View>
     );
   }
-
 }
+
+export default connect(mapStateToProps)(Timer);
+
 
 const styles = MediaQueryStyleSheet.create(
   {
     // Base styles
     body: {
       fontFamily: 'OpenSans-Regular',
-      fontSize: 15,
-      margin: 20,
+      fontSize: 12,
       color: colors.grey,
       textAlign: 'center'
     },
@@ -57,7 +66,7 @@ const styles = MediaQueryStyleSheet.create(
       textAlign: 'center',
       margin: 15,
       lineHeight: 50,
-      color: colors.grey,
+      color: colors.tomato,
       fontFamily: 'YanoneKaffeesatz-Regular',
       fontSize: 50,
     },
@@ -70,8 +79,8 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     titleContainer: {
-      flex: 2,
-      justifyContent: 'flex-start',
+      flex: 3,
+      justifyContent: 'center',
     },
 
     spacerContainer: {

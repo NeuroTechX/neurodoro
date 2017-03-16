@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  AppState,
   StyleSheet,
   Text,
   View,
@@ -8,9 +9,16 @@ import {
 import{
   Actions,
 }from 'react-native-router-flux';
+import BackgroundTimer from 'react-native-background-timer'
+import PushNotification from 'react-native-push-notification'
+import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import config from '../redux/config';
 import Button from '../components/Button';
+import Clock from '../components/Clock';
+import StartButton from '../components/StartButton';
+
 import { MediaQueryStyleSheet} from 'react-native-responsive';
 import * as colors from '../styles/colors';
 
@@ -25,29 +33,180 @@ function  mapStateToProps(state) {
   };
 }
 
+const Sound = require('react-native-sound');
+const breakSound = new Sound('jobs_done.mp3', Sound.MAIN_BUNDLE, (error) => {console.log('sound error')});
+const workSound = new Sound('level_up.mp3', Sound.MAIN_BUNDLE, (error) => {console.log('sound error')});
+
+const SECOND = 1000;
+const MINUTE = SECOND * 60;
+const ENCOURAGEMENT_INTERVAL = SECOND * 4;
+const ENCOURAGEMENTS = ['You are so smart', 'You are good at your job', 'Look at you hustle, homie', ':)', ":')", 'Laser-like focus', 'Intense concentration!', 'Such work ethic', 'You are strong and bright']
+
 class Timer extends Component {
   constructor(props) {
     super(props);
+    this.TIMER_ID = 0;
+    this.PLAYING = 'playing';
+    this.PAUSED = 'paused';
+    this.RESET = 'reset';
+
+
+    this.state = {
+      timeOnClock: 0,
+      timer: this.PAUSED,
+      onBreak: false,
+      workTime: 20 * SECOND,
+      breakTime: MINUTE * 1,
+      appState: AppState.currentState
+    }
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Temporary Classifier Testing Data Collection Screen</Text>
-          <Text style={styles.body}>Data stored as .csv in /Main Storage/Android/data/com.neurodoro/files/Download</Text>
-        </View>
-        <View style={styles.spacerContainer}>
-          <Button onPress={() => MuseListener.startListening()}>Start recording</Button>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button onPress={() => MuseListener.stopListening()}>Stop recording</Button>
-        </View>
-      </View>
-    );
+  componentDidMount() {
+    AppState.addEventListener('change', (appstate) => {
+      this.setState({appState: appstate});
+    });
+    this.configureTimer();
   }
-}
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', (appstate) => {
+      this.setState({appState: appstate});
+    });
+    BackgroundTimer.clearInterval(this.TIMER_ID);
+  }
+
+  // Instantiates a timer that will update the timeOnClock state every 1 second
+  configureTimer() {
+    this.TIMER_ID = BackgroundTimer.setInterval(() => {
+      let {
+        timeOnClock,
+        timer,
+        onBreak,
+        appState,
+        workTime,
+        breakTime
+      } = this.state
+      if (_.isEqual(timer, this.PLAYING)) {
+
+        let nextTime = timeOnClock + SECOND;
+        const timerState = (() => {
+          if (nextTime >= workTime && !onBreak || nextTime >= breakTime && onBreak) {
+            timer = this.PAUSED;
+            nextTime = 0;
+            onBreak = !onBreak;
+            if (onBreak) {
+              breakSound.play();
+            } else {workSound.play()}
+
+            if (!_.isEqual(appState, 'active')) {
+              let details = {
+                message: onBreak ? 'Take a break you genius!' : 'Re-orient and settle in for more work.',
+                playSound: true
+              };
+              PushNotification.localNotification(details)
+            }
+          }
+          return timer
+        })()
+
+        this.setState({
+          timeOnClock: nextTime,
+          timer: timerState,
+          onBreak,
+        })
+      }
+    }, SECOND)
+  };
+
+  startTimer = () => {
+    this.setState({
+      timer: this.PLAYING
+    })
+  }
+
+  stopTimer = () => {
+    this.setState({
+      timer: this.PAUSED
+    })
+  };
+
+    parseTime = (timeToDisplay) => {
+      const ms = Number(timeToDisplay);
+      if (!_.isNumber(ms)) {
+        console.error(NaN);
+        return {
+          minutes: -1,
+          seconds: -1
+        }
+      }
+      const date = new Date(ms);
+      const m = date.getMinutes();
+      const s = date.getSeconds();
+
+      let minutes = `${m}`;
+      if (m < 10) {
+        minutes = `0${m}`;
+      }
+
+      let seconds = `${s}`;
+      if (s < 10) {
+        seconds = `0${s}`;
+      }
+
+      return {
+        minutes,
+        seconds
+      }
+    };
+
+    renderDisplay() {
+      const {timeOnClock, workTime, breakTime} = this.state;
+      const {minutes, seconds} = this.parseTime(timeOnClock);
+      switch (this.state.timer) {
+        case this.PLAYING:
+          return (
+            <Clock onPress={this.stopTimer} minutes={minutes} seconds={seconds}/>
+          );
+
+        case this.PAUSED:
+          return (
+            <StartButton onPress={this.startTimer}/>
+          );
+      }
+    }
+
+    renderText() {
+      switch (this.state.onBreak) {
+        case true:
+          return (<Text style={styles.body}>Break!</Text>)
+
+        case false:
+          if (this.state.timeOnClock > 0 && this.state.timeOnClock % ENCOURAGEMENT_INTERVAL === 0) {
+            return (<Animatable.Text animation="fadeOut" duration={1500} style={styles.body}>{
+              ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]
+            }</Animatable.Text>)
+          }
+      }
+    }
+
+    render()
+    {
+      return (
+        <View style={styles.container}>
+
+          <View style={styles.titleContainer}>
+            {this.renderDisplay()}
+          </View>
+          <View style={styles.spacerContainer}>
+            {this.renderText()}
+          </View>
+          <View style={styles.buttonContainer}>
+          </View>
+        </View>
+      );
+    }
+  }
+
 
 export default connect(mapStateToProps)(Timer);
 
@@ -57,7 +216,8 @@ const styles = MediaQueryStyleSheet.create(
     // Base styles
     body: {
       fontFamily: 'OpenSans-Regular',
-      fontSize: 12,
+      fontSize: 25,
+      margin: 20,
       color: colors.grey,
       textAlign: 'center'
     },

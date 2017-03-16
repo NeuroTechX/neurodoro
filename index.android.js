@@ -20,6 +20,7 @@ import ConnectorOne from './src/scenes/connector-01';
 import ConnectorTwo from './src/scenes/connector-02';
 import ConnectorThree from './src/scenes/connector-03';
 import Timer from './src/scenes/timer';
+import Recorder from './src/scenes/recorder';
 
 // reducer is a function
 import reducer from './src/redux/reducer';
@@ -54,6 +55,7 @@ export default class Neurodoro extends Component {
             <Scene component={ConnectorTwo} key='ConnectorTwo' hideNavBar={true}/>
             <Scene component={ConnectorThree} key='ConnectorThree' hideNavBar={true}/>
             <Scene component={Timer} key='Timer' hideNavBar={true}/>
+            <Scene component={Recorder} key='Recorder' hideNavBar={true}/>
           </Scene>
         </RouterWithRedux>
       </Provider>

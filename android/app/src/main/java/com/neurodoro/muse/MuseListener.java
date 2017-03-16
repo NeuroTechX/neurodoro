@@ -63,14 +63,12 @@ public class  MuseListener extends ReactContextBaseJavaModule {
     public Filter bandPassFilter;
     public double[][] bandPassFiltState;
     public double[] filtResult;
-    StringBuilder builder = new StringBuilder();
-
 
     // File writing stuff
+    StringBuilder builder = new StringBuilder();
     int fileNum = 1;
     File file;
     public FileWriter fileWriter;
-    public CSVWriter csvWriter;
 
     // grab reference to global Muse
     MainApplication appState;

@@ -13,7 +13,6 @@ import {
 export default class WhiteButton extends Component{
   constructor(props){
     super(props);
-
   }
 
 	render() {
