@@ -18,6 +18,8 @@ import config from '../redux/config';
 import Button from '../components/Button';
 import Clock from '../components/Clock';
 import StartButton from '../components/StartButton';
+import MenuIcon from '../components/MenuIcon';
+import ModalMenu from '../components/ModalMenu';
 
 import { MediaQueryStyleSheet} from 'react-native-responsive';
 import * as colors from '../styles/colors';
@@ -39,7 +41,7 @@ const workSound = new Sound('level_up.mp3', Sound.MAIN_BUNDLE, (error) => {conso
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
-const ENCOURAGEMENT_INTERVAL = SECOND * 4;
+const ENCOURAGEMENT_INTERVAL = SECOND * 10;
 const ENCOURAGEMENTS = ['You are so smart', 'You are good at your job', 'Look at you hustle, homie', ':)', ":')", 'Laser-like focus', 'Intense concentration!', 'Such work ethic', 'You are strong and bright']
 
 class Timer extends Component {
@@ -52,11 +54,12 @@ class Timer extends Component {
 
 
     this.state = {
+      menuVisible: false,
       timeOnClock: 0,
       timer: this.PAUSED,
       onBreak: false,
-      workTime: 20 * SECOND,
-      breakTime: MINUTE * 1,
+      workTime: 25 * MINUTE,
+      breakTime: 5 * MINUTE,
       appState: AppState.currentState
     }
   }
@@ -130,6 +133,7 @@ class Timer extends Component {
     })
   };
 
+
     parseTime = (timeToDisplay) => {
       const ms = Number(timeToDisplay);
       if (!_.isNumber(ms)) {
@@ -160,7 +164,7 @@ class Timer extends Component {
     };
 
     renderDisplay() {
-      const {timeOnClock, workTime, breakTime} = this.state;
+      const {timeOnClock} = this.state;
       const {minutes, seconds} = this.parseTime(timeOnClock);
       switch (this.state.timer) {
         case this.PLAYING:
@@ -189,11 +193,26 @@ class Timer extends Component {
       }
     }
 
+    closeMenu(workTime, breakTime) {
+      BackgroundTimer.clearInterval(this.TIMER_ID);
+      this.setState({
+        timer: this.PAUSED,
+        menuVisible: false,
+        timeOnClock: 0,
+        workTime: workTime * MINUTE,
+        breakTime: breakTime * MINUTE,
+      });
+
+      this.configureTimer();
+    }
+
     render()
     {
       return (
         <View style={styles.container}>
-
+          <View style={styles.menuContainer}>
+            <MenuIcon onPress={() => this.setState({menuVisible: true, timer: this.PAUSED})}/>
+          </View>
           <View style={styles.titleContainer}>
             {this.renderDisplay()}
           </View>
@@ -202,6 +221,9 @@ class Timer extends Component {
           </View>
           <View style={styles.buttonContainer}>
           </View>
+
+          <ModalMenu onClose={(workTime, breakTime) => this.closeMenu(workTime, breakTime)} visible={this.state.menuVisible}/>
+
         </View>
       );
     }
@@ -236,6 +258,12 @@ const styles = MediaQueryStyleSheet.create(
       justifyContent: 'center',
       alignItems: 'center',
       margin: 50,
+    },
+
+    menuContainer: {
+      position: 'absolute',
+      right: -40,
+      top: -30,
     },
 
     titleContainer: {

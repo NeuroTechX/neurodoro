@@ -11,20 +11,21 @@ import {
   StyleSheet,
 } from 'react-native';
 import { MediaQueryStyleSheet } from 'react-native-responsive';
+import _ from 'lodash';
 import * as colors from '../styles/colors';
 
 export default class Button extends Component{
   constructor(props){
     super(props);
-
   }
 
 	render() {
+    const fontSize = (_.isNil(this.props.fontSize)) ? 25 : this.props.fontSize;
     const dynamicStyle = (this.props.disabled) ? styles.disabled: styles.active;
 		return(
 		<TouchableOpacity onPress={this.props.onPress} disabled={this.props.disabled}> 
 			<View style={dynamicStyle}>
-          		<Text style={{color: 'white', fontFamily: 'OpenSans-Regular', fontSize: 25}}>{this.props.children}</Text>
+          		<Text style={{color: 'white', fontFamily: 'OpenSans-Regular', fontSize: fontSize}}>{this.props.children}</Text>
         	</View>
 		</TouchableOpacity>
 		)
@@ -35,6 +36,7 @@ export default class Button extends Component{
 const styles = MediaQueryStyleSheet.create(
   {
   // Base styles
+
   active: {
     justifyContent: 'center',
     backgroundColor: colors.tomato,
@@ -43,7 +45,7 @@ const styles = MediaQueryStyleSheet.create(
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    },
+  },
 
   disabled: {
     justifyContent: 'center',
@@ -53,7 +55,7 @@ const styles = MediaQueryStyleSheet.create(
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    }
+  }
   },
   // Responsive styles
   {
