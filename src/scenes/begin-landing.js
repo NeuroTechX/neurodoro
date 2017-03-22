@@ -34,7 +34,7 @@ export default class Landing extends Component {
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.Timer}>Get Started!</Button>
+          <Button onPress={Actions.ConnectorOne}>Get Started!</Button>
         </View>
       </View>
     );
