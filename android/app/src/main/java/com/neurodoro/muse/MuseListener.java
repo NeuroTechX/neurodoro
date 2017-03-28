@@ -210,9 +210,9 @@ public class  MuseListener extends ReactContextBaseJavaModule {
         public double[] smoothLogPower = new double[nbBins];
 
 
-        // Choosing these step sizes arbitrarily based on how they look
+        // Setting appropriate variance for noise detector (being pretty generous)
         public EEGDataSource() {
-            noiseDetector = new NoiseDetector(900.0);
+            noiseDetector = new NoiseDetector(600.0);
         }
 
         @Override
@@ -234,10 +234,8 @@ public class  MuseListener extends ReactContextBaseJavaModule {
                                 rawPSD = fft.computeLogPSD(latestSamples[i]);
 
                                 // Loops through every PSD bin
-                                for (int j = 0; j < rawPSD.length; j++) {
-                                    Log.w("Listener", "bin index " + j);
+                                for (int j = 0; j < latestSamples[i].length; j++) {
                                     builder.append(Double.toString(rawPSD[j]));
-                                    Log.w("Listener", "electrode " + i + " appending " + rawPSD[j]);
                                     if (j < rawPSD.length - 1) {
                                         builder.append(",");
                                     }
