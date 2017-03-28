@@ -9,7 +9,7 @@ import java.util.Arrays; // For printing arrays when debugging
 
 public class FFT {
 // This class uses the DoubleFFT_1D object from JTransforms to 
-// compute the DFT of an array of fixed size.
+// compute the FFT of an array of fixed size.
 //
 // Args:
 // 	inputLength (int) : length of the input signal (number of samples)
