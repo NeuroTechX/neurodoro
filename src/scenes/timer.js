@@ -26,7 +26,7 @@ import * as colors from '../styles/colors';
 
 // Modules for bridged Java methods
 import TensorFlowModule from '../modules/TensorFlow';
-import MuseListener from '../modules/MuseListener';
+import MuseListener from '../modules/MuseRecorder';
 
 // Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
 function  mapStateToProps(state) {

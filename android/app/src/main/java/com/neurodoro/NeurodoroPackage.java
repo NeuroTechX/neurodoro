@@ -5,7 +5,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.neurodoro.muse.ConnectorModule;
-import com.neurodoro.muse.MuseListener;
+import com.neurodoro.muse.MuseRecorder;
 import com.neurodoro.tensorflow.TensorFlowModule;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class NeurodoroPackage implements com.facebook.react.ReactPackage {
         return Arrays.<NativeModule>asList(
                 new TensorFlowModule(reactApplicationContext),
                 new ConnectorModule(reactApplicationContext),
-                new MuseListener(reactApplicationContext)
+                new MuseRecorder(reactApplicationContext)
         );
     }
 

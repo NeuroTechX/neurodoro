@@ -10,4 +10,9 @@ export default {
     DISCONNECTED: 'DISCONNECTED',
     NO_MUSES: 'NO_MUSES',
   },
+  dataType: {
+    DENOISED_PSD: 'DENOISED_PSD',
+    RAW_EEG: 'RAW_EEG',
+    FILTERED_EEG: 'FILTERED_EEG',
+  }
 }

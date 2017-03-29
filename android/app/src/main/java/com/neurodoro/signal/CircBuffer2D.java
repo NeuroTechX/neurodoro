@@ -1,4 +1,6 @@
 package com.neurodoro.signal;
+import android.util.Log;
+
 import java.util.Arrays; // For printing arrays when debugging
 
 public class CircBuffer2D {
@@ -31,9 +33,9 @@ public class CircBuffer2D {
     public void update(double[][] newData) {
 
         // loop through channels
-        for(int i = 0; i < nbCh; i++) {
+        for(int i = 0; i < this.nbCh; i++) {
             // loop through bins
-            for(int j = 0; j < nbBins; j++) {
+            for(int j = 0; j < this.nbBins; j++) {
                 buffer[index][i][j] = newData[i][j];
             }
         }
@@ -70,6 +72,12 @@ public class CircBuffer2D {
         // Modulo operation that always return a positive number
         int c = a % b;
         return (c < 0) ? c + b : c;
+    }
+
+    public void clear() {
+        this.buffer = new double[bufferLength][nbCh][nbBins];
+        this.index = 0;
+        this.pts = 0;
     }
 
     public static void main(String[] args ) {

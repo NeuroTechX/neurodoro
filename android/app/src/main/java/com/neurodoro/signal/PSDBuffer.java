@@ -27,7 +27,6 @@ public class PSDBuffer {
     // Updates the 2D buffer array with the 1D newData array at the current index. When index reaches the maximum bufferLength it returns to 0.
     public void update(double[] newData) {
 
-
             // loop through bins
             for(int j = 0; j < nbBins; j++) {
                 buffer[index][j] = newData[j];
