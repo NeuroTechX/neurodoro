@@ -194,7 +194,6 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     // Runs an FFT on data in eegBuffer when it fills up, checks for noise, and writes data to
     // csv file if it is noise-free
     public final class PSDDataSource extends MuseDataSource implements Runnable  {
-        public double[][] latestSamples;
         private int nbChannels = 4;
         private NoiseDetector noiseDetector;
         private boolean[] noiseArray;
@@ -203,7 +202,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         private FFT fft = new FFT(BUFFER_LENGTH, fftLength, filterFreq);
         int fftBufferLength = 20;
         PSDBuffer2D psdBuffer = new PSDBuffer2D(fftBufferLength, nbChannels, nbFreqBins);
-        double[][] logpower = new double[nbChannels][nbFreqBins];
+        public double[][] latestSamples = new double[nbChannels][BUFFER_LENGTH];
+        public double[] tempPSD = new double[nbFreqBins];
+        double[][] logPSD = new double[nbChannels][nbFreqBins];
         public double[][] smoothLogPower = new double[nbChannels][nbFreqBins];
 
 
@@ -229,15 +230,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
                         if (isNoiseFree(noiseArray)) {
                            Log.w("Listener", "Clean array!");
 
-                            // Loop through each electrode channel
-                            for(int i = 0; i < 4; i++) {
-
-                                // Compute log-PSD
-                                logpower[i] = fft.computeLogPSD(latestSamples[i]);
-                            }
-
-                            // Write new log-PSD in buffer
-                            psdBuffer.update(logpower);
+                            // Compute average PSD for all channels in latest samples and add to
+                            // PSDBuffer
+                            psdBuffer.fftAndUpdate(latestSamples, fft);
 
                             // Compute average PSD over buffer
                             smoothLogPower = psdBuffer.mean();

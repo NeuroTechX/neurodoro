@@ -11,9 +11,28 @@ public class PSDBuffer2D extends CircBuffer2D {
     // ------------------------------------------------------------------------
     // Variables
 
-    public PSDBuffer2D(int bufferLength, int nbChannels, int nbBins) {
+    public double[] logPSD;
 
+    public PSDBuffer2D(int bufferLength, int nbChannels, int nbBins) {
         super(bufferLength, nbChannels, nbBins);
+        logPSD = new double[nbBins];
+    }
+
+    public void fftAndUpdate(double[][] newData, FFT fft) {
+
+        // Loop through each electrode channel
+        for (int i = 0; i < newData.length; i++) {
+
+            // Compute log-PSD
+            logPSD = fft.computeLogPSD(newData[i]);
+
+            // loop through bins
+            for(int j = 0; j < logPSD.length; j++) {
+                buffer[index][i][j] = logPSD[j];
+            }
+        }
+        index = (index + 1) % bufferLength;
+        pts++;
     }
 
     public void update(double[][] newData) {
@@ -34,20 +53,18 @@ public class PSDBuffer2D extends CircBuffer2D {
             // Loop through all channels 0-4
             for (int c = 0; c <  this.nbCh; c++) {
 
-
                 // Loop through all bins, summing each bins value with previous values in the epoch
                 for (int n = 0; n <  this.nbBins; n++) {
+
                     bufferMean[c][n] = bufferMean[c][n] + buffer[i][c][n];
                 }
             }
         }
 
         for (int c = 0; c <  this.nbCh; c++) {
-            Log.w("Mean", "summed" + bufferMean[c][0]);
             for (int n = 0; n <  this.nbBins; n++) {
                 bufferMean[c][n] /= nbPointsSummed;
             }
-            Log.w("Mean", "averaged" + bufferMean[c][0]);
         }
 
         return bufferMean;

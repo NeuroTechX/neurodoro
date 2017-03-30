@@ -34,6 +34,7 @@ public class CircBuffer2D {
 
         // loop through channels
         for(int i = 0; i < this.nbCh; i++) {
+
             // loop through bins
             for(int j = 0; j < this.nbBins; j++) {
                 buffer[index][i][j] = newData[i][j];

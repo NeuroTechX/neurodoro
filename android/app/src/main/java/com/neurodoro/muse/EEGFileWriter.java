@@ -61,7 +61,7 @@ public class EEGFileWriter {
         builder.append("Difficulty,");
         builder.append("Performance,");
         if(title.contains("PSD")) {
-            builder.append("Channel");
+            builder.append("Channel,");
             for(int i=1; i<= nbFreqBins; i++) {
                 builder.append(i + " hz");
                 if (i < nbFreqBins - 1) {
