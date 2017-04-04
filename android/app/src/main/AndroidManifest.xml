@@ -20,12 +20,12 @@
     <application
       android:name="com.neurodoro.MainApplication"
       android:allowBackup="true"
-      android:label="neurodoro"
+      android:label="Neurodoro"
       android:icon="@mipmap/neurodoro_launcher"
       android:theme="@style/AppTheme">
       <activity
         android:name="com.neurodoro.MainActivity"
-        android:label="neurodoro"
+        android:label="Neurodoro"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

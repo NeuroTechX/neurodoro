@@ -12,6 +12,7 @@ import{
 import BackgroundTimer from 'react-native-background-timer'
 import PushNotification from 'react-native-push-notification'
 import * as Animatable from 'react-native-animatable';
+import Animation from 'lottie-react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import config from '../redux/config';

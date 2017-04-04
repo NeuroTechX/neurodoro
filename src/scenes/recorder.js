@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import {
+  WebView,
   StyleSheet,
   Text,
   View,
   Image,
   Picker,
 } from 'react-native';
-import{
-  Actions,
-}from 'react-native-router-flux';
+import{ Actions }from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import Button from '../components/Button';
 import { MediaQueryStyleSheet} from 'react-native-responsive';
 import config from '../redux/config';
 import * as colors from '../styles/colors';
+
 
 // Modules for bridged Java methods
 import TensorFlowModule from '../modules/TensorFlow';
@@ -34,15 +35,30 @@ class Timer extends Component {
     }
   }
 
+  onMessage = (event) => {
+    let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
+    let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
+    console.log('difficulty ' + difficulty, ' performance ' + performance);
+    if(_.isNaN(difficulty)) {
+      console.log('nan detected');
+      difficulty = 0;
+    }
+    MuseRecorder.sendTaskInfo(difficulty , performance);
+  };
+
   render() {
     return (
       <View style={styles.container}>
-
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Help Us Collect Training Data</Text>
-          <Text style={styles.body}>Data sent to Neurodoro database</Text>
+        <View style={styles.webviewContainer}>
+          <WebView
+            source={{uri: 'https://daos-84628.firebaseapp.com'}}
+            style={{width: 350}}
+            onMessage={this.onMessage}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+          />
         </View>
-        <View style={styles.spacerContainer}>
+        <View style={styles.buttonContainer}>
           <View style={{flexDirection: 'row', alignItems:'center'}}>
             <Text style={styles.body}>Data type:</Text>
             <Picker
@@ -54,11 +70,10 @@ class Timer extends Component {
               <Picker.Item label="Filtered EEG" value={config.dataType.FILTERED_EEG}/>
             </Picker>
           </View>
-          <Button onPress={() => MuseRecorder.startRecording(this.state.dataType)}>Start recording</Button>
-          <Button onPress={() => MuseRecorder.sendTaskInfo(5 , 4)}>Send test info</Button>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button onPress={() => MuseRecorder.stopRecording()}>Stop recording</Button>
+          <View style={{width: 250, flexDirection: 'row', alignItems:'center', justifyContent: 'space-between'}}>
+            <Button fontSize={12} onPress={() => MuseRecorder.startRecording(this.state.dataType)}>Start recording</Button>
+            <Button fontSize={12} onPress={() => MuseRecorder.stopRecording()}>Stop recording</Button>
+          </View>
         </View>
       </View>
     );
@@ -91,7 +106,6 @@ const styles = MediaQueryStyleSheet.create(
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 50,
     },
 
     titleContainer: {
@@ -99,10 +113,11 @@ const styles = MediaQueryStyleSheet.create(
       justifyContent: 'center',
     },
 
-    spacerContainer: {
+    webviewContainer: {
       alignItems: 'center',
-      justifyContent: 'space-around',
-      flex: 2,
+      justifyContent: 'center',
+      flex: 3,
+
     },
 
     buttonContainer: {

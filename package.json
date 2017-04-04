@@ -7,6 +7,8 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"lodash": "^4.17.4",
+		"lottie-react-native": "^1.1.1",
 		"react": "~15.4.0",
 		"react-native": "0.41.2",
 		"react-native-animatable": "^1.1.0",
