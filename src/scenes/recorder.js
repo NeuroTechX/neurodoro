@@ -10,8 +10,11 @@ import {
 import{ Actions }from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import Button from '../components/Button';
 import { MediaQueryStyleSheet} from 'react-native-responsive';
+import Prompt from 'react-native-prompt';
+
+import Button from '../components/Button';
+
 import config from '../redux/config';
 import * as colors from '../styles/colors';
 
@@ -32,6 +35,8 @@ class Timer extends Component {
     super(props);
     this.state = {
       dataType: config.dataType.DENOISED_PSD,
+      promptVisible: true,
+      userName: '',
     }
   }
 
@@ -75,6 +80,19 @@ class Timer extends Component {
             <Button fontSize={12} onPress={() => MuseRecorder.stopRecording()}>Stop recording</Button>
           </View>
         </View>
+
+        <Prompt
+          title="Enter the name (or pseudonym) you would like your data to be stored under"
+          placeholder="Enter name here..."
+          defaultValue=""
+          visible={this.state.promptVisible}
+          onCancel={() => this.setState({promptVisible: false})}
+          onSubmit={ (value) => {
+            this.setState({promptVisible: false});
+            MuseRecorder.setUserName(value);
+            }
+          }/>
+
       </View>
     );
   }

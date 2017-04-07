@@ -14,13 +14,13 @@ public abstract class MuseDataSource implements Runnable {
     public boolean keepRunning;
     public EEGFileWriter fileWriter;
 
-    public MuseDataSource(Context context, String dataType) {
+    public MuseDataSource(Context context, String dataType, int fileNum) {
         Log.w("MuseDataSource", "Abstract constructor called");
-        fileWriter = new EEGFileWriter(context, dataType);
+        fileWriter = new EEGFileWriter(context, dataType, fileNum);
     }
-    public MuseDataSource(Context context, String dataType, int nbFreqbins) {
+    public MuseDataSource(Context context, String dataType, int fileNum, int nbFreqbins) {
         Log.w("MuseDataSource", "Abstract constructor called");
-        fileWriter = new EEGFileWriter(context, dataType, nbFreqbins);
+        fileWriter = new EEGFileWriter(context, dataType, fileNum, nbFreqbins);
     }
 
     public void stopThread() {

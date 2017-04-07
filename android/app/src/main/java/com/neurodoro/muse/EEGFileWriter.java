@@ -32,23 +32,26 @@ public class EEGFileWriter {
     private static boolean isRecording;
     private int difficulty = 0;
     private int performance = 0;
+    private String userName = "";
 
     // ---------------------------------------------------------------------------
     // Constructor
 
-    public EEGFileWriter(Context context, String title) {
+    public EEGFileWriter(Context context, String title, int fileNum) {
         Log.w("MuseDataSource", "Abstract constructor called");
         this.context = context;
         isRecording = false;
         this.title = getTitleFromDataType(title);
+        this.fileNum = fileNum;
     }
 
-    public EEGFileWriter(Context context, String title, int nbFreqBins) {
+    public EEGFileWriter(Context context, String title, int fileNum, int nbFreqBins) {
         Log.w("MuseDataSource", "Abstract constructor called");
         this.context = context;
         this.nbFreqBins = nbFreqBins;
         isRecording = false;
         this.title = getTitleFromDataType(title);
+        this.fileNum = fileNum;
     }
 
     // ---------------------------------------------------------------------------
@@ -103,8 +106,6 @@ public class EEGFileWriter {
     }
 
     public void addPSDToFile(double[][] data) {
-        Log.w("FileWriter", "Adding PSD to file");
-
         // Loop through all 4 channels
         for (int j = 0; j < data.length; j++) {
 
@@ -122,7 +123,7 @@ public class EEGFileWriter {
             // Loop through all freqbins
             for (int i = 0; i < data[j].length; i++) {
                 builder.append(Double.toString(data[j][i]));
-                if (i < data[j].length - 1) {
+                if (i < data[j].length) {
                     builder.append(",");
                 }
             }
@@ -133,23 +134,19 @@ public class EEGFileWriter {
     public void writeFile() {
         try {
             final File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-            final File file = new File(dir,
-                    title+fileNum+
-                            ".csv");
-            Log.w("Listener", "Creating new file " + file);
-            fileWriter = new java.io.FileWriter(file);
-
             if (!dir.exists()) {
                 dir.mkdir();
             }
-
+            final File file = new File(dir,
+                    userName+title+fileNum+
+                            ".csv");
+            fileWriter = new java.io.FileWriter(file);
 
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(builder.toString());
             bufferedWriter.close();
 
             sendData(file);
-            fileNum ++;
             isRecording = false;
         } catch (IOException e) {}
     }
@@ -159,8 +156,12 @@ public class EEGFileWriter {
         this.performance = performance;
     }
 
+    public void updateUserName(String name) {
+        this.userName = name;
+    }
+
     public void makeToast() {
-        CharSequence toastText = "Recording data in " + title+fileNum+".csv";
+        CharSequence toastText = "Recording data in " + userName+title+fileNum+".csv";
         Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
         toast.show();
     }

@@ -13,6 +13,7 @@
 		"react-native": "0.41.2",
 		"react-native-animatable": "^1.1.0",
 		"react-native-background-timer": "^1.0.0",
+		"react-native-prompt": "^1.0.0",
 		"react-native-push-notification": "^2.2.1",
 		"react-native-responsive": "^1.0.1",
 		"react-native-router-flux": "^3.38.0",

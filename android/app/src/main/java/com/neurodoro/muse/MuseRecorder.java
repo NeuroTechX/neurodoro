@@ -41,6 +41,8 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     public DataListener dataListener;
     public CircularBuffer eegBuffer;
     public double[] newData = new double[4];
+    public String userName = "";
+    public int fileNum = 0;
 
     // Filter variables
     public int filterFreq;
@@ -93,11 +95,17 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     public void stopRecording() {
         Log.w("Listener", "Stop Listening Called");
         stopThreads();
+        fileNum++;
     }
 
     @ReactMethod
     public void sendTaskInfo(int difficulty, int performance) {
         data.fileWriter.updateTaskInfo(difficulty, performance);
+    }
+
+    @ReactMethod
+    public void setUserName(String name) {
+        this.userName = name;
     }
 
     // ---------------------------------------------------------
@@ -118,10 +126,10 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         // Create PSDDataSource if recorder is to record PSD data, EEGDataSource otherwise
         if (recorderDataType.contains("PSD")) {
             Log.w("Listener", "PSD datatype detected");
-            data = new PSDDataSource();
+            data = new PSDDataSource(fileNum);
         } else {
             Log.w("Listener", "EEG datatype detected");
-            data = new EEGDataSource();
+            data = new EEGDataSource(fileNum);
 
             // If data will be filtered, create filters
             if(recorderDataType.contains("FILTERED")) {
@@ -210,8 +218,8 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
         // Setting appropriate variance for noise detector (being pretty generous)
 
-        public PSDDataSource() {
-            super(getCurrentActivity(), recorderDataType, BUFFER_LENGTH / 2);
+        public PSDDataSource(int fileNum) {
+            super(getCurrentActivity(), recorderDataType, fileNum, BUFFER_LENGTH / 2);
             noiseDetector = new NoiseDetector(600.0);
         }
 
@@ -269,8 +277,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         private int stepSize = 1;
         public double[] latestSamples;
 
-        public EEGDataSource() {
-            super(getCurrentActivity(), recorderDataType);
+        public EEGDataSource(int fileNum) {
+            super(getCurrentActivity(), recorderDataType, fileNum);
+            fileWriter.updateUserName(userName);
         }
 
         @Override
@@ -282,8 +291,6 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
                         // Extract latest samples
                         latestSamples = eegBuffer.extract(1)[0];
-
-                        Log.w("EEGData", "latest samples " + latestSamples);
 
                         // Adds datapoint from all 4 channels to csv
                         fileWriter.addEEGDataToFile(latestSamples);
