@@ -100,7 +100,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void sendTaskInfo(int difficulty, int performance) {
-        data.fileWriter.updateTaskInfo(difficulty, performance);
+        if (data.fileWriter != null) {
+            data.fileWriter.updateTaskInfo(difficulty, performance);
+        }
     }
 
     @ReactMethod
