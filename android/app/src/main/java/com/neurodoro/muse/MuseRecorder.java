@@ -223,6 +223,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         public PSDDataSource(int fileNum) {
             super(getCurrentActivity(), recorderDataType, fileNum, BUFFER_LENGTH / 2);
             noiseDetector = new NoiseDetector(600.0);
+            fileWriter.updateUserName(userName);
         }
 
         @Override
