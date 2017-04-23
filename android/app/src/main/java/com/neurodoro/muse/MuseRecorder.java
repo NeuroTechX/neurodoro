@@ -174,15 +174,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         @Override
         public void receiveMuseDataPacket(final MuseDataPacket p, final Muse muse) {
             getEegChannelValues(newData, p);
-
-            if(recorderDataType.contains("FILTERED")) {
-                // Filter new raw sample
-                bandPassFiltState = bandPassFilter.transform(newData, bandPassFiltState);
-                filtResult = bandPassFilter.extractFilteredSamples(bandPassFiltState);
-                eegBuffer.update(filtResult);
-            } else {
-                eegBuffer.update(newData);
-            }
+            eegBuffer.update(newData);
         }
 
         private void getEegChannelValues(double[] buffer, MuseDataPacket p) {
@@ -295,8 +287,19 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
                         // Extract latest samples
                         latestSamples = eegBuffer.extract(1)[0];
 
-                        // Adds datapoint from all 4 channels to csv
-                        fileWriter.addEEGDataToFile(latestSamples);
+                        if(recorderDataType.contains("FILTERED")) {
+                            // Filter new raw sample
+                            bandPassFiltState = bandPassFilter.transform(latestSamples,
+                                    bandPassFiltState);
+                            filtResult = bandPassFilter.extractFilteredSamples(bandPassFiltState);
+                            // Adds datapoint from all 4 channels to csv
+                            fileWriter.addEEGDataToFile(filtResult);
+                        } else {
+
+                            // Adds datapoint from all 4 channels to csv
+                            fileWriter.addEEGDataToFile(latestSamples);
+
+                        }
 
                         // resets the 'points-since-dataSource-read' value
                         eegBuffer.resetPts();
