@@ -261,7 +261,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
                         // Check for noise. Proceed only if it's clean
                         noiseArray = noiseDetector.detectArtefact(latestSamples);
                         if (isNoiseFree(noiseArray)) {
-                           Log.w("Listener", "Clean array!");
+                            Log.w("Listener", "Clean array!");
 
                             // Compute average PSD for all channels in latest samples and add to
                             // PSDBuffer
