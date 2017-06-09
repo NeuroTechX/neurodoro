@@ -27,6 +27,10 @@ We know that training an EEG classifier that works for everyone will be hard. Th
 
 We'll need quite a bit of help to pull this off, though. If you're interested in contributing, join us in the #neurodoro channel of the [NeuroTechX Slack](http://neurotechx.herokuapp.com/) or take a look at the open issues here on GitHub.
 
+## Training Data
+
+In addition to the data files in `muse-data`, we are trying to keep all new data that comes in stored in a shared [Google Drive folder](https://drive.google.com/drive/folders/0B_yXrZKFt-y2eUhsVVQ4Qk1SVk0?usp=sharing). 
+
 ## Setup
 
 1. Install and setup React Native from the [Source website](https://facebook.github.io/react-native/docs/getting-started.html). We recommend setting up the [Gradle Daemon](https://docs.gradle.org/2.9/userguide/gradle_daemon.html) as well
