@@ -19,10 +19,8 @@ import com.neurodoro.MainApplication;
 import com.neurodoro.signal.CircularBuffer;
 import com.neurodoro.signal.FFT;
 import com.neurodoro.signal.Filter;
-import com.neurodoro.signal.DynamicSeries;
 import com.neurodoro.signal.NoiseDetector;
 import com.neurodoro.signal.PSDBuffer2D;
-import com.neurodoro.muse.MuseDataSource;
 
 /**
  * Streams data from Muses and performs preprocessing functions
@@ -33,24 +31,22 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     // ----------------------------------------------------------
     // Variables
 
-    public DynamicSeries dataSeries;
-    String TAG = "EEGGraph";
-    public int BUFFER_LENGTH;
     Thread dataThread;
-    MuseDataSource data;
+    public int samplingFreq;
+    public int BUFFER_LENGTH;
+    public PSDDataSource data;
     public DataListener dataListener;
     public CircularBuffer eegBuffer;
     public String userName = "";
     public int fileNum = 0;
+    public EEGFileWriter fileWriter;
 
     // Filter variables
-    public int filterFreq;
     public Filter bandPassFilter;
     public double[][] bandPassFiltState;
-    public double[] filtResult = new double[4];
 
     // Bridged props
-    public String recorderDataType = "DENOISED_PSD";
+    public String recorderDataType;
 
     // Reference to global Muse
     MainApplication appState;
@@ -86,21 +82,29 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         Log.w("Listener", "Start Listening Called");
         this.recorderDataType = dataType;
         initListener();
-        data.fileWriter.initFile();
-        startDataThread();
+        fileWriter.initFile();
+        if(recorderDataType.contains("DENOISED_PSD")) {
+            startDataThread();
+        }
     }
 
     @ReactMethod
     public void stopRecording() {
         Log.w("Listener", "Stop Listening Called");
-        stopThreads();
+        if (dataListener != null) {
+            appState.connectedMuse.unregisterDataListener(dataListener, MuseDataPacketType.EEG);
+        }
+        if(recorderDataType.contains("DENOISED_PSD")) {
+            stopThread();
+        }
+        fileWriter.writeFile();
         fileNum++;
     }
 
     @ReactMethod
     public void sendTaskInfo(int difficulty, int performance) {
-        if (data.fileWriter != null) {
-            data.fileWriter.updateTaskInfo(difficulty, performance);
+        if (fileWriter != null) {
+            fileWriter.updateTaskInfo(difficulty, performance);
         }
     }
 
@@ -117,25 +121,24 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
         // Set sampling frequency based on type of Muse
         if (appState.connectedMuse.isLowEnergy()) {
-            filterFreq = 256;
-        } else { filterFreq = 220; }
-        BUFFER_LENGTH = filterFreq;
+            samplingFreq = 256;
+        } else { samplingFreq = 220; }
 
-        // Create new eegBuffer
-        eegBuffer = new CircularBuffer(BUFFER_LENGTH, 4);
-
-        // Create PSDDataSource if recorder is to record PSD data, EEGDataSource otherwise
+        // Create PSDDataSource if recorder is set to record PSD data.
+        // This will create a different type of PSDDataSource
         if (recorderDataType.contains("PSD")) {
             Log.w("Listener", "PSD datatype detected");
-            data = new PSDDataSource(fileNum);
+            eegBuffer = new CircularBuffer(samplingFreq, 4);
+            data = new PSDDataSource();
         } else {
             Log.w("Listener", "EEG datatype detected");
-            data = new EEGDataSource(fileNum);
+            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType, fileNum);
+            fileWriter.updateUserName(userName);
 
             // If data will be filtered, create filters
             if(recorderDataType.contains("FILTERED")) {
                 Log.w("Listener", "Filter detected");
-                bandPassFilter = new Filter(filterFreq, "bandpass", 4, 1, 50);
+                bandPassFilter = new Filter(samplingFreq, "bandpass", 4, 1, 50);
                 bandPassFiltState = new double[4][bandPassFilter.getNB()];
             }
         }
@@ -153,10 +156,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         dataThread.start();
     }
 
-    public void stopThreads(){
-        data.stopThread();
-        if (dataListener != null) {
-            appState.connectedMuse.unregisterDataListener(dataListener, MuseDataPacketType.EEG);
+    public void stopThread(){
+        if(data != null) {
+            data.stopThread();
         }
     }
 
@@ -165,13 +167,13 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
     // Listener that receives incoming data from the Muse. Will run receiveMuseDataPacket
     // Will call receiveMuseDataPacket as data comes in around 220hz (250hz for Muse 2016)
-    public final class DataListener extends MuseDataListener {
+    private final class DataListener extends MuseDataListener {
         private double[] newData;
+
         // Filter variables
         public boolean filterOn = false;
         public Filter bandstopFilter;
         public double[][] bandstopFiltState;
-        public double[] bandstopFiltResult;
 
         DataListener() {
             if (appState.connectedMuse.isLowEnergy()) {
@@ -194,16 +196,14 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
             // Optional filter for filtered data
             if(recorderDataType.contains("FILTERED")) {
-                // Filter new raw sample
-                bandPassFiltState = bandPassFilter.transform(newData,
-                        bandPassFiltState);
-                filtResult = bandPassFilter.extractFilteredSamples(bandPassFiltState);
-                // Adds datapoint from all 4 channels to csv
-                data.fileWriter.addEEGDataToFile(filtResult);
-            } else {
+                bandPassFiltState = bandPassFilter.transform(newData, bandPassFiltState);
+                newData = bandPassFilter.extractFilteredSamples(bandPassFiltState);
+            }
 
-                // Adds datapoint from all 4 channels to csv
-                data.fileWriter.addEEGDataToFile(newData);
+            if(recorderDataType.contains("DENOISED_PSD")) {
+                eegBuffer.update(newData);
+            } else {
+                fileWriter.addEEGDataToFile(newData);
             }
         }
 
@@ -225,27 +225,24 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
     // Runs an FFT on data in eegBuffer when it fills up, checks for noise, and writes data to
     // csv file if it is noise-free
-    public final class PSDDataSource extends MuseDataSource implements Runnable  {
+    public final class PSDDataSource implements Runnable  {
         private int nbChannels = 4;
+        private boolean keepRunning;
         private NoiseDetector noiseDetector;
         private boolean[] noiseArray;
-        int fftLength = BUFFER_LENGTH;
-        int nbFreqBins = BUFFER_LENGTH / 2;
-        private FFT fft = new FFT(BUFFER_LENGTH, fftLength, filterFreq);
+        int inputLength = samplingFreq * 1; // 1s second samples
+        int fftLength = 256;
+        private FFT fft = new FFT(inputLength, fftLength, samplingFreq);
         int fftBufferLength = 20;
+        int nbFreqBins = fft.getFreqBins().length;
         PSDBuffer2D psdBuffer = new PSDBuffer2D(fftBufferLength, nbChannels, nbFreqBins);
-        public double[][] latestSamples = new double[nbChannels][BUFFER_LENGTH];
-        public double[] tempPSD = new double[nbFreqBins];
-        double[][] logPSD = new double[nbChannels][nbFreqBins];
+        public double[][] latestSamples = new double[nbChannels][inputLength];
         public double[][] smoothLogPower = new double[nbChannels][nbFreqBins];
 
-
-        // Setting appropriate variance for noise detector (being pretty generous)
-
-        public PSDDataSource(int fileNum) {
-            super(getCurrentActivity(), recorderDataType, fileNum, BUFFER_LENGTH / 2);
-            noiseDetector = new NoiseDetector(600.0);
+        public PSDDataSource() {
+            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType, fileNum, nbFreqBins);
             fileWriter.updateUserName(userName);
+            noiseDetector = new NoiseDetector(600.0);
         }
 
         @Override
@@ -253,28 +250,16 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
             try {
                 keepRunning = true;
                 while (keepRunning) {
-                    if (eegBuffer.getPts() >= BUFFER_LENGTH) {
-
-                        // Extract latest samples
-                        latestSamples = eegBuffer.extractTransposed(BUFFER_LENGTH);
-
-                        // Check for noise. Proceed only if it's clean
+                    if (eegBuffer.getPts() >= inputLength) {
+                        latestSamples = eegBuffer.extractTransposed(inputLength);
                         noiseArray = noiseDetector.detectArtefact(latestSamples);
+
                         if (isNoiseFree(noiseArray)) {
-                            Log.w("Listener", "Clean array!");
-
-                            // Compute average PSD for all channels in latest samples and add to
-                            // PSDBuffer
                             psdBuffer.fftAndUpdate(latestSamples, fft);
-
-                            // Compute average PSD over buffer
                             smoothLogPower = psdBuffer.mean();
-
-                            // Add all 4 channels' smoothed PSDs to the CSV file
                             fileWriter.addPSDToFile(smoothLogPower);
                         }
 
-                        // resets the 'points-since-dataSource-read' value
                         eegBuffer.resetPts();
                     }
                 }
@@ -290,39 +275,14 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
             return true;
         }
 
+        public void stopThread() {
+            keepRunning = false;
+        }
+
         public void clearDataBuffer() {
             psdBuffer.clear();
             eegBuffer.clear();
         }
-
-    }
-
-    // Runnable adds raw or filtered EEG to a csv as it comes in
-    public final class EEGDataSource extends MuseDataSource implements Runnable {
-        private int stepSize = 1;
-        public double[] latestSamples;
-
-        public EEGDataSource(int fileNum) {
-            super(getCurrentActivity(), recorderDataType, fileNum);
-            fileWriter.updateUserName(userName);
-        }
-
-        @Override
-        public void run() {
-            try {
-                keepRunning = true;
-                while (keepRunning) {
-                    if (eegBuffer.getPts() >= stepSize) {
-                        // Doesn't need to do anything
-                    }
-                }
-            } catch (Exception e) {}
-        }
-
-        public void clearDataBuffer() {
-            eegBuffer.clear();
-        }
-
     }
 }
 
