@@ -34,7 +34,8 @@ export default class Landing extends Component {
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.ConnectorOne}>Get Started!</Button>
+          <Button onPress={Actions.Timer}>Use the timer</Button>
+          <Button onPress={Actions.ConnectorOne}>Collect data</Button>
         </View>
       </View>
     );
@@ -80,8 +81,9 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     buttonContainer: {
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       flex: 1,
+
     },
 
     logo: {

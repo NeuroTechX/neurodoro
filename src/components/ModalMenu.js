@@ -47,11 +47,6 @@ export default class ModalMenu extends Component {
 
             <Slider  maximumValue={60} step={1} value={this.state.breakTime} onSlidingComplete={(value) => this.setState({breakTime: value})} />
             <View style={styles.buttonContainer}>
-              <Button fontSize={15} onPress={() => {
-                  Actions.Recorder();
-                  this.props.onClose(this.state.workTime, this.state.breakTime);
-                }
-              }>Record Data</Button>
               <Button fontSize={15} onPress={() => this.props.onClose(this.state.workTime, this.state.breakTime)}>Close Menu</Button>
             </View>
           </View>
@@ -103,7 +98,7 @@ const styles = MediaQueryStyleSheet.create(
     buttonContainer: {
       margin: 20,
       flex: 1,
-      justifyContent: 'space-between'
+      justifyContent: 'center'
     }
   },
   // Responsive styles
@@ -132,4 +127,3 @@ const styles = MediaQueryStyleSheet.create(
       }
     }
   });
-

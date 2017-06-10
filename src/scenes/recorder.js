@@ -1,54 +1,73 @@
-import React, { Component } from 'react';
-import {
-  WebView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Picker,
-} from 'react-native';
-import{ Actions }from 'react-native-router-flux';
-import { connect } from 'react-redux';
-import _ from 'lodash';
-import { MediaQueryStyleSheet} from 'react-native-responsive';
-import Prompt from 'react-native-prompt';
+import React, { Component } from "react";
+import { WebView, StyleSheet, Text, View, Image, Picker } from "react-native";
+import { Actions } from "react-native-router-flux";
+import { connect } from "react-redux";
+import _ from "lodash";
+import { MediaQueryStyleSheet } from "react-native-responsive";
+import Prompt from "react-native-prompt";
 
-import Button from '../components/Button';
+import Button from "../components/Button";
 
-import config from '../redux/config';
-import * as colors from '../styles/colors';
-
+import config from "../redux/config";
+import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
-import TensorFlowModule from '../modules/TensorFlow';
-import MuseRecorder from '../modules/MuseRecorder';
+//import TensorFlowModule from '../modules/TensorFlow';
+import MuseRecorder from "../modules/MuseRecorder";
 
 // Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
-function  mapStateToProps(state) {
+function mapStateToProps(state) {
   return {
-    connectionStatus: state.connectionStatus,
+    connectionStatus: state.connectionStatus
   };
 }
 
-class Timer extends Component {
+class Recorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataType: config.dataType.DENOISED_PSD,
       promptVisible: true,
-      userName: '',
-    }
+      userName: "",
+      isRecording: false
+    };
   }
 
-  onMessage = (event) => {
+  renderRecordingButton() {
+    if (this.state.isRecording) {
+      return (
+        <Button
+          onPress={() => {
+            this.setState({ isRecording: false });
+            MuseRecorder.stopRecording();
+          }}
+        >
+          Stop recording
+        </Button>
+      );
+    }
+      return (
+        <Button
+          onPress={() => {
+            this.setState({ isRecording: true });
+            MuseRecorder.startRecording(this.state.dataType);
+          }}
+        >
+          Start recording
+        </Button>
+      );
+    }
+
+
+  onMessage = event => {
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
-    console.log('difficulty ' + difficulty, ' performance ' + performance);
-    if(_.isNaN(difficulty)) {
-      console.log('nan detected');
+    console.log("difficulty " + difficulty, " performance " + performance);
+    if (_.isNaN(difficulty)) {
+      console.log("nan detected");
       difficulty = 0;
     }
-    MuseRecorder.sendTaskInfo(difficulty , performance);
+    MuseRecorder.sendTaskInfo(difficulty, performance);
   };
 
   render() {
@@ -56,101 +75,109 @@ class Timer extends Component {
       <View style={styles.container}>
         <View style={styles.webviewContainer}>
           <WebView
-            source={{uri: 'https://daos-84628.firebaseapp.com'}}
-            style={{width: 350}}
+            source={{ uri: "https://daos-84628.firebaseapp.com" }}
+            style={{ width: 350 }}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
             domStorageEnabled={true}
           />
         </View>
         <View style={styles.buttonContainer}>
-          <View style={{flexDirection: 'row', alignItems:'center'}}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={styles.body}>Data type:</Text>
             <Picker
               style={styles.picker}
               selectedValue={this.state.dataType}
-              onValueChange={(type) => this.setState({dataType: type})}>
-              <Picker.Item label="Denoised PSD" value={config.dataType.DENOISED_PSD}/>
-              <Picker.Item label="Raw EEG" value={config.dataType.RAW_EEG}/>
-              <Picker.Item label="Filtered EEG" value={config.dataType.FILTERED_EEG}/>
+              onValueChange={type => this.setState({ dataType: type })}
+            >
+              <Picker.Item
+                label="Denoised PSD"
+                value={config.dataType.DENOISED_PSD}
+              />
+              <Picker.Item label="Raw EEG" value={config.dataType.RAW_EEG} />
+              <Picker.Item
+                label="Filtered EEG"
+                value={config.dataType.FILTERED_EEG}
+              />
             </Picker>
           </View>
-          <View style={{width: 250, flexDirection: 'row', alignItems:'center', justifyContent: 'space-between'}}>
-            <Button fontSize={12} onPress={() => MuseRecorder.startRecording(this.state.dataType)}>Start recording</Button>
-            <Button fontSize={12} onPress={() => MuseRecorder.stopRecording()}>Stop recording</Button>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            {this.renderRecordingButton()}
           </View>
         </View>
 
         <Prompt
-          title="Enter the name (or pseudonym) you would like your data to be stored under"
+          title="Enter the name you would like your data to be stored under"
           placeholder="Enter name here..."
           defaultValue=""
           visible={this.state.promptVisible}
-          onCancel={() => this.setState({promptVisible: false})}
-          onSubmit={ (value) => {
-            this.setState({promptVisible: false});
+          onCancel={() => this.setState({ promptVisible: false })}
+          onSubmit={value => {
+            this.setState({ promptVisible: false });
             MuseRecorder.setUserName(value);
-            }
-          }/>
+          }}
+        />
 
       </View>
     );
   }
 }
 
-export default connect(mapStateToProps)(Timer);
-
+export default connect(mapStateToProps)(Recorder);
 
 const styles = MediaQueryStyleSheet.create(
   {
     // Base styles
     body: {
-      fontFamily: 'OpenSans-Regular',
+      fontFamily: "OpenSans-Regular",
       fontSize: 12,
       color: colors.grey,
-      textAlign: 'center'
+      textAlign: "center"
     },
 
     title: {
-      textAlign: 'center',
+      textAlign: "center",
       margin: 15,
       lineHeight: 50,
       color: colors.tomato,
-      fontFamily: 'YanoneKaffeesatz-Regular',
-      fontSize: 50,
+      fontFamily: "YanoneKaffeesatz-Regular",
+      fontSize: 50
     },
 
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center"
     },
 
     titleContainer: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center"
     },
 
     webviewContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 3,
-
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 3
     },
 
     buttonContainer: {
-      justifyContent: 'center',
-      flex: 1,
+      justifyContent: "center",
+      flex: 1
     },
 
     logo: {
       width: 200,
-      height: 200,
+      height: 200
     },
 
     picker: {
-      width: 175,
-    },
+      width: 175
+    }
   },
   // Responsive styles
   {
@@ -161,4 +188,5 @@ const styles = MediaQueryStyleSheet.create(
         marginRight: 50
       }
     }
-  });
+  }
+);
