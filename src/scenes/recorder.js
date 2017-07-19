@@ -75,7 +75,7 @@ class Recorder extends Component {
       <View style={styles.container}>
         <View style={styles.webviewContainer}>
           <WebView
-            source={{ uri: "https://daos-84628.firebaseapp.com/neurodoro.html" }}
+            source={{ uri: "https://daos-84628.firebaseapp.com" }}
             style={{ width: 350 }}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
