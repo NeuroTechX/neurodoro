@@ -67,6 +67,10 @@ class Recorder extends Component {
       console.log("nan detected");
       difficulty = 0;
     }
+    if (_.isNaN(performance)) {
+      console.log("nan detected");
+      performance = 0;
+    }
     MuseRecorder.sendTaskInfo(difficulty, performance);
   };
 
