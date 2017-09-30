@@ -81,6 +81,7 @@ class Recorder extends Component {
           <WebView
             source={{ uri: "https://daos-84628.firebaseapp.com" }}
             style={{ width: 350 }}
+            scalePageToFit={true}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
             domStorageEnabled={true}

@@ -205,7 +205,7 @@ export default class ConnectorWidget extends Component {
           <View style={styles.container}>
             <Text style={styles.noMuses}>No connected Muse</Text>
             <WhiteButton onPress={() => this.getAndConnectToDevice()}>
-              SEARCH
+              Search
             </WhiteButton>
           </View>
         );
@@ -217,7 +217,7 @@ export default class ConnectorWidget extends Component {
               Bluetooth appears to be disabled!
             </Text>
             <WhiteButton onPress={() => this.getAndConnectToDevice()}>
-              SEARCH
+              Search
             </WhiteButton>
           </View>
         );
@@ -302,7 +302,7 @@ const styles = MediaQueryStyleSheet.create(
       fontFamily: "Roboto",
       fontWeight: "700",
       fontSize: 30,
-      color: colors.malachite
+      color: colors.tomato
     },
 
     disconnected: {
