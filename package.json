@@ -7,6 +7,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"eslint-plugin-react-native": "^3.1.0",
 		"lodash": "^4.17.4",
 		"lottie-react-native": "^1.1.1",
 		"react": "~15.4.0",
@@ -23,8 +24,11 @@
 		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
+		"babel-eslint": "^8.0.1",
 		"babel-jest": "19.0.0",
 		"babel-preset-react-native": "1.9.1",
+		"eslint": "^4.8.0",
+		"eslint-plugin-react": "^7.4.0",
 		"jest": "19.0.2",
 		"react-test-renderer": "~15.4.0"
 	},

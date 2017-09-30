@@ -5,28 +5,36 @@ import { ActionConst } from 'react-native-router-flux';
 import config from './config';
 import {
   SET_CONNECTION_STATUS,
-} from './constants';
+  SET_MUSE_INFO,
+  SET_AVAILABLE_MUSES
+} from './actionTypes';
 
 const initialState = {
-  connectionStatus: config.connectionStatus.DISCONNECTED,
-  availableMuses: false,
+  connectionStatus: config.connectionStatus.NOT_YET_CONNECTED,
+  availableMuses: [],
+  museInfo: {},
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // focus action is dispatched when a new screen comes into focus
-    case ActionConst.FOCUS:
-
-      return {
-        ...state,
-        scene: action.scene
-      };
 
     case SET_CONNECTION_STATUS:
-
       return {
         ...state,
-        connectionStatus: action.payload
+        connectionStatus: action.payload,
+      };
+
+      case SET_AVAILABLE_MUSES:
+      return {
+        ...state,
+        availableMuses: action.payload,
+      };
+
+      case SET_MUSE_INFO:
+      return {
+        ...state,
+        museInfo: action.payload
       };
 
     // ...other actions
