@@ -1,0 +1,10 @@
+TODO
+
+update data_prep.py
+accuracy metric is broken
+separate train, valid, test set
+Understand and verify Loss function is good for the task
+Understand and verify Optimizer is good for the task
+be able to create model checkpoints
+tensorboard summaries
+
