@@ -65,7 +65,7 @@ raw = (RawArray(data=data, info=info))
 raw.filter(2, 50, method='iir')
 
 ## Plot the PSD of the EEG data just to make sure it looks alright
-raw.plot_psd(picks=[1]);
+#raw.plot_psd(picks=[2]);
 
 from mne import make_fixed_length_events, Epochs
 
@@ -76,7 +76,7 @@ event = make_fixed_length_events(raw, 1, duration=0.5)
 epochs = Epochs(raw, event, tmin=0, tmax=4, preload=True)
 
 def difficulty_class(diff_perf):
-    if diff_perf[0] < 60 and diff_perf[1] < 60:
+    if diff_perf[0] < 30 and diff_perf[1] < 70 and diff_perf[1] > 20:
         return [1,0]
     else:
         return [0,1]
@@ -92,6 +92,11 @@ print(X.shape, y.shape)
 covs = Covariances(estimator='lwf').fit_transform(X)
 tans = TangentSpace().fit_transform(covs)
 
-output_data = pd.DataFrame(np.concatenate((y, tans), axis=1))
+output_data = np.concatenate((y, tans), axis=1)
 
-output_data.to_csv('/Users/joshharris/neurodoro/classifier/neural_nets/juniper/data/tangent_space_eeg.csv', header=False, index=False)
+split = int(len(output_data) / 10)
+train = pd.DataFrame(output_data[:len(output_data)-split,:])
+valid = pd.DataFrame(output_data[len(output_data)-split:,:])
+
+train.to_csv('/Users/joshharris/neurodoro/classifier/neural_nets/juniper/data/training_eeg.csv', header=False, index=False)
+valid.to_csv('/Users/joshharris/neurodoro/classifier/neural_nets/juniper/data/valid_eeg.csv', header=False, index=False)

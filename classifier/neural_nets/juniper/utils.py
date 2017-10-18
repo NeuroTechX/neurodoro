@@ -6,12 +6,10 @@ import numpy as np
 
 
 class BatchLoader():
-    def __init__(self, data_dir, batch_size, seq_length):
+    def __init__(self, input_file, batch_size, seq_length):
         self.data_dir = data_dir
         self.batch_size = batch_size
         self.seq_length = seq_length
-
-        input_file = os.path.join(data_dir, "tangent_space_eeg.csv")
         
         self.preprocess(input_file)
         self.create_batches()
@@ -33,11 +31,11 @@ class BatchLoader():
 
         self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]
         batched_data = self.tensor.reshape(-1, self.seq_length, 12)
-        xdata = batched_data[:,:,2:12]
-        ydata = batched_data[:,-1,0:2]
-        self.x_batches = np.array_split(xdata,
+        self.xdata = batched_data[:,:,2:12]
+        self.ydata = batched_data[:,-1,0:2]
+        self.x_batches = np.array_split(self.xdata,
                                   self.num_batches, 0)
-        self.y_batches = np.array_split(ydata,
+        self.y_batches = np.array_split(self.ydata,
                                   self.num_batches, 0)
 
     def next_batch(self):
@@ -47,3 +45,7 @@ class BatchLoader():
 
     def reset_batch_pointer(self):
         self.pointer = 0
+
+    def get_x_and_y(self):
+        x, y = self.xdata, self.ydata
+        return x, y

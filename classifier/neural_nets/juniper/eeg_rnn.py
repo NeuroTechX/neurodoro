@@ -19,7 +19,7 @@ sess = tf.InteractiveSession()
 
 # Training Parameters
 learning_rate = 0.001
-epochs = 10000
+epochs = 2000
 batch_size = 5
 display_step = 100
 
@@ -30,7 +30,8 @@ num_hidden = 64 # hidden layer num of features
 num_classes = 2 # distracted or concentrated
 
 # Initialize data feed
-loader = BatchLoader('data', batch_size, timesteps) 
+train_loader = BatchLoader('data/train_eeg.csv', batch_size, timesteps) 
+valid_loader = BatchLoader('data/test_eeg.csv', batch_size, timesteps)
 
 # tf Graph input
 X = tf.placeholder("float", [batch_size, timesteps, num_imput])
@@ -79,7 +80,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 def print_eval():
     print("pred: " + str(sess.run(prediction, feed_dict={X: batch_x, Y: batch_y})))
     print("Y: " + str(sess.run(Y, feed_dict={X: batch_x, Y: batch_y})))
-    print("epoch accuracy: " + str(sum(epoch_accuracy) / loader.num_batches))
+    print("epoch accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))
 #    print("outputs: " + str(sess.run(outputs, feed_dict={X: batch_x, Y: batch_y })))
 #    print("argmax_pred: " + str(tf.argmax(prediction, 1).eval()))
 #    print("argmax_Y: " + str(tf.argmax(Y, 1).eval()))
@@ -97,9 +98,9 @@ with tf.Session() as sess:
 
     for e in range(epochs):
         epoch_accuracy = []
-        loader.reset_batch_pointer()
-        for b in range(loader.num_batches):
-            batch_x, batch_y = loader.next_batch()
+        train_loader.reset_batch_pointer()
+        for b in range(train_loader.num_batches):
+            batch_x, batch_y = train_loader.next_batch()
             sess.run(train_op, feed_dict={X: batch_x, Y: batch_y})
             batch_acc = sess.run(accuracy, feed_dict={X:batch_x, Y:batch_y})
             epoch_accuracy.append(batch_acc)
@@ -116,4 +117,7 @@ with tf.Session() as sess:
     
     print("Optimization Finished!")
 
-    # Calculate test accuracy
+    # Calculate validation accuracy
+    valid_x, valid_y = valid_loader.get_x_and_y()
+    vloss, vacc = sess.run([loss_op, accuracy], feed_dict={X: valid_x, Y: valid_y})
+    print("Validation Loss= " + vloss + " and Accuracy= " + vacc)
