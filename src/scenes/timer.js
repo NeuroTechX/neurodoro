@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { AppState, StyleSheet, Text, View, Image } from "react-native";
+import {
+  AppState,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  NativeEventEmitter,
+  NativeModules
+} from "react-native";
 import { Actions } from "react-native-router-flux";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
@@ -18,6 +26,7 @@ import { MediaQueryStyleSheet } from "react-native-responsive";
 import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
+import MuseConcentrationTracker from "../modules/MuseConcentrationTracker";
 import TensorFlowModule from "../modules/TensorFlow";
 import MuseListener from "../modules/MuseRecorder";
 
@@ -60,6 +69,7 @@ class Timer extends Component {
     this.RESET = "reset";
 
     this.state = {
+      score: 0,
       menuVisible: false,
       timeOnClock: 0,
       timer: this.PAUSED,
@@ -74,6 +84,17 @@ class Timer extends Component {
     AppState.addEventListener("change", appstate => {
       this.setState({ appState: appstate });
     });
+    if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
+      const scoreListener = new NativeEventEmitter(NativeModules.MuseConcentrationTracker);
+      this.predictSubscription = scoreListener.addListener(
+        "CONCENTRATION_SCORE",
+        score => {
+          this.setState({
+            score: score
+          });
+        }
+      );
+    }
     this.configureTimer();
   }
 
@@ -86,6 +107,10 @@ class Timer extends Component {
 
   // Instantiates a timer that will update the timeOnClock state every 1 second
   configureTimer() {
+    if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
+      MuseConcentrationTracker.init();
+    }
+
     this.TIMER_ID = BackgroundTimer.setInterval(() => {
       let {
         timeOnClock,
@@ -134,12 +159,18 @@ class Timer extends Component {
   }
 
   startTimer = () => {
+    if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
+      MuseConcentrationTracker.startTracking();
+    }
     this.setState({
       timer: this.PLAYING
     });
   };
 
   stopTimer = () => {
+    if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
+      MuseConcentrationTracker.stopTracking();
+    }
     this.setState({
       timer: this.PAUSED
     });
@@ -243,6 +274,7 @@ class Timer extends Component {
         </View>
 
         <View style={styles.spacerContainer}>
+          <Text style={styles.title}>{this.state.score}</Text>
           {this.renderText()}
         </View>
 
@@ -250,7 +282,6 @@ class Timer extends Component {
           onClose={(workTime, breakTime) => this.closeMenu(workTime, breakTime)}
           visible={this.state.menuVisible}
         />
-
       </View>
     );
   }
@@ -282,7 +313,7 @@ const styles = MediaQueryStyleSheet.create(
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      margin: 50,
+      margin: 50
     },
 
     menuContainer: {
