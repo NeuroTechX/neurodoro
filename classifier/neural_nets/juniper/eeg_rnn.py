@@ -19,7 +19,7 @@ sess = tf.InteractiveSession()
 
 # Training Parameters
 learning_rate = 0.001
-epochs = 100
+epochs = 2000
 batch_size = 5
 display_step = 100
 

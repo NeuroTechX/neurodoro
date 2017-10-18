@@ -1,10 +1,6 @@
 TODO
 
- - pyriemann not working with Python 3?
- - sess.run on test data
- - how to properly use validation in this case?
+ - use window on input: window(t) = [x(t-window size), x(t)] and label = y(t)
  - will we need droupout? probably will help
- - Understand and verify Loss function is good for the task
- - Understand and verify Optimizer is good for the task
  - be able to create model checkpoints
  - tensorboard summaries
