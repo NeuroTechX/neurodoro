@@ -30,8 +30,8 @@ num_hidden = 64 # hidden layer num of features
 num_classes = 2 # distracted or concentrated
 
 # Initialize data feed
-train_loader = BatchLoader('data/train_eeg.csv', batch_size, timesteps) 
-valid_loader = BatchLoader('data/test_eeg.csv', batch_size, timesteps)
+train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps) 
+valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps)
 
 # tf Graph input
 X = tf.placeholder("float", [batch_size, timesteps, num_imput])
@@ -104,7 +104,7 @@ with tf.Session() as sess:
             sess.run(train_op, feed_dict={X: batch_x, Y: batch_y})
             batch_acc = sess.run(accuracy, feed_dict={X:batch_x, Y:batch_y})
             epoch_accuracy.append(batch_acc)
-            if b == 229 and e % display_step == 0:        
+            if b == train_loader.num_batches-1  and e % display_step == 0:        
                 # Calculate epoch loss and accuracy
                 loss, acc = sess.run([loss_op, accuracy], feed_dict={X: batch_x, Y: batch_y})
 

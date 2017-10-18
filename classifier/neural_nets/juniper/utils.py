@@ -7,7 +7,7 @@ import numpy as np
 
 class BatchLoader():
     def __init__(self, input_file, batch_size, seq_length):
-        self.data_dir = data_dir
+        self.input_file = input_file
         self.batch_size = batch_size
         self.seq_length = seq_length
         
