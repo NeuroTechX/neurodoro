@@ -19,7 +19,7 @@ sess = tf.InteractiveSession()
 
 # Training Parameters
 learning_rate = 0.001
-epochs = 2000
+epochs = 100
 batch_size = 5
 display_step = 100
 
@@ -118,6 +118,11 @@ with tf.Session() as sess:
     print("Optimization Finished!")
 
     # Calculate validation accuracy
-    valid_x, valid_y = valid_loader.get_x_and_y()
-    vloss, vacc = sess.run([loss_op, accuracy], feed_dict={X: valid_x, Y: valid_y})
-    print("Validation Loss= " + vloss + " and Accuracy= " + vacc)
+    
+    validation_accuracy = []
+    for v in range(valid_loader.num_batches):
+        valid_x, valid_y = valid_loader.next_batch()
+        valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
+        validation_accuracy.append(valid_acc)
+    
+    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches))
