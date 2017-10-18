@@ -22,7 +22,7 @@ class BatchLoader():
         self.tensor = self.tensor.reshape(len(self.tensor), 1, 12)
 
     def create_batches(self):
-        self.num_batches = int(self.tensor.size / (self.batch_size *
+        self.num_batches = int(len(self.tensor) / (self.batch_size *
                                                    self.seq_length))
         print("num_batches: %s" % (self.num_batches))
 
@@ -34,7 +34,7 @@ class BatchLoader():
         self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]
         batched_data = self.tensor.reshape(-1, self.seq_length, 12)
         xdata = batched_data[:,:,2:12]
-        ydata = batched_data[:,4,0:2]
+        ydata = batched_data[:,-1,0:2]
         self.x_batches = np.array_split(xdata,
                                   self.num_batches, 0)
         self.y_batches = np.array_split(ydata,

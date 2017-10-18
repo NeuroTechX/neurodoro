@@ -1,10 +1,16 @@
 TODO
 
-update data_prep.py
-accuracy metric is broken
-separate train, valid, test set
-Understand and verify Loss function is good for the task
-Understand and verify Optimizer is good for the task
-be able to create model checkpoints
-tensorboard summaries
-
+ - test current progress
+ - move testing progress out of notebook onto server
+ - test server
+ - copy muse-data into juniper
+ - test & fix data_prep.py
+  - leave out a session for model validation and testingcd 
+  - likely need to capture more sessions
+ - sess.run on test data
+ - how to properly use validation in this case?
+ - will we need droupout? probably will help
+ - Understand and verify Loss function is good for the task
+ - Understand and verify Optimizer is good for the task
+ - be able to create model checkpoints
+ - tensorboard summaries
