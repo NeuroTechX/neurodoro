@@ -6,7 +6,7 @@ import config from './config';
 import {
   SET_CONNECTION_STATUS,
   SET_MUSE_INFO,
-  SET_AVAILABLE_MUSES
+  SET_AVAILABLE_MUSES,
 } from './actionTypes';
 
 const initialState = {
@@ -34,7 +34,8 @@ export default function reducer(state = initialState, action = {}) {
       case SET_MUSE_INFO:
       return {
         ...state,
-        museInfo: action.payload
+        museInfo: action.payload,
+        isUsingMuse: true
       };
 
     // ...other actions

@@ -8,14 +8,15 @@ public class CircularBuffer {
 
     // ------------------------------------------------------------------------
     // Variables
-    private int bufferLength;
-    private int nbCh;
-    private int index;
-    private int pts;
-    private double[][] buffer;
+    public int bufferLength;
+    public int nbCh;
+    public int index;
+    public int pts;
+    public double[][] buffer;
 
     // ------------------------------------------------------------------------
     // Constructor
+
     public CircularBuffer(int bufferLength, int nChannels) {
         this.bufferLength = bufferLength;
         this.nbCh = nChannels;
@@ -23,6 +24,7 @@ public class CircularBuffer {
         pts = 0;
         buffer = new double[bufferLength][nbCh];
     }
+
 
     // ------------------------------------------------------------------------
     // Methods
@@ -110,7 +112,7 @@ public class CircularBuffer {
 
     public int getIndex() { return index; }
 
-    private int mod(int a, int b) {
+    public int mod(int a, int b) {
         // Modulo operation that always return a positive number
         int c = a % b;
         return (c < 0) ? c + b : c;

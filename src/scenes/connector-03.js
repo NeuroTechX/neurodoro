@@ -28,7 +28,8 @@ import Button from '../components/Button';
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.Recorder}>Okay</Button>
+          <Button onPress={Actions.Recorder}>Collect Data</Button>
+          <Button onPress={Actions.Timer}>Use the Timer</Button>
         </View>
       </View>
     );
