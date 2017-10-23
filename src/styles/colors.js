@@ -4,6 +4,7 @@
 export const tomato = '#ff6347';
 export const grey = '#414141';
 export const lightGrey = '#cdcdcd';
+export const black = '#484848';
 export const green = '#32CD32';
 export const white = '#fff';
 export const mariner = '#2c85b9'

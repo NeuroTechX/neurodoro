@@ -1,18 +1,19 @@
 // reducer.js
 // Our Redux reducer. Handles the routing actions produced by react-native-router-flux as well as Muse connection actions
 
-import { ActionConst } from 'react-native-router-flux';
 import config from './config';
 import {
   SET_CONNECTION_STATUS,
   SET_MUSE_INFO,
   SET_AVAILABLE_MUSES,
+  SET_DESTINATION
 } from './actionTypes';
 
 const initialState = {
   connectionStatus: config.connectionStatus.NOT_YET_CONNECTED,
   availableMuses: [],
   museInfo: {},
+  destination: ''
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -37,6 +38,13 @@ export default function reducer(state = initialState, action = {}) {
         museInfo: action.payload,
         isUsingMuse: true
       };
+
+      case SET_DESTINATION:
+      console.log('setting destination to ' + action.payload)
+      return {
+        ...state,
+        destination: action.payload
+      }
 
     // ...other actions
 

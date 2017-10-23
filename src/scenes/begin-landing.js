@@ -1,95 +1,136 @@
-import React, { Component } from 'react';
-import {
-  Animated,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  StatusBar
-} from 'react-native';
-import{
-  Actions,
-}from 'react-native-router-flux';
-import { MediaQueryStyleSheet } from 'react-native-responsive';
-import * as colors from '../styles/colors';
-
+import React, { Component } from "react";
+import { Text, View, Image, StatusBar, Alert } from "react-native";
+import { Actions } from "react-native-router-flux";
+import { MediaQueryStyleSheet } from "react-native-responsive";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { connectAndGo } from "../redux/actions";
+import * as colors from "../styles/colors";
 
 // Components. For JS UI elements
-import Button from '../components/Button';
+import BigButton from "../components/BigButton";
+import WhiteButton from "../components/WhiteButton";
 
-export default class Landing extends Component {
+function mapStateToProps(state) {
+  return {
+    destination: state.destination
+  };
+}
+
+// Binds actions to component's props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      connectAndGo,
+    },
+    dispatch
+  );
+}
+
+class Landing extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
     return (
-      <View style={styles.container} resizeMode='stretch'>
-        <StatusBar backgroundColor={colors.tomato}/>
+      <View style={styles.container} resizeMode="stretch">
+        <StatusBar backgroundColor={colors.tomato} />
         <View style={styles.titleContainer}>
-          <Image source={require('../assets/logo_final.png')} style={styles.logo} resizeMode='stretch'/>
+          <Image
+            source={require("../assets/logo_final.png")}
+            style={styles.logo}
+            resizeMode="stretch"
+          />
           <Text style={styles.title}>NEURODORO</Text>
         </View>
-        <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.Timer}>Use the timer</Button>
-          <Button onPress={Actions.ConnectorOne}>Collect data</Button>
+          <BigButton
+            fontSize={30}
+            onPress={() =>
+              Alert.alert(
+                "You down with EEG?",
+                "Would you like to use the Muse to try and recommend when to take a break?",
+                [
+                  {
+                    text: "No EEG, just the timer",
+                    onPress: Actions.Timer
+                  },
+                  { text: "OK", onPress: () => this.props.connectAndGo("TIMER") }
+                ],
+                { cancelable: true }
+              )}
+          >
+            Use the timer
+          </BigButton>
+          <WhiteButton onPress={() => this.props.connectAndGo("RECORDER")}>
+            Collect data{" "}
+            <Image
+              source={require("../assets/beaker2.png")}
+              style={styles.beaker}
+              resizeMode="stretch"
+            />
+          </WhiteButton>
         </View>
       </View>
     );
   }
-
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
 
 const styles = MediaQueryStyleSheet.create(
   {
     // Base styles
     body: {
-      fontFamily: 'OpenSans-Regular',
+      fontFamily: "OpenSans-Regular",
       fontSize: 15,
       margin: 20,
       color: colors.grey,
-      textAlign: 'center'
+      textAlign: "center"
     },
 
     title: {
-      textAlign: 'center',
+      textAlign: "center",
       margin: 15,
       lineHeight: 50,
       color: colors.grey,
-      fontFamily: 'YanoneKaffeesatz-Regular',
-      fontSize: 50,
+      fontFamily: "YanoneKaffeesatz-Regular",
+      fontSize: 50
     },
 
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 50,
+      justifyContent: "center",
+      alignItems: "center",
+      margin: 50
     },
 
     titleContainer: {
       flex: 2,
-      justifyContent: 'flex-start',
+      justifyContent: "flex-start"
     },
 
     spacerContainer: {
-      justifyContent: 'center',
-      flex: 1,
+      justifyContent: "center",
+      flex: 1
     },
 
     buttonContainer: {
-      justifyContent: 'space-between',
-      flex: 1,
-
+      justifyContent: "space-between",
+      flex: 1.5
     },
 
     logo: {
       width: 200,
-      height: 200,
+      height: 200
     },
+
+    beaker: {
+      width: 55,
+      height: 55
+    }
   },
   // Responsive styles
   {
@@ -100,4 +141,5 @@ const styles = MediaQueryStyleSheet.create(
         marginRight: 50
       }
     }
-  });
+  }
+);

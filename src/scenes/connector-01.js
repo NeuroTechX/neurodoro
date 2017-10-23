@@ -29,7 +29,7 @@ import Button from '../components/Button';
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.ConnectorTwo}>Okay</Button>
+          <Button onPress={Actions.ConnectorTwo}>It's on</Button>
         </View>
       </View>
     );

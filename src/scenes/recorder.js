@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { WebView, StyleSheet, Text, View, Image, Picker } from "react-native";
-import { Actions } from "react-native-router-flux";
+import { WebView, Text, View, Picker, Dimensions } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { MediaQueryStyleSheet } from "react-native-responsive";
@@ -22,11 +21,13 @@ function mapStateToProps(state) {
   };
 }
 
+const width = Dimensions.get('window').width;
+
 class Recorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataType: config.dataType.DENOISED_PSD,
+      dataType: config.dataType.RAW_EEG,
       promptVisible: true,
       userName: "",
       isRecording: false
@@ -62,7 +63,6 @@ class Recorder extends Component {
   onMessage = event => {
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
-    console.log("difficulty " + difficulty, " performance " + performance);
     if (_.isNaN(difficulty)) {
       console.log("nan detected");
       difficulty = 0;
@@ -71,7 +71,9 @@ class Recorder extends Component {
       console.log("nan detected");
       performance = 0;
     }
+    if(this.state.isRecording){
     MuseRecorder.sendTaskInfo(difficulty, performance);
+  }
   };
 
   render() {
@@ -80,7 +82,7 @@ class Recorder extends Component {
         <View style={styles.webviewContainer}>
           <WebView
             source={{ uri: "https://daos-84628.firebaseapp.com" }}
-            style={{ width: 350 }}
+            style={{ width: width, backgroundColor: 'black' }}
             scalePageToFit={true}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
@@ -165,6 +167,7 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     webviewContainer: {
+      backgroundColor: 'purple',
       alignItems: "center",
       justifyContent: "center",
       flex: 3

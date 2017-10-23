@@ -8,15 +8,12 @@ import {
   NativeEventEmitter,
   NativeModules
 } from "react-native";
-import { Actions } from "react-native-router-flux";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
 import * as Animatable from "react-native-animatable";
-import Animation from "lottie-react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 import config from "../redux/config";
-import Button from "../components/Button";
 import Clock from "../components/Clock";
 import StartButton from "../components/StartButton";
 import MenuIcon from "../components/MenuIcon";
@@ -57,8 +54,9 @@ const ENCOURAGEMENTS = [
   "Laser-like focus",
   "Intense concentration!",
   "Such work ethic",
-  "You are strong and bright"
-];
+  "You are strong and bright",
+  "By Jove, look at that",
+  "Unreal!"]
 
 class Timer extends Component {
   constructor(props) {
@@ -81,9 +79,7 @@ class Timer extends Component {
   }
 
   componentDidMount() {
-    AppState.addEventListener("change", appstate => {
-      this.setState({ appState: appstate });
-    });
+    AppState.addEventListener("change", this.handleAppStateChange);
     if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
       const scoreListener = new NativeEventEmitter(NativeModules.MuseConcentrationTracker);
       this.predictSubscription = scoreListener.addListener(
@@ -99,10 +95,14 @@ class Timer extends Component {
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener("change", appstate => {
-      this.setState({ appState: appstate });
-    });
+    AppState.removeEventListener("change", this.handleAppStateChange);
     BackgroundTimer.clearInterval(this.TIMER_ID);
+    this.predictSubscription.cancel();
+  }
+
+  handleAppStateChange = (nextState) => {
+    console.log('appState change detected');
+    this.setState({ appState: nextState });
   }
 
   // Instantiates a timer that will update the timeOnClock state every 1 second
@@ -246,6 +246,12 @@ class Timer extends Component {
     }
   }
 
+  renderScore(){
+    if(this.props.connectionStatus == config.connectionStatus.CONNECTED){
+      return <Text style={styles.title}>{this.state.score}</Text>
+    }
+  }
+
   closeMenu(workTime, breakTime) {
     BackgroundTimer.clearInterval(this.TIMER_ID);
     this.setState({
@@ -272,9 +278,9 @@ class Timer extends Component {
         <View style={styles.titleContainer}>
           {this.renderDisplay()}
         </View>
-
+        {this.renderScore()}
         <View style={styles.spacerContainer}>
-          <Text style={styles.title}>{this.state.score}</Text>
+
           {this.renderText()}
         </View>
 

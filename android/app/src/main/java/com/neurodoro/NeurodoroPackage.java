@@ -7,7 +7,6 @@ import com.facebook.react.uimanager.ViewManager;
 import com.neurodoro.muse.ConnectorModule;
 import com.neurodoro.muse.MuseConcentrationTracker;
 import com.neurodoro.muse.MuseRecorder;
-import com.neurodoro.tensorflow.TensorFlowModule;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +21,6 @@ public class NeurodoroPackage implements com.facebook.react.ReactPackage {
     // Register Native Modules to JS
     public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
         return Arrays.<NativeModule>asList(
-                // new TensorFlowModule(reactApplicationContext),
                 new ConnectorModule(reactApplicationContext),
                 new MuseRecorder(reactApplicationContext),
                 new MuseConcentrationTracker(reactApplicationContext)

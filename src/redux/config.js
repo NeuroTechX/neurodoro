@@ -17,5 +17,9 @@ export default {
     DENOISED_PSD: 'DENOISED_PSD',
     RAW_EEG: 'RAW_EEG',
     FILTERED_EEG: 'FILTERED_EEG',
+  },
+  destinations: {
+    TIMER: "TIMER",
+    RECORDER: "RECORDER",
   }
 }

@@ -16,8 +16,7 @@ import {
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import config from "../../redux/config";
 import Connector from "../../modules/Connector";
-import WhiteButton from "../WhiteButton";
-import Button from "../SmallButton.js";
+import Button from "../Button";
 import * as colors from "../../styles/colors";
 
 class MusesPopUp extends Component {
@@ -36,7 +35,7 @@ class MusesPopUp extends Component {
         <View
           style={
             this.props.selectedMuse === index
-              ? { backgroundColor:  colors.tomato}
+              ? { backgroundColor: colors.tomato }
               : {}
           }
         >
@@ -88,18 +87,16 @@ class MusesPopUp extends Component {
               })}
             </ScrollView>
             <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 1 }}>
-                <Button
+              <View style={styles.buttonWrapper}>
+                <Button fontSize={18}
                   onPress={() =>
                     Connector.connectToMuseWithIndex(this.props.selectedMuse)}
                 >
-                  CONNECT
+                  Connect
                 </Button>
               </View>
-              <View style={{ flex: 1 }}>
-                <Button onPress={this.props.onClose}>
-                  CLOSE
-                </Button>
+              <View style={styles.buttonWrapper}>
+                <Button fontSize={18} onPress={this.props.onClose}>Close</Button>
               </View>
             </View>
           </View>
@@ -204,21 +201,15 @@ export default class ConnectorWidget extends Component {
         return (
           <View style={styles.container}>
             <Text style={styles.noMuses}>No connected Muse</Text>
-            <WhiteButton onPress={() => this.getAndConnectToDevice()}>
-              Search
-            </WhiteButton>
+            <Button onPress={() => this.getAndConnectToDevice()}>Search</Button>
           </View>
         );
 
       case config.connectionStatus.BLUETOOTH_DISABLED:
         return (
           <View style={styles.container}>
-            <Text style={styles.noMuses}>
-              Bluetooth appears to be disabled!
-            </Text>
-            <WhiteButton onPress={() => this.getAndConnectToDevice()}>
-              Search
-            </WhiteButton>
+            <Text style={styles.noMuses}>Bluetooth is disabled</Text>
+            <Button onPress={() => this.getAndConnectToDevice()}>Search</Button>
           </View>
         );
 
@@ -264,7 +255,7 @@ export default class ConnectorWidget extends Component {
         return (
           <View style={styles.container}>
             <View style={styles.connectingContainer}>
-              <Text style={styles.connected}>Connected</Text>
+              <Text style={styles.connecting}>Connected: {this.props.availableMuses[this.state.selectedMuse].name}</Text>
             </View>
           </View>
         );
@@ -295,14 +286,7 @@ const styles = MediaQueryStyleSheet.create(
       justifyContent: "space-around",
       padding: 20,
       height: 70,
-      width: 240
-    },
-
-    connected: {
-      fontFamily: "Roboto",
-      fontWeight: "700",
-      fontSize: 30,
-      color: colors.tomato
+      width: 260
     },
 
     disconnected: {
@@ -313,9 +297,9 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     noMuses: {
-      fontFamily: "Roboto",
+      fontFamily: "OpenSans-Regular",
       fontSize: 20,
-      color: colors.white,
+      color: colors.black,
       textAlign: "center"
     },
 
@@ -379,6 +363,11 @@ const styles = MediaQueryStyleSheet.create(
     refreshButton: {
       width: 30,
       height: 30
+    },
+
+    buttonWrapper: {
+      flex: 1,
+      margin: 10,
     },
 
     icon: {

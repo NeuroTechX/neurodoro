@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
 import { MediaQueryStyleSheet } from "react-native-responsive";
+import config from '../redux/config';
 import * as colors from "../styles/colors";
-
-import config from "../redux/config";
 
 // Components. For JS UI elements
 import Button from "../components/Button";
 import ConnectorWidget from "../components/ConnectorWidget";
 
-// Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
+
 function mapStateToProps(state) {
   return {
     connectionStatus: state.connectionStatus

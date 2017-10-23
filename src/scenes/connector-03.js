@@ -9,17 +9,26 @@ import{
 }from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { MediaQueryStyleSheet }  from 'react-native-responsive';
+import config from '../redux/config';
 import * as colors from '../styles/colors';
 
 // Components. For JS UI elements
 import Button from '../components/Button';
 
- export default class ConnectorThree extends Component {
+function mapStateToProps(state) {
+  return {
+    destination: state.destination
+  };
+}
+
+ class ConnectorThree extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    console.log(this.props.destination);
+  
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -28,13 +37,14 @@ import Button from '../components/Button';
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={Actions.Recorder}>Collect Data</Button>
-          <Button onPress={Actions.Timer}>Use the Timer</Button>
+          <Button onPress={this.props.destination == config.destinations.TIMER ? Actions.Timer : Actions.Recorder}>Let's get started</Button>
         </View>
       </View>
     );
   }
 }
+
+export default connect(mapStateToProps)(ConnectorThree);
 
 const styles = MediaQueryStyleSheet.create(
   {
