@@ -19,22 +19,22 @@ sess = tf.InteractiveSession()
 
 # Training Parameters
 learning_rate = 0.001
-epochs = 2000
-batch_size = 5
+epochs = 10000
+batch_size = 6
 display_step = 100
 
 # Network Parameters
-num_imput = 10 # Number of dimension in tangent space via pyriemann
-timesteps = 2 # two two-second eeg epochs per sequence
-num_hidden = 64 # hidden layer num of features
+num_features = 10 # Number of dimensions in tangent space produced by pyriemann
+timesteps = 5 # Number of eeg epochs per sequence
+num_hidden = 256 # hidden layer num of features
 num_classes = 2 # distracted or concentrated
 
 # Initialize data feed
-train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps) 
-valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps)
+train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps, num_features, num_classes)
+valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps, num_features, num_classes)
 
 # tf Graph input
-X = tf.placeholder("float", [batch_size, timesteps, num_imput])
+X = tf.placeholder("float", [batch_size, timesteps, num_features])
 Y = tf.placeholder("float", [batch_size, 2])
 
 # Define weights

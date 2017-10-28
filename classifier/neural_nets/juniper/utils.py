@@ -6,38 +6,50 @@ import numpy as np
 
 
 class BatchLoader():
-    def __init__(self, input_file, batch_size, seq_length):
+    def __init__(self, input_file, batch_size, seq_length, num_features, num_classes):
         self.input_file = input_file
         self.batch_size = batch_size
         self.seq_length = seq_length
+        self.num_features = num_features
+        self.num_classes = num_classes
         
         self.preprocess(input_file)
+        self.sequence_windows()
         self.create_batches()
         self.reset_batch_pointer()
 
     def preprocess(self, input_file):
         self.tensor = np.genfromtxt(input_file, delimiter=",")
-        self.tensor = self.tensor.reshape(len(self.tensor), 1, 12)
+
+    def sequence_windows(self):
+        xdata = []
+        ydata = []
+        # For each eeg epoch, get seq_length previous epochs and store current label
+        for i in range(len(self.tensor)):
+            if i + self.seq_length < len(self.tensor):
+                t = i + self.seq_length
+                x = self.tensor[i:t,self.num_classes:self.num_classes + self.num_features]
+                y = self.tensor[t,0:self.num_classes]
+                xdata.append(x)
+                ydata.append(y)
+        self.xdata = np.array(xdata)
+        self.ydata = np.array(ydata)
+        print("x: " + str(self.xdata.shape) +  "    y: " + str(self.ydata.shape))
 
     def create_batches(self):
-        self.num_batches = int(len(self.tensor) / (self.batch_size *
-                                                   self.seq_length))
+        self.num_batches = int(len(self.xdata) / self.batch_size)
         print("num_batches: %s" % (self.num_batches))
 
         # When the data (tensor) is too small,
         # let's give them a better error message
         if self.num_batches == 0:
             assert False, "Not enough data. Make seq_length and batch_size small."
-
-        self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]
-        batched_data = self.tensor.reshape(-1, self.seq_length, 12)
-        self.xdata = batched_data[:,:,2:12]
-        self.ydata = batched_data[:,-1,0:2]
-        self.x_batches = np.array_split(self.xdata,
-                                  self.num_batches, 0)
-        self.y_batches = np.array_split(self.ydata,
-                                  self.num_batches, 0)
-
+        
+        self.xtrimmed = self.xdata[:self.num_batches * self.batch_size]
+        self.ytrimmed = self.ydata[:self.num_batches * self.batch_size]
+        self.x_batches = np.array_split(self.xtrimmed, self.num_batches, 0)
+        self.y_batches = np.array_split(self.ytrimmed, self.num_batches, 0)
+        
     def next_batch(self):
         x, y = self.x_batches[self.pointer], self.y_batches[self.pointer]
         self.pointer += 1

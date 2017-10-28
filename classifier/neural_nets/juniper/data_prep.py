@@ -33,7 +33,7 @@ d = pd.read_csv("data/muse-data/josh_sep_21_distracted_RawEEG0.csv", header=0, i
 e = pd.read_csv("data/muse-data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
 
 # Add them all together
-data = [a,b,c,d,e]
+data = [e]
 data = pd.concat(data, ignore_index=True)
 data = data[data.Difficulty > -200]
 data = data[data.Difficulty != 0]
@@ -76,7 +76,9 @@ event = make_fixed_length_events(raw, 1, duration=0.5)
 epochs = Epochs(raw, event, tmin=0, tmax=4, preload=True)
 
 def difficulty_class(diff_perf):
-    if diff_perf[0] < 30 and diff_perf[1] < 70 and diff_perf[1] > 20:
+    # This was our "distracted criteria
+    # if diff_perf[0] < 30 and diff_perf[1] < 70 and diff_perf[1] > 20:
+    if diff_perf[0] > 60:
         return [1,0]
     else:
         return [0,1]

@@ -1,6 +1,8 @@
 TODO
-
+ 
+ - revisit labelling strategy
  - use window on input: window(t) = [x(t-window size), x(t)] and label = y(t)
+ - Add LSTM layers? More neurons in layers?
  - will we need droupout? probably will help
  - be able to create model checkpoints
  - tensorboard summaries
