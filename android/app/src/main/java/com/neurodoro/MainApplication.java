@@ -20,6 +20,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   // Global singleton Muse
   public static Muse connectedMuse;
+  private static MainApplication singleton;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -39,6 +40,10 @@ public class MainApplication extends Application implements ReactApplication {
     }
   };
 
+  public static MainApplication getInstance(){
+    return singleton;
+  }
+
   @Override
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
@@ -48,5 +53,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    singleton = this;
   }
 }

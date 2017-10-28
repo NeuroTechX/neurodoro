@@ -7,11 +7,15 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.iid.InstanceID;
+//import com.neurodoro.cloud.CloudStorageHelper;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * Writes EEG data (either raw/filtered EEG or computed FFT) into a csv. Presents a toast when
@@ -33,6 +37,7 @@ public class EEGFileWriter {
     private int difficulty = 0;
     private int performance = 0;
     private String userName = "";
+    private boolean firstLine;
 
     // ---------------------------------------------------------------------------
     // Constructor
@@ -58,6 +63,7 @@ public class EEGFileWriter {
     // Internal methods
 
     public void initFile() {
+        firstLine = true;
         Log.w("FileWriter", "init file called");
         builder = new StringBuilder();
         builder.append("Timestamp (ms),");
@@ -66,19 +72,17 @@ public class EEGFileWriter {
         if(title.contains("PSD")) {
             builder.append("Channel,");
             for(int i=1; i<= nbFreqBins; i++) {
-                builder.append(i + " hz");
-                if (i < nbFreqBins) {
-                    builder.append(",");
-                }
+                builder.append(i + " hz,");
             }
         } else {
             for(int i=1; i<= 4; i++) {
-                builder.append("Channel " + i);
-                if (i < 5 - 1) {
-                    builder.append(",");
-                }
+                builder.append("Channel " + i + ",");
             }
         }
+
+        // Create unique Instance ID column
+        builder.append("Instance ID");
+
         builder.append("\n");
         makeToast();
         isRecording = true;
@@ -101,6 +105,9 @@ public class EEGFileWriter {
             if (j < data.length - 1) {
                 builder.append(",");
             }
+        }
+        if(firstLine == true){
+            builder.append("," + InstanceID.getInstance(context).getId());
         }
         builder.append("\n");
     }
@@ -126,6 +133,10 @@ public class EEGFileWriter {
                 if (i < data[j].length) {
                     builder.append(",");
                 }
+            }
+
+            if(firstLine == true){
+                builder.append("," + InstanceID.getInstance(context).getId());
             }
             builder.append("\n");
         }
@@ -181,6 +192,7 @@ public class EEGFileWriter {
     }
 
     public void sendData(File dataCSV) {
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.setType("application/csv");
@@ -188,6 +200,14 @@ public class EEGFileWriter {
         sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(sendIntent, "Export " +
                 "data to..."));
+
+        /*CloudStorageHelper cloudHelper = new CloudStorageHelper();
+        try {
+            cloudHelper.uploadFile("neurodoro-data", userName, Uri.fromFile(dataCSV));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
     }
 
     public boolean isRecording() {

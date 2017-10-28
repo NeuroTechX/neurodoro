@@ -127,12 +127,15 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
     // Thread management functions
 
     public void startThread() {
+        Log.w("Tracker", "startthread");
         dataThread = new HandlerThread("dataThread");
         dataThread.start();
         dataHandler = new Handler(dataThread.getLooper());
     }
 
     public void stopThread() {
+        Log.w("Tracker", "stopthread");
+
         if (dataHandler != null) {
 
             // Removes all runnables and things from the Handler
@@ -168,6 +171,8 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
         @Override
         public void run() {
             if (noisePresent(rawBuffer)) {
+                Log.w("ConcentrationTracker", "noise");
+
                 return;
             }
 
@@ -233,7 +238,7 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
         ClassifierDataListener() {
             if (samplingRate == 256) {
                 filterOn = true;
-                bandstopFilter = new Filter(samplingRate, "bandstop", 5, 55, 65);
+                bandstopFilter = new Filter(samplingRate, "bandstop", 5, 45, 55);
                 bandstopFiltState = new double[4][bandstopFilter.getNB()];
             }
             newData = new double[4];
@@ -266,5 +271,3 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
         }
     }
 }
-
-
