@@ -138,7 +138,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
             // If data will be filtered, create filters
             if(recorderDataType.contains("FILTERED")) {
                 Log.w("Listener", "Filter detected");
-                bandPassFilter = new Filter(samplingFreq, "bandpass", 4, 1, 50);
+                bandPassFilter = new Filter(samplingFreq, "bandpass", 4, 1, 40);
                 bandPassFiltState = new double[4][bandPassFilter.getNB()];
             }
         }
@@ -178,7 +178,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         DataListener() {
             if (appState.connectedMuse.isLowEnergy()) {
                 filterOn = true;
-                bandstopFilter = new Filter(256, "bandstop", 5, 55, 65);
+                bandstopFilter = new Filter(256, "bandstop", 5, 45, 55);
                 bandstopFiltState = new double[4][bandstopFilter.getNB()];
             }
             newData = new double[4];
@@ -285,5 +285,3 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         }
     }
 }
-
-

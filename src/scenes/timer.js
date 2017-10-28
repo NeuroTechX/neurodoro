@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import {
   AppState,
-  StyleSheet,
   Text,
   View,
-  Image,
   NativeEventEmitter,
-  NativeModules
+  NativeModules,
+  Animated
 } from "react-native";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
@@ -24,8 +23,6 @@ import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
 import MuseConcentrationTracker from "../modules/MuseConcentrationTracker";
-import TensorFlowModule from "../modules/TensorFlow";
-import MuseListener from "../modules/MuseRecorder";
 
 // Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
 function mapStateToProps(state) {
@@ -36,10 +33,10 @@ function mapStateToProps(state) {
 
 const Sound = require("react-native-sound");
 const breakSound = new Sound("jobs_done.mp3", Sound.MAIN_BUNDLE, error => {
-  console.log("sound error");
+  console.log("sound error: ", error);
 });
 const workSound = new Sound("level_up.mp3", Sound.MAIN_BUNDLE, error => {
-  console.log("sound error");
+  console.log("sound error: ", error);
 });
 
 const SECOND = 1000;
@@ -55,8 +52,9 @@ const ENCOURAGEMENTS = [
   "Intense concentration!",
   "Such work ethic",
   "You are strong and bright",
-  "By Jove, look at that",
-  "Unreal!"]
+  "Look at that",
+  "Unreal!"
+];
 
 class Timer extends Component {
   constructor(props) {
@@ -65,9 +63,10 @@ class Timer extends Component {
     this.PLAYING = "playing";
     this.PAUSED = "paused";
     this.RESET = "reset";
+    this.animatedScore = new Animated.Value(0);
 
     this.state = {
-      score: 0,
+      scoreBuffer: [],
       menuVisible: false,
       timeOnClock: 0,
       timer: this.PAUSED,
@@ -81,13 +80,21 @@ class Timer extends Component {
   componentDidMount() {
     AppState.addEventListener("change", this.handleAppStateChange);
     if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
-      const scoreListener = new NativeEventEmitter(NativeModules.MuseConcentrationTracker);
+      const scoreListener = new NativeEventEmitter(
+        NativeModules.MuseConcentrationTracker
+      );
       this.predictSubscription = scoreListener.addListener(
         "CONCENTRATION_SCORE",
         score => {
-          this.setState({
-            score: score
-          });
+          this.animatedScore.setValue(score);
+          if (this.state.timeOnClock >= 15 * MINUTE) {
+            this.setState({ scoreBuffer: this.state.scoreBuffer.push(score) });
+            if (this.state.scoreBuffer.length >= 30) {
+              this.state.scoreBuffer.shift();
+            }
+            if (this.state.scoreBuffer.reduce((a, b) => a + b) <= 75); // mean
+            this.setState({ workTime: this.state.workTime - 2 * MINUTE });
+          }
         }
       );
     }
@@ -97,13 +104,15 @@ class Timer extends Component {
   componentWillUnmount() {
     AppState.removeEventListener("change", this.handleAppStateChange);
     BackgroundTimer.clearInterval(this.TIMER_ID);
-    this.predictSubscription.cancel();
+    if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
+      this.predictSubscription.cancel();
+    }
   }
 
-  handleAppStateChange = (nextState) => {
-    console.log('appState change detected');
+  handleAppStateChange = nextState => {
+    console.log("appState change detected");
     this.setState({ appState: nextState });
-  }
+  };
 
   // Instantiates a timer that will update the timeOnClock state every 1 second
   configureTimer() {
@@ -112,20 +121,13 @@ class Timer extends Component {
     }
 
     this.TIMER_ID = BackgroundTimer.setInterval(() => {
-      let {
-        timeOnClock,
-        timer,
-        onBreak,
-        appState,
-        workTime,
-        breakTime
-      } = this.state;
+      let { timeOnClock, timer, onBreak, appState } = this.state;
       if (_.isEqual(timer, this.PLAYING)) {
         let nextTime = timeOnClock + SECOND;
         const timerState = (() => {
           if (
-            (nextTime >= workTime && !onBreak) ||
-            (nextTime >= breakTime && onBreak)
+            (nextTime >= this.state.workTime && !onBreak) ||
+            (nextTime >= this.state.breakTime && onBreak)
           ) {
             timer = this.PAUSED;
             nextTime = 0;
@@ -246,9 +248,26 @@ class Timer extends Component {
     }
   }
 
-  renderScore(){
-    if(this.props.connectionStatus == config.connectionStatus.CONNECTED){
-      return <Text style={styles.title}>{this.state.score}</Text>
+  renderScore() {
+    if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
+      const opacity = this.animatedScore.interpolate({
+        inputRange: [0, 75, 110],
+        outputRange: [0, .25, 1]
+      });
+      const size = this.animatedScore.interpolate({
+        inputRange: [0, 75, 110],
+        outputRange: [20, 40, 200]
+      });
+      return (
+        <Animated.View
+          style={{
+            opacity,
+            height: size,
+            width: size,
+            backgroundColor: colors.tomato
+          }}
+        />
+      );
     }
   }
 
@@ -280,7 +299,6 @@ class Timer extends Component {
         </View>
         {this.renderScore()}
         <View style={styles.spacerContainer}>
-
           {this.renderText()}
         </View>
 
