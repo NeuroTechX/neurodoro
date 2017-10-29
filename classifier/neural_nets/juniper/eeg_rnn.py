@@ -25,7 +25,7 @@ display_step = 100
 
 # Network Parameters
 num_features = 10 # Number of dimensions in tangent space produced by pyriemann
-timesteps = 5 # Number of eeg epochs per sequence
+timesteps = 8 # Number of eeg epochs per sequence
 num_hidden = 256 # hidden layer num of features
 num_classes = 2 # distracted or concentrated
 

@@ -38,7 +38,7 @@ d = pd.read_csv("data/muse-data/josh_sep_21_distracted_RawEEG0.csv", header=0, i
 e = pd.read_csv("data/muse-data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
 
 # Add them all together
-data = [a,b]
+data = [a,b,c,d,e]
 data = pd.concat(data, ignore_index=True)
 data = data[data.Difficulty > -200]
 data = data[data.Difficulty != 0]
@@ -82,8 +82,8 @@ epochs = Epochs(raw, event, tmin=0, tmax=4, preload=True)
 
 def difficulty_class(diff_perf):
     # This was our distracted criteria
-    # if diff_perf[0] < 30 and diff_perf[1] < 70 and diff_perf[1] > 20:
-    if diff_perf[0] > 60:
+    if diff_perf[0] < 50 and diff_perf[1] < 60:
+    # if diff_perf[0] > 60:
         return [1,0]
     else:
         return [0,1]
@@ -101,7 +101,7 @@ tans = TangentSpace().fit_transform(covs)
 
 output_data = np.concatenate((y, tans), axis=1)
 
-split = int(len(output_data) / 10)
+split = int(len(output_data) / 3)
 train = pd.DataFrame(output_data[:len(output_data)-split,:])
 valid = pd.DataFrame(output_data[len(output_data)-split:,:])
 
