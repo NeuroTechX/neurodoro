@@ -1,7 +1,5 @@
 TODO
  
-
- - Make sure server is training as performantly as possible
  - tensorboard summaries
  - Add LSTM layers? 
  - will we need droupout? probably will help

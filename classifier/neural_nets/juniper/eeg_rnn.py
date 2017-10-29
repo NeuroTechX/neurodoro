@@ -127,4 +127,4 @@ with tf.Session() as sess:
         valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
         validation_accuracy.append(valid_acc)
     
-    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches + " " + str(datetime.now())))
+    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
