@@ -10,6 +10,7 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 
 from __future__ import print_function
 
+from datetime import datetime
 import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import rnn
@@ -20,7 +21,7 @@ sess = tf.InteractiveSession()
 # Training Parameters
 learning_rate = 0.001
 epochs = 1000
-batch_size = 6
+batch_size = 10
 display_step = 100
 
 # Network Parameters
@@ -112,7 +113,8 @@ with tf.Session() as sess:
                         ", batch " + str(b) +
                         ", Minibatch Loss= " + \
                         "{:.4f}".format(loss) + ", Training Accuracy= " + \
-                        "{:.3f}".format(acc))
+                        "{:.3f}".format(acc) + "    " + 
+                        str(datetime.now()))
                 print_eval()
     
     print("Optimization Finished!")
@@ -125,4 +127,4 @@ with tf.Session() as sess:
         valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
         validation_accuracy.append(valid_acc)
     
-    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches))
+    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches + " " + str(datetime.now())))
