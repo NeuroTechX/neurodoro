@@ -15,6 +15,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import rnn
 from utils import BatchLoader
+import time
+import os
 
 sess = tf.InteractiveSession()
 
@@ -22,7 +24,7 @@ sess = tf.InteractiveSession()
 learning_rate = 0.001
 epochs = 1000
 batch_size = 10
-display_step = 100
+display_step = 10
 
 # Network Parameters
 num_features = 10 # Number of dimensions in tangent space produced by pyriemann
@@ -79,8 +81,8 @@ correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 def print_eval():
-    print("pred: " + str(sess.run(prediction, feed_dict={X: batch_x, Y: batch_y})))
-    print("Y: " + str(sess.run(Y, feed_dict={X: batch_x, Y: batch_y})))
+#    print("pred: " + str(sess.run(prediction, feed_dict={X: batch_x, Y: batch_y})))
+#    print("Y: " + str(sess.run(Y, feed_dict={X: batch_x, Y: batch_y})))
     print("epoch accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))
 #    print("outputs: " + str(sess.run(outputs, feed_dict={X: batch_x, Y: batch_y })))
 #    print("argmax_pred: " + str(tf.argmax(prediction, 1).eval()))
@@ -93,7 +95,11 @@ init = tf.global_variables_initializer()
 
 # Start training
 with tf.Session() as sess:
-
+    # instrument for tensorboard
+    writer = tf.summary.FileWriter(
+            os.path.join('tensorboard/log/', time.strftime("%Y-%m-%d-%H-%M-%S")))
+    writer.add_graph(sess.graph)
+ 
     # Run the initializer
     sess.run(init)
 
@@ -102,22 +108,26 @@ with tf.Session() as sess:
         train_loader.reset_batch_pointer()
         for b in range(train_loader.num_batches):
             batch_x, batch_y = train_loader.next_batch()
-            sess.run(train_op, feed_dict={X: batch_x, Y: batch_y})
-            batch_acc = sess.run(accuracy, feed_dict={X:batch_x, Y:batch_y})
-            epoch_accuracy.append(batch_acc)
-            if b == train_loader.num_batches-1  and e % display_step == 0:        
+            loss, acc, _ = sess.run([loss_op, accuracy, train_op], feed_dict={X: batch_x, Y: batch_y})
+            epoch_accuracy.append(acc)
+            if b == train_loader.num_batches-1  and (e + 1) % display_step == 0:        
                 # Calculate epoch loss and accuracy
-                loss, acc = sess.run([loss_op, accuracy], feed_dict={X: batch_x, Y: batch_y})
-
-                print("Epoch " + str(e) + 
+                print("Epoch " + str(e + 1) + 
                         ", batch " + str(b) +
                         ", Minibatch Loss= " + \
-                        "{:.4f}".format(loss) + ", Training Accuracy= " + \
-                        "{:.3f}".format(acc) + "    " + 
+                        "{:.4f}".format(loss) +  "    " + 
                         str(datetime.now()))
-                print_eval()
-    
-    print("Optimization Finished!")
+                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))   
+ 
+                # intrument for tensorboard
+                tf.summary.scalar('loss', loss)    
+                tf.summary.scalar('accuracy', acc)
+                summaries = tf.summary.merge_all()
+                summ = sess.run(summaries)
+                writer.add_summary(summ, e)
+
+
+    print("Optimization Finisihed!")
 
     # Calculate validation accuracy
     
@@ -128,3 +138,5 @@ with tf.Session() as sess:
         validation_accuracy.append(valid_acc)
     
     print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
+
+

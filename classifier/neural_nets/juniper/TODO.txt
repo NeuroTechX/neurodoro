@@ -1,7 +1,7 @@
 TODO
  
- - tensorboard summaries
- - Add LSTM layers? 
+ - Add LSTM layers 
  - will we need droupout? probably will help
  - be able to create model checkpoints
  - quantizing the model, make sit smaller for mobile
+ - make tensorboard useful?
