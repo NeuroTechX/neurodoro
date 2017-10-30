@@ -2,6 +2,7 @@ TODO
  
  - Add LSTM layers 
  - will we need droupout? probably will help
+ - choose best initilaization scheme
  - be able to create model checkpoints
  - quantizing the model, make sit smaller for mobile
  - make tensorboard useful?
