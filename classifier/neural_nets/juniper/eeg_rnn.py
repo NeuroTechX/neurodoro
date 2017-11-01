@@ -18,10 +18,16 @@ from utils import BatchLoader
 import time
 import os
 
+import logging
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG, filename="training_log", filemode="a+",
+                        format="%(message)s")
+
 sess = tf.InteractiveSession()
 
 # Training Parameters
-learning_rate = 0.001
+learning_rate = 0.005
 epochs = 5000
 batch_size = 100
 display_step = 10
@@ -31,6 +37,8 @@ num_features = 10 # Number of dimensions in tangent space produced by pyriemann
 timesteps = 6 # Number of eeg epochs per sequence
 num_hidden = 2048 # hidden layer num of neurons
 num_classes = 2 # distracted or concentrated
+
+logging.info("LR = " + learning_rate + " Epochs = " + epochs)
 
 # Initialize data feed
 train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps, num_features, num_classes)
@@ -80,16 +88,6 @@ train_op = optimizer.minimize(loss_op)
 correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
-def print_eval():
-#    print("pred: " + str(sess.run(prediction, feed_dict={X: batch_x, Y: batch_y})))
-#    print("Y: " + str(sess.run(Y, feed_dict={X: batch_x, Y: batch_y})))
-    print("epoch accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))
-#    print("outputs: " + str(sess.run(outputs, feed_dict={X: batch_x, Y: batch_y })))
-#    print("argmax_pred: " + str(tf.argmax(prediction, 1).eval()))
-#    print("argmax_Y: " + str(tf.argmax(Y, 1).eval()))
-#    print("equal: " + str(tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1)).eval()))
-
-
 # Initialize the variable (i.e. assign their default value)
 init = tf.global_variables_initializer()
 
@@ -112,14 +110,17 @@ with tf.Session() as sess:
             epoch_accuracy.append(acc)
             if b == train_loader.num_batches-1  and (e + 1) % display_step == 0:        
                 # Calculate epoch loss and accuracy
-                print("Epoch " + str(e + 1) + 
+                logging.info("Epoch " + str(e + 1) + 
                         ", batch " + str(b) +
                         ", Minibatch Loss= " + \
                         "{:.4f}".format(loss) +  "    " + 
                         str(datetime.now()))
-                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))   
+                logging.info("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))   
  
                 # intrument for tensorboard
+
+                tf.add_to_collection('loss', loss)
+                tf.add_to_collection('accuracy', acc)
                 tf.summary.scalar('loss', loss)    
                 tf.summary.scalar('accuracy', acc)
                 summaries = tf.summary.merge_all()
@@ -127,7 +128,7 @@ with tf.Session() as sess:
                 writer.add_summary(summ, e)
 
 
-    print("Optimization Finisihed!")
+    logging.info("Optimization Finisihed!")
 
     # Calculate validation accuracy
     
@@ -137,6 +138,5 @@ with tf.Session() as sess:
         valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
         validation_accuracy.append(valid_acc)
     
-    print("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
-
+    logging.info("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
 
