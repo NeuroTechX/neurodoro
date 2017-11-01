@@ -1,0 +1,1006 @@
+x: (1531, 6, 10)    y: (1531, 2)
+num_batches: 15
+x: (762, 6, 10)    y: (762, 2)
+num_batches: 7
+45
+Epoch Accuracy: 0.687999996543
+Epoch 20, batch 14, Minibatch Loss= 0.0896    2017-11-01 18:37:27.293194
+Epoch Accuracy: 0.691999992728
+Epoch 30, batch 14, Minibatch Loss= 0.0897    2017-11-01 18:37:36.721393
+Epoch Accuracy: 0.699333323042
+Epoch 40, batch 14, Minibatch Loss= 0.0900    2017-11-01 18:37:46.176472
+Epoch Accuracy: 0.700666661064
+Epoch 50, batch 14, Minibatch Loss= 0.0904    2017-11-01 18:37:55.674123
+Epoch Accuracy: 0.702666661143
+Epoch 60, batch 14, Minibatch Loss= 0.0909    2017-11-01 18:38:05.186415
+Epoch Accuracy: 0.704666653275
+Epoch 70, batch 14, Minibatch Loss= 0.0914    2017-11-01 18:38:14.723727
+Epoch Accuracy: 0.709333325426
+Epoch 80, batch 14, Minibatch Loss= 0.0921    2017-11-01 18:38:24.249075
+Epoch Accuracy: 0.70999999543
+Epoch 90, batch 14, Minibatch Loss= 0.0927    2017-11-01 18:38:33.769710
+Epoch Accuracy: 0.709333329399
+Epoch 100, batch 14, Minibatch Loss= 0.0934    2017-11-01 18:38:43.275439
+Epoch Accuracy: 0.710666661461
+Epoch 110, batch 14, Minibatch Loss= 0.0942    2017-11-01 18:38:52.761855
+Epoch Accuracy: 0.70999999543
+Epoch 120, batch 14, Minibatch Loss= 0.0949    2017-11-01 18:39:02.266465
+Epoch Accuracy: 0.70999999543
+Epoch 130, batch 14, Minibatch Loss= 0.0957    2017-11-01 18:39:11.787971
+Epoch Accuracy: 0.709333331386
+Epoch 140, batch 14, Minibatch Loss= 0.0965    2017-11-01 18:39:21.288664
+Epoch Accuracy: 0.709999993443
+Epoch 150, batch 14, Minibatch Loss= 0.0973    2017-11-01 18:39:30.794986
+Epoch Accuracy: 0.711333319545
+Epoch 160, batch 14, Minibatch Loss= 0.0981    2017-11-01 18:39:40.305001
+Epoch Accuracy: 0.712666661541
+Epoch 170, batch 14, Minibatch Loss= 0.0989    2017-11-01 18:39:49.807802
+Epoch Accuracy: 0.713333327572
+Epoch 180, batch 14, Minibatch Loss= 0.0998    2017-11-01 18:39:59.294099
+Epoch Accuracy: 0.715333327651
+Epoch 190, batch 14, Minibatch Loss= 0.1006    2017-11-01 18:40:08.794254
+Epoch Accuracy: 0.713999995589
+Epoch 200, batch 14, Minibatch Loss= 0.1014    2017-11-01 18:40:18.303535
+Epoch Accuracy: 0.715333325664
+Epoch 210, batch 14, Minibatch Loss= 0.1023    2017-11-01 18:40:27.829577
+Epoch Accuracy: 0.715333323677
+Epoch 220, batch 14, Minibatch Loss= 0.1031    2017-11-01 18:40:37.367074
+Epoch Accuracy: 0.715999987721
+Epoch 230, batch 14, Minibatch Loss= 0.1039    2017-11-01 18:40:46.883077
+Epoch Accuracy: 0.718666655819
+Epoch 240, batch 14, Minibatch Loss= 0.1048    2017-11-01 18:40:56.387984
+Epoch Accuracy: 0.71999998788
+Epoch 250, batch 14, Minibatch Loss= 0.1056    2017-11-01 18:41:05.884667
+Epoch Accuracy: 0.721333323916
+Epoch 260, batch 14, Minibatch Loss= 0.1064    2017-11-01 18:41:15.394626
+Epoch Accuracy: 0.721999983986
+Epoch 270, batch 14, Minibatch Loss= 0.1072    2017-11-01 18:41:24.915937
+Epoch Accuracy: 0.722666650017
+Epoch 280, batch 14, Minibatch Loss= 0.1081    2017-11-01 18:41:34.431126
+Epoch Accuracy: 0.723999986053
+Epoch 290, batch 14, Minibatch Loss= 0.1089    2017-11-01 18:41:43.940914
+Epoch Accuracy: 0.724666658044
+Epoch 300, batch 14, Minibatch Loss= 0.1097    2017-11-01 18:41:53.447410
+Epoch Accuracy: 0.723999986053
+Epoch 310, batch 14, Minibatch Loss= 0.1105    2017-11-01 18:42:02.962440
+Epoch Accuracy: 0.723999986053
+Epoch 320, batch 14, Minibatch Loss= 0.1113    2017-11-01 18:42:12.470671
+Epoch Accuracy: 0.723999990026
+Epoch 330, batch 14, Minibatch Loss= 0.1121    2017-11-01 18:42:21.975672
+Epoch Accuracy: 0.724666656057
+Epoch 340, batch 14, Minibatch Loss= 0.1129    2017-11-01 18:42:31.478234
+Epoch Accuracy: 0.725333322088
+Epoch 350, batch 14, Minibatch Loss= 0.1137    2017-11-01 18:42:40.995189
+Epoch Accuracy: 0.725999992092
+Epoch 360, batch 14, Minibatch Loss= 0.1145    2017-11-01 18:42:50.522768
+Epoch Accuracy: 0.727333322167
+Epoch 370, batch 14, Minibatch Loss= 0.1153    2017-11-01 18:43:00.046930
+Epoch Accuracy: 0.727999988198
+Epoch 380, batch 14, Minibatch Loss= 0.1161    2017-11-01 18:43:09.555364
+Epoch Accuracy: 0.727999992172
+Epoch 390, batch 14, Minibatch Loss= 0.1168    2017-11-01 18:43:19.064278
+Epoch Accuracy: 0.729999990265
+Epoch 400, batch 14, Minibatch Loss= 0.1176    2017-11-01 18:43:28.586314
+Epoch Accuracy: 0.731333324313
+Epoch 410, batch 14, Minibatch Loss= 0.1183    2017-11-01 18:43:38.100938
+Epoch Accuracy: 0.733333326379
+Epoch 420, batch 14, Minibatch Loss= 0.1191    2017-11-01 18:43:47.605578
+Epoch Accuracy: 0.733999996384
+Epoch 430, batch 14, Minibatch Loss= 0.1198    2017-11-01 18:43:57.109328
+Epoch Accuracy: 0.734666662415
+Epoch 440, batch 14, Minibatch Loss= 0.1205    2017-11-01 18:44:06.622622
+Epoch Accuracy: 0.735333330433
+Epoch 450, batch 14, Minibatch Loss= 0.1212    2017-11-01 18:44:16.149594
+Epoch Accuracy: 0.736666658521
+Epoch 460, batch 14, Minibatch Loss= 0.1219    2017-11-01 18:44:25.672652
+Epoch Accuracy: 0.739333336552
+Epoch 470, batch 14, Minibatch Loss= 0.1226    2017-11-01 18:44:35.184041
+Epoch Accuracy: 0.739999992649
+Epoch 480, batch 14, Minibatch Loss= 0.1233    2017-11-01 18:44:44.693749
+Epoch Accuracy: 0.739999996622
+Epoch 490, batch 14, Minibatch Loss= 0.1240    2017-11-01 18:44:54.213082
+Epoch Accuracy: 0.74066666464
+Epoch 500, batch 14, Minibatch Loss= 0.1246    2017-11-01 18:45:03.740264
+Epoch Accuracy: 0.739999994636
+Epoch 510, batch 14, Minibatch Loss= 0.1252    2017-11-01 18:45:13.255270
+Epoch Accuracy: 0.741999992728
+Epoch 520, batch 14, Minibatch Loss= 0.1258    2017-11-01 18:45:22.781224
+Epoch Accuracy: 0.743333320816
+Epoch 530, batch 14, Minibatch Loss= 0.1264    2017-11-01 18:45:32.274051
+Epoch Accuracy: 0.743999986847
+Epoch 540, batch 14, Minibatch Loss= 0.1270    2017-11-01 18:45:41.769614
+Epoch Accuracy: 0.745333322883
+Epoch 550, batch 14, Minibatch Loss= 0.1275    2017-11-01 18:45:51.288597
+Epoch Accuracy: 0.746666654944
+Epoch 560, batch 14, Minibatch Loss= 0.1280    2017-11-01 18:46:00.799074
+Epoch Accuracy: 0.746666650971
+Epoch 570, batch 14, Minibatch Loss= 0.1285    2017-11-01 18:46:10.310496
+Epoch Accuracy: 0.747999983033
+Epoch 580, batch 14, Minibatch Loss= 0.1290    2017-11-01 18:46:19.827577
+Epoch Accuracy: 0.749999993046
+Epoch 590, batch 14, Minibatch Loss= 0.1294    2017-11-01 18:46:29.362828
+Epoch Accuracy: 0.751333325108
+Epoch 600, batch 14, Minibatch Loss= 0.1298    2017-11-01 18:46:38.885918
+Epoch Accuracy: 0.751333325108
+Epoch 610, batch 14, Minibatch Loss= 0.1302    2017-11-01 18:46:48.410588
+Epoch Accuracy: 0.751999993126
+Epoch 620, batch 14, Minibatch Loss= 0.1306    2017-11-01 18:46:57.923195
+Epoch Accuracy: 0.751333329082
+Epoch 630, batch 14, Minibatch Loss= 0.1309    2017-11-01 18:47:07.445888
+Epoch Accuracy: 0.754000001152
+Epoch 640, batch 14, Minibatch Loss= 0.1311    2017-11-01 18:47:16.962970
+Epoch Accuracy: 0.75533332924
+Epoch 650, batch 14, Minibatch Loss= 0.1314    2017-11-01 18:47:26.506261
+Epoch Accuracy: 0.753333331148
+Epoch 660, batch 14, Minibatch Loss= 0.1316    2017-11-01 18:47:36.027558
+Epoch Accuracy: 0.756000003219
+Epoch 670, batch 14, Minibatch Loss= 0.1317    2017-11-01 18:47:45.512965
+Epoch Accuracy: 0.757333331307
+Epoch 680, batch 14, Minibatch Loss= 0.1318    2017-11-01 18:47:55.009468
+Epoch Accuracy: 0.757333323359
+Epoch 690, batch 14, Minibatch Loss= 0.1319    2017-11-01 18:48:04.517442
+Epoch Accuracy: 0.75933333536
+Epoch 700, batch 14, Minibatch Loss= 0.1319    2017-11-01 18:48:14.020252
+Epoch Accuracy: 0.75999999543
+Epoch 710, batch 14, Minibatch Loss= 0.1318    2017-11-01 18:48:23.532130
+Epoch Accuracy: 0.761333331466
+Epoch 720, batch 14, Minibatch Loss= 0.1317    2017-11-01 18:48:33.043298
+Epoch Accuracy: 0.761333331466
+Epoch 730, batch 14, Minibatch Loss= 0.1316    2017-11-01 18:48:42.558856
+Epoch Accuracy: 0.759333329399
+Epoch 740, batch 14, Minibatch Loss= 0.1313    2017-11-01 18:48:52.111418
+Epoch Accuracy: 0.759999999404
+Epoch 750, batch 14, Minibatch Loss= 0.1311    2017-11-01 18:49:01.644093
+Epoch Accuracy: 0.761333335439
+Epoch 760, batch 14, Minibatch Loss= 0.1308    2017-11-01 18:49:11.159613
+Epoch Accuracy: 0.761333327492
+Epoch 770, batch 14, Minibatch Loss= 0.1304    2017-11-01 18:49:20.674518
+Epoch Accuracy: 0.761999993523
+Epoch 780, batch 14, Minibatch Loss= 0.1299    2017-11-01 18:49:30.218666
+Epoch Accuracy: 0.761999997497
+Epoch 790, batch 14, Minibatch Loss= 0.1295    2017-11-01 18:49:39.765345
+Epoch Accuracy: 0.762666667501
+Epoch 800, batch 14, Minibatch Loss= 0.1289    2017-11-01 18:49:49.305611
+Epoch Accuracy: 0.763333333532
+Epoch 810, batch 14, Minibatch Loss= 0.1283    2017-11-01 18:49:58.816918
+Epoch Accuracy: 0.764666669567
+Epoch 820, batch 14, Minibatch Loss= 0.1277    2017-11-01 18:50:08.321610
+Epoch Accuracy: 0.76466666162
+Epoch 830, batch 14, Minibatch Loss= 0.1270    2017-11-01 18:50:17.843189
+Epoch Accuracy: 0.761999993523
+Epoch 840, batch 14, Minibatch Loss= 0.1263    2017-11-01 18:50:27.350915
+Epoch Accuracy: 0.763999995589
+Epoch 850, batch 14, Minibatch Loss= 0.1255    2017-11-01 18:50:36.843962
+Epoch Accuracy: 0.762666667501
+Epoch 860, batch 14, Minibatch Loss= 0.1247    2017-11-01 18:50:46.347864
+Epoch Accuracy: 0.762666659554
+Epoch 870, batch 14, Minibatch Loss= 0.1238    2017-11-01 18:50:55.874538
+Epoch Accuracy: 0.763999995589
+Epoch 880, batch 14, Minibatch Loss= 0.1230    2017-11-01 18:51:05.404268
+Epoch Accuracy: 0.765333331625
+Epoch 890, batch 14, Minibatch Loss= 0.1221    2017-11-01 18:51:14.925314
+Epoch Accuracy: 0.763999999563
+Epoch 900, batch 14, Minibatch Loss= 0.1212    2017-11-01 18:51:24.450992
+Epoch Accuracy: 0.764666665594
+Epoch 910, batch 14, Minibatch Loss= 0.1203    2017-11-01 18:51:33.971089
+Epoch Accuracy: 0.765999997656
+Epoch 920, batch 14, Minibatch Loss= 0.1193    2017-11-01 18:51:43.500428
+Epoch Accuracy: 0.766666663686
+Epoch 930, batch 14, Minibatch Loss= 0.1184    2017-11-01 18:51:53.034886
+Epoch Accuracy: 0.764666657646
+Epoch 940, batch 14, Minibatch Loss= 0.1175    2017-11-01 18:52:02.561735
+Epoch Accuracy: 0.764666657646
+Epoch 950, batch 14, Minibatch Loss= 0.1165    2017-11-01 18:52:12.089319
+Epoch Accuracy: 0.765333331625
+Epoch 960, batch 14, Minibatch Loss= 0.1156    2017-11-01 18:52:21.621757
+Epoch Accuracy: 0.767333329717
+Epoch 970, batch 14, Minibatch Loss= 0.1147    2017-11-01 18:52:31.152605
+Epoch Accuracy: 0.764666667581
+Epoch 980, batch 14, Minibatch Loss= 0.1137    2017-11-01 18:52:40.677848
+Epoch Accuracy: 0.764000003537
+Epoch 990, batch 14, Minibatch Loss= 0.1128    2017-11-01 18:52:50.194512
+Epoch Accuracy: 0.766000003616
+Epoch 1000, batch 14, Minibatch Loss= 0.1119    2017-11-01 18:52:59.733526
+Epoch Accuracy: 0.766000004609
+Epoch 1010, batch 14, Minibatch Loss= 0.1111    2017-11-01 18:53:09.264286
+Epoch Accuracy: 0.766666672627
+Epoch 1020, batch 14, Minibatch Loss= 0.1102    2017-11-01 18:53:18.794609
+Epoch Accuracy: 0.768666672707
+Epoch 1030, batch 14, Minibatch Loss= 0.1094    2017-11-01 18:53:28.344131
+Epoch Accuracy: 0.772666670879
+Epoch 1040, batch 14, Minibatch Loss= 0.1085    2017-11-01 18:53:37.873048
+Epoch Accuracy: 0.771333340804
+Epoch 1050, batch 14, Minibatch Loss= 0.1077    2017-11-01 18:53:47.410697
+Epoch Accuracy: 0.775333336989
+Epoch 1060, batch 14, Minibatch Loss= 0.1069    2017-11-01 18:53:56.964697
+Epoch Accuracy: 0.776000005007
+Epoch 1070, batch 14, Minibatch Loss= 0.1061    2017-11-01 18:54:06.513037
+Epoch Accuracy: 0.775333335002
+Epoch 1080, batch 14, Minibatch Loss= 0.1054    2017-11-01 18:54:16.056657
+Epoch Accuracy: 0.775333335002
+Epoch 1090, batch 14, Minibatch Loss= 0.1046    2017-11-01 18:54:25.606607
+Epoch Accuracy: 0.775333331029
+Epoch 1100, batch 14, Minibatch Loss= 0.1039    2017-11-01 18:54:35.151837
+Epoch Accuracy: 0.777999993165
+Epoch 1110, batch 14, Minibatch Loss= 0.1032    2017-11-01 18:54:44.689252
+Epoch Accuracy: 0.780666667223
+Epoch 1120, batch 14, Minibatch Loss= 0.1025    2017-11-01 18:54:54.217861
+Epoch Accuracy: 0.781333339214
+Epoch 1130, batch 14, Minibatch Loss= 0.1019    2017-11-01 18:55:03.755690
+Epoch Accuracy: 0.782666671276
+Epoch 1140, batch 14, Minibatch Loss= 0.1012    2017-11-01 18:55:13.298534
+Epoch Accuracy: 0.783999997377
+Epoch 1150, batch 14, Minibatch Loss= 0.1006    2017-11-01 18:55:22.838248
+Epoch Accuracy: 0.786666669448
+Epoch 1160, batch 14, Minibatch Loss= 0.1000    2017-11-01 18:55:32.392740
+Epoch Accuracy: 0.788666659594
+Epoch 1170, batch 14, Minibatch Loss= 0.0994    2017-11-01 18:55:41.949041
+Epoch Accuracy: 0.79066666762
+Epoch 1180, batch 14, Minibatch Loss= 0.0988    2017-11-01 18:55:51.507438
+Epoch Accuracy: 0.791999997695
+Epoch 1190, batch 14, Minibatch Loss= 0.0982    2017-11-01 18:56:01.046433
+Epoch Accuracy: 0.792666659753
+Epoch 1200, batch 14, Minibatch Loss= 0.0977    2017-11-01 18:56:10.580430
+Epoch Accuracy: 0.790666665634
+Epoch 1210, batch 14, Minibatch Loss= 0.0971    2017-11-01 18:56:20.129147
+Epoch Accuracy: 0.789999999603
+Epoch 1220, batch 14, Minibatch Loss= 0.0966    2017-11-01 18:56:29.654907
+Epoch Accuracy: 0.789333325624
+Epoch 1230, batch 14, Minibatch Loss= 0.0961    2017-11-01 18:56:39.204928
+Epoch Accuracy: 0.789999999603
+Epoch 1240, batch 14, Minibatch Loss= 0.0956    2017-11-01 18:56:48.741567
+Epoch Accuracy: 0.790666665634
+Epoch 1250, batch 14, Minibatch Loss= 0.0952    2017-11-01 18:56:58.288009
+Epoch Accuracy: 0.789999999603
+Epoch 1260, batch 14, Minibatch Loss= 0.0947    2017-11-01 18:57:07.856848
+Epoch Accuracy: 0.791999999682
+Epoch 1270, batch 14, Minibatch Loss= 0.0943    2017-11-01 18:57:17.411556
+Epoch Accuracy: 0.793333331744
+Epoch 1280, batch 14, Minibatch Loss= 0.0939    2017-11-01 18:57:26.944672
+Epoch Accuracy: 0.795999999841
+Epoch 1290, batch 14, Minibatch Loss= 0.0934    2017-11-01 18:57:36.482642
+Epoch Accuracy: 0.797333331903
+Epoch 1300, batch 14, Minibatch Loss= 0.0931    2017-11-01 18:57:46.029532
+Epoch Accuracy: 0.79799999396
+Epoch 1310, batch 14, Minibatch Loss= 0.0927    2017-11-01 18:57:55.596337
+Epoch Accuracy: 0.799333337943
+Epoch 1320, batch 14, Minibatch Loss= 0.0923    2017-11-01 18:58:05.164534
+Epoch Accuracy: 0.802666668097
+Epoch 1330, batch 14, Minibatch Loss= 0.0920    2017-11-01 18:58:14.711946
+Epoch Accuracy: 0.80266666015
+Epoch 1340, batch 14, Minibatch Loss= 0.0916    2017-11-01 18:58:24.262890
+Epoch Accuracy: 0.804000000159
+Epoch 1350, batch 14, Minibatch Loss= 0.0913    2017-11-01 18:58:33.822362
+Epoch Accuracy: 0.805333336194
+Epoch 1360, batch 14, Minibatch Loss= 0.0910    2017-11-01 18:58:43.384561
+Epoch Accuracy: 0.806000002225
+Epoch 1370, batch 14, Minibatch Loss= 0.0907    2017-11-01 18:58:52.963091
+Epoch Accuracy: 0.807333334287
+Epoch 1380, batch 14, Minibatch Loss= 0.0904    2017-11-01 18:59:02.516755
+Epoch Accuracy: 0.808666670322
+Epoch 1390, batch 14, Minibatch Loss= 0.0901    2017-11-01 18:59:12.066952
+Epoch Accuracy: 0.808666670322
+Epoch 1400, batch 14, Minibatch Loss= 0.0898    2017-11-01 18:59:21.632968
+Epoch Accuracy: 0.809999998411
+Epoch 1410, batch 14, Minibatch Loss= 0.0896    2017-11-01 18:59:31.210957
+Epoch Accuracy: 0.81133333842
+Epoch 1420, batch 14, Minibatch Loss= 0.0893    2017-11-01 18:59:40.799840
+Epoch Accuracy: 0.811999996503
+Epoch 1430, batch 14, Minibatch Loss= 0.0891    2017-11-01 18:59:50.348226
+Epoch Accuracy: 0.81200000445
+Epoch 1440, batch 14, Minibatch Loss= 0.0889    2017-11-01 18:59:59.927524
+Epoch Accuracy: 0.812000000477
+Epoch 1450, batch 14, Minibatch Loss= 0.0887    2017-11-01 19:00:09.517559
+Epoch Accuracy: 0.811999996503
+Epoch 1460, batch 14, Minibatch Loss= 0.0885    2017-11-01 19:00:19.096436
+Epoch Accuracy: 0.813333332539
+Epoch 1470, batch 14, Minibatch Loss= 0.0883    2017-11-01 19:00:28.671151
+Epoch Accuracy: 0.813333332539
+Epoch 1480, batch 14, Minibatch Loss= 0.0881    2017-11-01 19:00:38.262914
+Epoch Accuracy: 0.813999998569
+Epoch 1490, batch 14, Minibatch Loss= 0.0879    2017-11-01 19:00:47.836373
+Epoch Accuracy: 0.813999998569
+Epoch 1500, batch 14, Minibatch Loss= 0.0877    2017-11-01 19:00:57.436510
+Epoch Accuracy: 0.815333342552
+Epoch 1510, batch 14, Minibatch Loss= 0.0875    2017-11-01 19:01:07.021926
+Epoch Accuracy: 0.815333338579
+Epoch 1520, batch 14, Minibatch Loss= 0.0874    2017-11-01 19:01:16.596036
+Epoch Accuracy: 0.816000004609
+Epoch 1530, batch 14, Minibatch Loss= 0.0872    2017-11-01 19:01:26.182861
+Epoch Accuracy: 0.816000008583
+Epoch 1540, batch 14, Minibatch Loss= 0.0871    2017-11-01 19:01:35.752337
+Epoch Accuracy: 0.816000008583
+Epoch 1550, batch 14, Minibatch Loss= 0.0869    2017-11-01 19:01:45.328456
+Epoch Accuracy: 0.816000004609
+Epoch 1560, batch 14, Minibatch Loss= 0.0868    2017-11-01 19:01:54.894172
+Epoch Accuracy: 0.818000006676
+Epoch 1570, batch 14, Minibatch Loss= 0.0866    2017-11-01 19:02:04.473368
+Epoch Accuracy: 0.818000002702
+Epoch 1580, batch 14, Minibatch Loss= 0.0865    2017-11-01 19:02:14.023577
+Epoch Accuracy: 0.818666668733
+Epoch 1590, batch 14, Minibatch Loss= 0.0864    2017-11-01 19:02:23.625951
+Epoch Accuracy: 0.820000008742
+Epoch 1600, batch 14, Minibatch Loss= 0.0862    2017-11-01 19:02:33.234302
+Epoch Accuracy: 0.822666672866
+Epoch 1610, batch 14, Minibatch Loss= 0.0861    2017-11-01 19:02:42.804488
+Epoch Accuracy: 0.824000004927
+Epoch 1620, batch 14, Minibatch Loss= 0.0860    2017-11-01 19:02:52.399454
+Epoch Accuracy: 0.82600000302
+Epoch 1630, batch 14, Minibatch Loss= 0.0859    2017-11-01 19:03:01.995003
+Epoch Accuracy: 0.827333339055
+Epoch 1640, batch 14, Minibatch Loss= 0.0858    2017-11-01 19:03:11.591728
+Epoch Accuracy: 0.828000001113
+Epoch 1650, batch 14, Minibatch Loss= 0.0857    2017-11-01 19:03:21.174611
+Epoch Accuracy: 0.829333341122
+Epoch 1660, batch 14, Minibatch Loss= 0.0856    2017-11-01 19:03:30.744251
+Epoch Accuracy: 0.829333337148
+Epoch 1670, batch 14, Minibatch Loss= 0.0855    2017-11-01 19:03:40.330043
+Epoch Accuracy: 0.829999999205
+Epoch 1680, batch 14, Minibatch Loss= 0.0854    2017-11-01 19:03:49.935505
+Epoch Accuracy: 0.829333333174
+Epoch 1690, batch 14, Minibatch Loss= 0.0853    2017-11-01 19:03:59.534378
+Epoch Accuracy: 0.828666667144
+Epoch 1700, batch 14, Minibatch Loss= 0.0852    2017-11-01 19:04:09.129047
+Epoch Accuracy: 0.829333329201
+Epoch 1710, batch 14, Minibatch Loss= 0.0851    2017-11-01 19:04:18.692021
+Epoch Accuracy: 0.830666665236
+Epoch 1720, batch 14, Minibatch Loss= 0.0850    2017-11-01 19:04:28.259810
+Epoch Accuracy: 0.831333331267
+Epoch 1730, batch 14, Minibatch Loss= 0.0849    2017-11-01 19:04:37.851248
+Epoch Accuracy: 0.831999997298
+Epoch 1740, batch 14, Minibatch Loss= 0.0848    2017-11-01 19:04:47.452187
+Epoch Accuracy: 0.832666667302
+Epoch 1750, batch 14, Minibatch Loss= 0.0847    2017-11-01 19:04:57.044161
+Epoch Accuracy: 0.833333333333
+Epoch 1760, batch 14, Minibatch Loss= 0.0846    2017-11-01 19:05:06.617092
+Epoch Accuracy: 0.833333333333
+Epoch 1770, batch 14, Minibatch Loss= 0.0845    2017-11-01 19:05:16.223068
+Epoch Accuracy: 0.834000003338
+Epoch 1780, batch 14, Minibatch Loss= 0.0844    2017-11-01 19:05:25.834085
+Epoch Accuracy: 0.833999999364
+Epoch 1790, batch 14, Minibatch Loss= 0.0843    2017-11-01 19:05:35.427383
+Epoch Accuracy: 0.8353333354
+Epoch 1800, batch 14, Minibatch Loss= 0.0842    2017-11-01 19:05:45.028167
+Epoch Accuracy: 0.835333331426
+Epoch 1810, batch 14, Minibatch Loss= 0.0841    2017-11-01 19:05:54.629396
+Epoch Accuracy: 0.834666669369
+Epoch 1820, batch 14, Minibatch Loss= 0.0840    2017-11-01 19:06:04.218222
+Epoch Accuracy: 0.8353333354
+Epoch 1830, batch 14, Minibatch Loss= 0.0839    2017-11-01 19:06:13.822825
+Epoch Accuracy: 0.836000001431
+Epoch 1840, batch 14, Minibatch Loss= 0.0838    2017-11-01 19:06:23.439701
+Epoch Accuracy: 0.836000001431
+Epoch 1850, batch 14, Minibatch Loss= 0.0837    2017-11-01 19:06:33.041562
+Epoch Accuracy: 0.836000001431
+Epoch 1860, batch 14, Minibatch Loss= 0.0837    2017-11-01 19:06:42.599959
+Epoch Accuracy: 0.8353333354
+Epoch 1870, batch 14, Minibatch Loss= 0.0836    2017-11-01 19:06:52.204379
+Epoch Accuracy: 0.836000001431
+Epoch 1880, batch 14, Minibatch Loss= 0.0835    2017-11-01 19:07:01.824270
+Epoch Accuracy: 0.8353333354
+Epoch 1890, batch 14, Minibatch Loss= 0.0834    2017-11-01 19:07:11.437837
+Epoch Accuracy: 0.836000005404
+Epoch 1900, batch 14, Minibatch Loss= 0.0833    2017-11-01 19:07:21.025054
+Epoch Accuracy: 0.836666663488
+Epoch 1910, batch 14, Minibatch Loss= 0.0832    2017-11-01 19:07:30.613010
+Epoch Accuracy: 0.836666667461
+Epoch 1920, batch 14, Minibatch Loss= 0.0831    2017-11-01 19:07:40.240368
+Epoch Accuracy: 0.836666667461
+Epoch 1930, batch 14, Minibatch Loss= 0.0830    2017-11-01 19:07:49.872096
+Epoch Accuracy: 0.836666663488
+Epoch 1940, batch 14, Minibatch Loss= 0.0829    2017-11-01 19:07:59.479170
+Epoch Accuracy: 0.837999999523
+Epoch 1950, batch 14, Minibatch Loss= 0.0828    2017-11-01 19:08:09.077113
+Epoch Accuracy: 0.837999999523
+Epoch 1960, batch 14, Minibatch Loss= 0.0827    2017-11-01 19:08:18.670086
+Epoch Accuracy: 0.838666665554
+Epoch 1970, batch 14, Minibatch Loss= 0.0826    2017-11-01 19:08:28.279719
+Epoch Accuracy: 0.83866666158
+Epoch 1980, batch 14, Minibatch Loss= 0.0825    2017-11-01 19:08:37.899315
+Epoch Accuracy: 0.837999991576
+Epoch 1990, batch 14, Minibatch Loss= 0.0824    2017-11-01 19:08:47.501218
+Epoch Accuracy: 0.83866666158
+Epoch 2000, batch 14, Minibatch Loss= 0.0823    2017-11-01 19:08:57.092564
+Epoch Accuracy: 0.839999997616
+Epoch 2010, batch 14, Minibatch Loss= 0.0822    2017-11-01 19:09:06.708195
+Epoch Accuracy: 0.840666663647
+Epoch 2020, batch 14, Minibatch Loss= 0.0821    2017-11-01 19:09:16.336904
+Epoch Accuracy: 0.840666663647
+Epoch 2030, batch 14, Minibatch Loss= 0.0820    2017-11-01 19:09:25.961128
+Epoch Accuracy: 0.841999987761
+Epoch 2040, batch 14, Minibatch Loss= 0.0819    2017-11-01 19:09:35.567138
+Epoch Accuracy: 0.843333331744
+Epoch 2050, batch 14, Minibatch Loss= 0.0817    2017-11-01 19:09:45.178518
+Epoch Accuracy: 0.84333332777
+Epoch 2060, batch 14, Minibatch Loss= 0.0816    2017-11-01 19:09:54.779096
+Epoch Accuracy: 0.842666661739
+Epoch 2070, batch 14, Minibatch Loss= 0.0815    2017-11-01 19:10:04.386644
+Epoch Accuracy: 0.842666665713
+Epoch 2080, batch 14, Minibatch Loss= 0.0814    2017-11-01 19:10:14.022625
+Epoch Accuracy: 0.843333331744
+Epoch 2090, batch 14, Minibatch Loss= 0.0813    2017-11-01 19:10:23.649913
+Epoch Accuracy: 0.84333332777
+Epoch 2100, batch 14, Minibatch Loss= 0.0812    2017-11-01 19:10:33.282934
+Epoch Accuracy: 0.844000001748
+Epoch 2110, batch 14, Minibatch Loss= 0.0811    2017-11-01 19:10:42.930125
+Epoch Accuracy: 0.845999999841
+Epoch 2120, batch 14, Minibatch Loss= 0.0810    2017-11-01 19:10:52.584767
+Epoch Accuracy: 0.845999995867
+Epoch 2130, batch 14, Minibatch Loss= 0.0809    2017-11-01 19:11:02.203600
+Epoch Accuracy: 0.846666661898
+Epoch 2140, batch 14, Minibatch Loss= 0.0808    2017-11-01 19:11:11.835092
+Epoch Accuracy: 0.846666669846
+Epoch 2150, batch 14, Minibatch Loss= 0.0806    2017-11-01 19:11:21.470280
+Epoch Accuracy: 0.84733333985
+Epoch 2160, batch 14, Minibatch Loss= 0.0805    2017-11-01 19:11:31.125127
+Epoch Accuracy: 0.848000001907
+Epoch 2170, batch 14, Minibatch Loss= 0.0804    2017-11-01 19:11:40.772165
+Epoch Accuracy: 0.847999997934
+Epoch 2180, batch 14, Minibatch Loss= 0.0803    2017-11-01 19:11:50.415372
+Epoch Accuracy: 0.848000005881
+Epoch 2190, batch 14, Minibatch Loss= 0.0802    2017-11-01 19:12:00.058968
+Epoch Accuracy: 0.846666669846
+Epoch 2200, batch 14, Minibatch Loss= 0.0801    2017-11-01 19:12:09.698412
+Epoch Accuracy: 0.846666665872
+Epoch 2210, batch 14, Minibatch Loss= 0.0800    2017-11-01 19:12:19.375511
+Epoch Accuracy: 0.846666661898
+Epoch 2220, batch 14, Minibatch Loss= 0.0799    2017-11-01 19:12:29.031077
+Epoch Accuracy: 0.848000001907
+Epoch 2230, batch 14, Minibatch Loss= 0.0797    2017-11-01 19:12:38.685558
+Epoch Accuracy: 0.848000001907
+Epoch 2240, batch 14, Minibatch Loss= 0.0796    2017-11-01 19:12:48.321582
+Epoch Accuracy: 0.849333333969
+Epoch 2250, batch 14, Minibatch Loss= 0.0795    2017-11-01 19:12:57.967800
+Epoch Accuracy: 0.849333337943
+Epoch 2260, batch 14, Minibatch Loss= 0.0794    2017-11-01 19:13:07.625868
+Epoch Accuracy: 0.849333333969
+Epoch 2270, batch 14, Minibatch Loss= 0.0793    2017-11-01 19:13:17.275357
+Epoch Accuracy: 0.849333333969
+Epoch 2280, batch 14, Minibatch Loss= 0.0792    2017-11-01 19:13:26.928902
+Epoch Accuracy: 0.848666663965
+Epoch 2290, batch 14, Minibatch Loss= 0.0791    2017-11-01 19:13:36.573779
+Epoch Accuracy: 0.848666663965
+Epoch 2300, batch 14, Minibatch Loss= 0.0790    2017-11-01 19:13:46.238262
+Epoch Accuracy: 0.848666667938
+Epoch 2310, batch 14, Minibatch Loss= 0.0789    2017-11-01 19:13:55.875649
+Epoch Accuracy: 0.848666667938
+Epoch 2320, batch 14, Minibatch Loss= 0.0787    2017-11-01 19:14:05.515093
+Epoch Accuracy: 0.848666667938
+Epoch 2330, batch 14, Minibatch Loss= 0.0786    2017-11-01 19:14:15.137037
+Epoch Accuracy: 0.848666671912
+Epoch 2340, batch 14, Minibatch Loss= 0.0785    2017-11-01 19:14:24.793843
+Epoch Accuracy: 0.848666667938
+Epoch 2350, batch 14, Minibatch Loss= 0.0784    2017-11-01 19:14:34.468637
+Epoch Accuracy: 0.848666667938
+Epoch 2360, batch 14, Minibatch Loss= 0.0783    2017-11-01 19:14:44.119274
+Epoch Accuracy: 0.848666671912
+Epoch 2370, batch 14, Minibatch Loss= 0.0782    2017-11-01 19:14:53.766019
+Epoch Accuracy: 0.849333337943
+Epoch 2380, batch 14, Minibatch Loss= 0.0781    2017-11-01 19:15:03.429078
+Epoch Accuracy: 0.85
+Epoch 2390, batch 14, Minibatch Loss= 0.0780    2017-11-01 19:15:13.102108
+Epoch Accuracy: 0.850000003974
+Epoch 2400, batch 14, Minibatch Loss= 0.0779    2017-11-01 19:15:22.780559
+Epoch Accuracy: 0.850666670005
+Epoch 2410, batch 14, Minibatch Loss= 0.0778    2017-11-01 19:15:32.446943
+Epoch Accuracy: 0.850666670005
+Epoch 2420, batch 14, Minibatch Loss= 0.0777    2017-11-01 19:15:42.094249
+Epoch Accuracy: 0.851333336035
+Epoch 2430, batch 14, Minibatch Loss= 0.0775    2017-11-01 19:15:51.743710
+Epoch Accuracy: 0.851333336035
+Epoch 2440, batch 14, Minibatch Loss= 0.0774    2017-11-01 19:16:01.428090
+Epoch Accuracy: 0.850666670005
+Epoch 2450, batch 14, Minibatch Loss= 0.0773    2017-11-01 19:16:11.105264
+Epoch Accuracy: 0.850000003974
+Epoch 2460, batch 14, Minibatch Loss= 0.0772    2017-11-01 19:16:20.767091
+Epoch Accuracy: 0.850000003974
+Epoch 2470, batch 14, Minibatch Loss= 0.0771    2017-11-01 19:16:30.421945
+Epoch Accuracy: 0.850000003974
+Epoch 2480, batch 14, Minibatch Loss= 0.0770    2017-11-01 19:16:40.070479
+Epoch Accuracy: 0.850000003974
+Epoch 2490, batch 14, Minibatch Loss= 0.0769    2017-11-01 19:16:49.741299
+Epoch Accuracy: 0.850666670005
+Epoch 2500, batch 14, Minibatch Loss= 0.0768    2017-11-01 19:16:59.421923
+Epoch Accuracy: 0.851333336035
+Epoch 2510, batch 14, Minibatch Loss= 0.0767    2017-11-01 19:17:09.089049
+Epoch Accuracy: 0.851333336035
+Epoch 2520, batch 14, Minibatch Loss= 0.0766    2017-11-01 19:17:18.752098
+Epoch Accuracy: 0.851333336035
+Epoch 2530, batch 14, Minibatch Loss= 0.0765    2017-11-01 19:17:28.453775
+Epoch Accuracy: 0.851333336035
+Epoch 2540, batch 14, Minibatch Loss= 0.0764    2017-11-01 19:17:38.154366
+Epoch Accuracy: 0.851333336035
+Epoch 2550, batch 14, Minibatch Loss= 0.0763    2017-11-01 19:17:47.850545
+Epoch Accuracy: 0.851333336035
+Epoch 2560, batch 14, Minibatch Loss= 0.0762    2017-11-01 19:17:57.524988
+Epoch Accuracy: 0.851999998093
+Epoch 2570, batch 14, Minibatch Loss= 0.0761    2017-11-01 19:18:07.189431
+Epoch Accuracy: 0.852000002066
+Epoch 2580, batch 14, Minibatch Loss= 0.0760    2017-11-01 19:18:16.844776
+Epoch Accuracy: 0.852000002066
+Epoch 2590, batch 14, Minibatch Loss= 0.0759    2017-11-01 19:18:26.495636
+Epoch Accuracy: 0.852000002066
+Epoch 2600, batch 14, Minibatch Loss= 0.0758    2017-11-01 19:18:36.196044
+Epoch Accuracy: 0.852666672071
+Epoch 2610, batch 14, Minibatch Loss= 0.0757    2017-11-01 19:18:45.857252
+Epoch Accuracy: 0.852666672071
+Epoch 2620, batch 14, Minibatch Loss= 0.0756    2017-11-01 19:18:55.544518
+Epoch Accuracy: 0.852666668097
+Epoch 2630, batch 14, Minibatch Loss= 0.0755    2017-11-01 19:19:05.211135
+Epoch Accuracy: 0.852666668097
+Epoch 2640, batch 14, Minibatch Loss= 0.0754    2017-11-01 19:19:14.905688
+Epoch Accuracy: 0.852000002066
+Epoch 2650, batch 14, Minibatch Loss= 0.0753    2017-11-01 19:19:24.585378
+Epoch Accuracy: 0.852666668097
+Epoch 2660, batch 14, Minibatch Loss= 0.0752    2017-11-01 19:19:34.267583
+Epoch Accuracy: 0.852666668097
+Epoch 2670, batch 14, Minibatch Loss= 0.0751    2017-11-01 19:19:43.947077
+Epoch Accuracy: 0.854000000159
+Epoch 2680, batch 14, Minibatch Loss= 0.0750    2017-11-01 19:19:53.648250
+Epoch Accuracy: 0.854000004133
+Epoch 2690, batch 14, Minibatch Loss= 0.0749    2017-11-01 19:20:03.349163
+Epoch Accuracy: 0.854000000159
+Epoch 2700, batch 14, Minibatch Loss= 0.0748    2017-11-01 19:20:13.014165
+Epoch Accuracy: 0.854000000159
+Epoch 2710, batch 14, Minibatch Loss= 0.0747    2017-11-01 19:20:22.714341
+Epoch Accuracy: 0.854000000159
+Epoch 2720, batch 14, Minibatch Loss= 0.0746    2017-11-01 19:20:32.443261
+Epoch Accuracy: 0.854000000159
+Epoch 2730, batch 14, Minibatch Loss= 0.0745    2017-11-01 19:20:42.159473
+Epoch Accuracy: 0.854000000159
+Epoch 2740, batch 14, Minibatch Loss= 0.0744    2017-11-01 19:20:51.857787
+Epoch Accuracy: 0.85466666619
+Epoch 2750, batch 14, Minibatch Loss= 0.0743    2017-11-01 19:21:01.541348
+Epoch Accuracy: 0.854666670163
+Epoch 2760, batch 14, Minibatch Loss= 0.0742    2017-11-01 19:21:11.239747
+Epoch Accuracy: 0.855333332221
+Epoch 2770, batch 14, Minibatch Loss= 0.0741    2017-11-01 19:21:20.960889
+Epoch Accuracy: 0.856000002225
+Epoch 2780, batch 14, Minibatch Loss= 0.0740    2017-11-01 19:21:30.677373
+Epoch Accuracy: 0.855999998252
+Epoch 2790, batch 14, Minibatch Loss= 0.0739    2017-11-01 19:21:40.379716
+Epoch Accuracy: 0.855999998252
+Epoch 2800, batch 14, Minibatch Loss= 0.0738    2017-11-01 19:21:50.097398
+Epoch Accuracy: 0.857333338261
+Epoch 2810, batch 14, Minibatch Loss= 0.0737    2017-11-01 19:21:59.797042
+Epoch Accuracy: 0.858000004292
+Epoch 2820, batch 14, Minibatch Loss= 0.0736    2017-11-01 19:22:09.500302
+Epoch Accuracy: 0.858000004292
+Epoch 2830, batch 14, Minibatch Loss= 0.0736    2017-11-01 19:22:19.210943
+Epoch Accuracy: 0.858000000318
+Epoch 2840, batch 14, Minibatch Loss= 0.0735    2017-11-01 19:22:28.902783
+Epoch Accuracy: 0.858666670322
+Epoch 2850, batch 14, Minibatch Loss= 0.0734    2017-11-01 19:22:38.587018
+Epoch Accuracy: 0.859333336353
+Epoch 2860, batch 14, Minibatch Loss= 0.0733    2017-11-01 19:22:48.335518
+Epoch Accuracy: 0.860000002384
+Epoch 2870, batch 14, Minibatch Loss= 0.0732    2017-11-01 19:22:58.064520
+Epoch Accuracy: 0.859999998411
+Epoch 2880, batch 14, Minibatch Loss= 0.0731    2017-11-01 19:23:07.781659
+Epoch Accuracy: 0.860666668415
+Epoch 2890, batch 14, Minibatch Loss= 0.0730    2017-11-01 19:23:17.490304
+Epoch Accuracy: 0.861333330472
+Epoch 2900, batch 14, Minibatch Loss= 0.0729    2017-11-01 19:23:27.215317
+Epoch Accuracy: 0.861333334446
+Epoch 2910, batch 14, Minibatch Loss= 0.0728    2017-11-01 19:23:36.938929
+Epoch Accuracy: 0.861333334446
+Epoch 2920, batch 14, Minibatch Loss= 0.0727    2017-11-01 19:23:46.643831
+Epoch Accuracy: 0.861333330472
+Epoch 2930, batch 14, Minibatch Loss= 0.0726    2017-11-01 19:23:56.380686
+Epoch Accuracy: 0.862666666508
+Epoch 2940, batch 14, Minibatch Loss= 0.0725    2017-11-01 19:24:06.085230
+Epoch Accuracy: 0.862666662534
+Epoch 2950, batch 14, Minibatch Loss= 0.0724    2017-11-01 19:24:15.815026
+Epoch Accuracy: 0.862666662534
+Epoch 2960, batch 14, Minibatch Loss= 0.0723    2017-11-01 19:24:25.539886
+Epoch Accuracy: 0.862666666508
+Epoch 2970, batch 14, Minibatch Loss= 0.0722    2017-11-01 19:24:35.281282
+Epoch Accuracy: 0.863333328565
+Epoch 2980, batch 14, Minibatch Loss= 0.0721    2017-11-01 19:24:44.995832
+Epoch Accuracy: 0.863333328565
+Epoch 2990, batch 14, Minibatch Loss= 0.0720    2017-11-01 19:24:54.729148
+Epoch Accuracy: 0.863333328565
+Epoch 3000, batch 14, Minibatch Loss= 0.0719    2017-11-01 19:25:04.496916
+Epoch Accuracy: 0.862666662534
+Epoch 3010, batch 14, Minibatch Loss= 0.0718    2017-11-01 19:25:14.229279
+Epoch Accuracy: 0.862666662534
+Epoch 3020, batch 14, Minibatch Loss= 0.0717    2017-11-01 19:25:23.950427
+Epoch Accuracy: 0.863999998569
+Epoch 3030, batch 14, Minibatch Loss= 0.0716    2017-11-01 19:25:33.686001
+Epoch Accuracy: 0.863999998569
+Epoch 3040, batch 14, Minibatch Loss= 0.0715    2017-11-01 19:25:43.428351
+Epoch Accuracy: 0.863999998569
+Epoch 3050, batch 14, Minibatch Loss= 0.0714    2017-11-01 19:25:53.191896
+Epoch Accuracy: 0.863999994596
+Epoch 3060, batch 14, Minibatch Loss= 0.0713    2017-11-01 19:26:02.960452
+Epoch Accuracy: 0.863999998569
+Epoch 3070, batch 14, Minibatch Loss= 0.0712    2017-11-01 19:26:12.728527
+Epoch Accuracy: 0.863333332539
+Epoch 3080, batch 14, Minibatch Loss= 0.0711    2017-11-01 19:26:22.453318
+Epoch Accuracy: 0.863999998569
+Epoch 3090, batch 14, Minibatch Loss= 0.0711    2017-11-01 19:26:32.206164
+Epoch Accuracy: 0.864000002543
+Epoch 3100, batch 14, Minibatch Loss= 0.0710    2017-11-01 19:26:41.984131
+Epoch Accuracy: 0.864666660627
+Epoch 3110, batch 14, Minibatch Loss= 0.0709    2017-11-01 19:26:51.736663
+Epoch Accuracy: 0.8646666646
+Epoch 3120, batch 14, Minibatch Loss= 0.0708    2017-11-01 19:27:01.491228
+Epoch Accuracy: 0.865333330631
+Epoch 3130, batch 14, Minibatch Loss= 0.0707    2017-11-01 19:27:11.252676
+Epoch Accuracy: 0.866666666667
+Epoch 3140, batch 14, Minibatch Loss= 0.0706    2017-11-01 19:27:21.022159
+Epoch Accuracy: 0.866666666667
+Epoch 3150, batch 14, Minibatch Loss= 0.0705    2017-11-01 19:27:30.795320
+Epoch Accuracy: 0.867333332698
+Epoch 3160, batch 14, Minibatch Loss= 0.0704    2017-11-01 19:27:40.566342
+Epoch Accuracy: 0.867333332698
+Epoch 3170, batch 14, Minibatch Loss= 0.0703    2017-11-01 19:27:50.287528
+Epoch Accuracy: 0.867999998728
+Epoch 3180, batch 14, Minibatch Loss= 0.0702    2017-11-01 19:28:00.052318
+Epoch Accuracy: 0.867999998728
+Epoch 3190, batch 14, Minibatch Loss= 0.0701    2017-11-01 19:28:09.823534
+Epoch Accuracy: 0.867999994755
+Epoch 3200, batch 14, Minibatch Loss= 0.0700    2017-11-01 19:28:19.579052
+Epoch Accuracy: 0.867999998728
+Epoch 3210, batch 14, Minibatch Loss= 0.0699    2017-11-01 19:28:29.345503
+Epoch Accuracy: 0.867999994755
+Epoch 3220, batch 14, Minibatch Loss= 0.0698    2017-11-01 19:28:39.102893
+Epoch Accuracy: 0.867999994755
+Epoch 3230, batch 14, Minibatch Loss= 0.0697    2017-11-01 19:28:48.892488
+Epoch Accuracy: 0.867999998728
+Epoch 3240, batch 14, Minibatch Loss= 0.0696    2017-11-01 19:28:58.678989
+Epoch Accuracy: 0.867999998728
+Epoch 3250, batch 14, Minibatch Loss= 0.0695    2017-11-01 19:29:08.436586
+Epoch Accuracy: 0.867999994755
+Epoch 3260, batch 14, Minibatch Loss= 0.0694    2017-11-01 19:29:18.182134
+Epoch Accuracy: 0.868666660786
+Epoch 3270, batch 14, Minibatch Loss= 0.0693    2017-11-01 19:29:27.924758
+Epoch Accuracy: 0.868666664759
+Epoch 3280, batch 14, Minibatch Loss= 0.0692    2017-11-01 19:29:37.711312
+Epoch Accuracy: 0.86933333079
+Epoch 3290, batch 14, Minibatch Loss= 0.0691    2017-11-01 19:29:47.510558
+Epoch Accuracy: 0.869999996821
+Epoch 3300, batch 14, Minibatch Loss= 0.0690    2017-11-01 19:29:57.313018
+Epoch Accuracy: 0.869999996821
+Epoch 3310, batch 14, Minibatch Loss= 0.0689    2017-11-01 19:30:07.078912
+Epoch Accuracy: 0.869999992847
+Epoch 3320, batch 14, Minibatch Loss= 0.0688    2017-11-01 19:30:16.815263
+Epoch Accuracy: 0.86933333079
+Epoch 3330, batch 14, Minibatch Loss= 0.0687    2017-11-01 19:30:26.598374
+Epoch Accuracy: 0.869999996821
+Epoch 3340, batch 14, Minibatch Loss= 0.0686    2017-11-01 19:30:36.365544
+Epoch Accuracy: 0.869333322843
+Epoch 3350, batch 14, Minibatch Loss= 0.0686    2017-11-01 19:30:46.153856
+Epoch Accuracy: 0.869333326817
+Epoch 3360, batch 14, Minibatch Loss= 0.0685    2017-11-01 19:30:55.903639
+Epoch Accuracy: 0.869333326817
+Epoch 3370, batch 14, Minibatch Loss= 0.0684    2017-11-01 19:31:05.686226
+Epoch Accuracy: 0.869333326817
+Epoch 3380, batch 14, Minibatch Loss= 0.0683    2017-11-01 19:31:15.483731
+Epoch Accuracy: 0.869333326817
+Epoch 3390, batch 14, Minibatch Loss= 0.0682    2017-11-01 19:31:25.295337
+Epoch Accuracy: 0.869333322843
+Epoch 3400, batch 14, Minibatch Loss= 0.0681    2017-11-01 19:31:35.094457
+Epoch Accuracy: 0.869333326817
+Epoch 3410, batch 14, Minibatch Loss= 0.0680    2017-11-01 19:31:44.884081
+Epoch Accuracy: 0.869333326817
+Epoch 3420, batch 14, Minibatch Loss= 0.0679    2017-11-01 19:31:54.659369
+Epoch Accuracy: 0.869333326817
+Epoch 3430, batch 14, Minibatch Loss= 0.0678    2017-11-01 19:32:04.496623
+Epoch Accuracy: 0.868666656812
+Epoch 3440, batch 14, Minibatch Loss= 0.0677    2017-11-01 19:32:14.287353
+Epoch Accuracy: 0.868666660786
+Epoch 3450, batch 14, Minibatch Loss= 0.0676    2017-11-01 19:32:24.120096
+Epoch Accuracy: 0.869333326817
+Epoch 3460, batch 14, Minibatch Loss= 0.0675    2017-11-01 19:32:33.898717
+Epoch Accuracy: 0.86933333079
+Epoch 3470, batch 14, Minibatch Loss= 0.0674    2017-11-01 19:32:43.735418
+Epoch Accuracy: 0.870666658878
+Epoch 3480, batch 14, Minibatch Loss= 0.0673    2017-11-01 19:32:53.575991
+Epoch Accuracy: 0.870666662852
+Epoch 3490, batch 14, Minibatch Loss= 0.0672    2017-11-01 19:33:03.386303
+Epoch Accuracy: 0.870666658878
+Epoch 3500, batch 14, Minibatch Loss= 0.0672    2017-11-01 19:33:13.212387
+Epoch Accuracy: 0.870666658878
+Epoch 3510, batch 14, Minibatch Loss= 0.0671    2017-11-01 19:33:23.061012
+Epoch Accuracy: 0.870666658878
+Epoch 3520, batch 14, Minibatch Loss= 0.0670    2017-11-01 19:33:32.848829
+Epoch Accuracy: 0.870666662852
+Epoch 3530, batch 14, Minibatch Loss= 0.0669    2017-11-01 19:33:42.627251
+Epoch Accuracy: 0.87199999094
+Epoch 3540, batch 14, Minibatch Loss= 0.0668    2017-11-01 19:33:52.433017
+Epoch Accuracy: 0.87199999094
+Epoch 3550, batch 14, Minibatch Loss= 0.0667    2017-11-01 19:34:02.229963
+Epoch Accuracy: 0.872666660945
+Epoch 3560, batch 14, Minibatch Loss= 0.0666    2017-11-01 19:34:12.063581
+Epoch Accuracy: 0.872666664918
+Epoch 3570, batch 14, Minibatch Loss= 0.0665    2017-11-01 19:34:21.865329
+Epoch Accuracy: 0.872666664918
+Epoch 3580, batch 14, Minibatch Loss= 0.0664    2017-11-01 19:34:31.683870
+Epoch Accuracy: 0.872666660945
+Epoch 3590, batch 14, Minibatch Loss= 0.0663    2017-11-01 19:34:41.520631
+Epoch Accuracy: 0.873333330949
+Epoch 3600, batch 14, Minibatch Loss= 0.0662    2017-11-01 19:34:51.339647
+Epoch Accuracy: 0.873333330949
+Epoch 3610, batch 14, Minibatch Loss= 0.0662    2017-11-01 19:35:01.195770
+Epoch Accuracy: 0.873333326976
+Epoch 3620, batch 14, Minibatch Loss= 0.0661    2017-11-01 19:35:11.040629
+Epoch Accuracy: 0.874666663011
+Epoch 3630, batch 14, Minibatch Loss= 0.0660    2017-11-01 19:35:20.851691
+Epoch Accuracy: 0.874666666985
+Epoch 3640, batch 14, Minibatch Loss= 0.0659    2017-11-01 19:35:30.669945
+Epoch Accuracy: 0.874666663011
+Epoch 3650, batch 14, Minibatch Loss= 0.0658    2017-11-01 19:35:40.506753
+Epoch Accuracy: 0.874666663011
+Epoch 3660, batch 14, Minibatch Loss= 0.0657    2017-11-01 19:35:50.390546
+Epoch Accuracy: 0.875333333015
+Epoch 3670, batch 14, Minibatch Loss= 0.0656    2017-11-01 19:36:00.257920
+Epoch Accuracy: 0.875333325068
+Epoch 3680, batch 14, Minibatch Loss= 0.0656    2017-11-01 19:36:10.091780
+Epoch Accuracy: 0.876666665077
+Epoch 3690, batch 14, Minibatch Loss= 0.0655    2017-11-01 19:36:19.942412
+Epoch Accuracy: 0.876666669051
+Epoch 3700, batch 14, Minibatch Loss= 0.0654    2017-11-01 19:36:29.825189
+Epoch Accuracy: 0.876666673024
+Epoch 3710, batch 14, Minibatch Loss= 0.0653    2017-11-01 19:36:39.697251
+Epoch Accuracy: 0.876666669051
+Epoch 3720, batch 14, Minibatch Loss= 0.0652    2017-11-01 19:36:49.561261
+Epoch Accuracy: 0.876666661104
+Epoch 3730, batch 14, Minibatch Loss= 0.0651    2017-11-01 19:36:59.373058
+Epoch Accuracy: 0.877333327134
+Epoch 3740, batch 14, Minibatch Loss= 0.0651    2017-11-01 19:37:09.206018
+Epoch Accuracy: 0.877333339055
+Epoch 3750, batch 14, Minibatch Loss= 0.0650    2017-11-01 19:37:19.049454
+Epoch Accuracy: 0.87800000906
+Epoch 3760, batch 14, Minibatch Loss= 0.0649    2017-11-01 19:37:28.929411
+Epoch Accuracy: 0.878666667144
+Epoch 3770, batch 14, Minibatch Loss= 0.0648    2017-11-01 19:37:38.788125
+Epoch Accuracy: 0.879333337148
+Epoch 3780, batch 14, Minibatch Loss= 0.0647    2017-11-01 19:37:48.650975
+Epoch Accuracy: 0.879333337148
+Epoch 3790, batch 14, Minibatch Loss= 0.0646    2017-11-01 19:37:58.497395
+Epoch Accuracy: 0.880000003179
+Epoch 3800, batch 14, Minibatch Loss= 0.0646    2017-11-01 19:38:08.350242
+Epoch Accuracy: 0.880666673183
+Epoch 3810, batch 14, Minibatch Loss= 0.0645    2017-11-01 19:38:18.210333
+Epoch Accuracy: 0.88066666921
+Epoch 3820, batch 14, Minibatch Loss= 0.0644    2017-11-01 19:38:28.073192
+Epoch Accuracy: 0.881333335241
+Epoch 3830, batch 14, Minibatch Loss= 0.0643    2017-11-01 19:38:37.960873
+Epoch Accuracy: 0.880666665236
+Epoch 3840, batch 14, Minibatch Loss= 0.0642    2017-11-01 19:38:47.815024
+Epoch Accuracy: 0.88066666921
+Epoch 3850, batch 14, Minibatch Loss= 0.0642    2017-11-01 19:38:57.667218
+Epoch Accuracy: 0.880666673183
+Epoch 3860, batch 14, Minibatch Loss= 0.0641    2017-11-01 19:39:07.518014
+Epoch Accuracy: 0.882000005245
+Epoch 3870, batch 14, Minibatch Loss= 0.0640    2017-11-01 19:39:17.369247
+Epoch Accuracy: 0.882000001272
+Epoch 3880, batch 14, Minibatch Loss= 0.0639    2017-11-01 19:39:27.247727
+Epoch Accuracy: 0.882000001272
+Epoch 3890, batch 14, Minibatch Loss= 0.0639    2017-11-01 19:39:37.164869
+Epoch Accuracy: 0.882666671276
+Epoch 3900, batch 14, Minibatch Loss= 0.0638    2017-11-01 19:39:47.010396
+Epoch Accuracy: 0.882000005245
+Epoch 3910, batch 14, Minibatch Loss= 0.0637    2017-11-01 19:39:56.851389
+Epoch Accuracy: 0.883333337307
+Epoch 3920, batch 14, Minibatch Loss= 0.0636    2017-11-01 19:40:06.707045
+Epoch Accuracy: 0.884000007312
+Epoch 3930, batch 14, Minibatch Loss= 0.0635    2017-11-01 19:40:16.600934
+Epoch Accuracy: 0.884000007312
+Epoch 3940, batch 14, Minibatch Loss= 0.0635    2017-11-01 19:40:26.541186
+Epoch Accuracy: 0.884000003338
+Epoch 3950, batch 14, Minibatch Loss= 0.0634    2017-11-01 19:40:36.451634
+Epoch Accuracy: 0.884000003338
+Epoch 3960, batch 14, Minibatch Loss= 0.0633    2017-11-01 19:40:46.388883
+Epoch Accuracy: 0.884000003338
+Epoch 3970, batch 14, Minibatch Loss= 0.0632    2017-11-01 19:40:56.287309
+Epoch Accuracy: 0.884666669369
+Epoch 3980, batch 14, Minibatch Loss= 0.0632    2017-11-01 19:41:06.232878
+Epoch Accuracy: 0.8853333354
+Epoch 3990, batch 14, Minibatch Loss= 0.0631    2017-11-01 19:41:16.091685
+Epoch Accuracy: 0.886000009378
+Epoch 4000, batch 14, Minibatch Loss= 0.0630    2017-11-01 19:41:25.996538
+Epoch Accuracy: 0.886666671435
+Epoch 4010, batch 14, Minibatch Loss= 0.0630    2017-11-01 19:41:35.853360
+Epoch Accuracy: 0.88733334144
+Epoch 4020, batch 14, Minibatch Loss= 0.0629    2017-11-01 19:41:45.788597
+Epoch Accuracy: 0.88733334144
+Epoch 4030, batch 14, Minibatch Loss= 0.0628    2017-11-01 19:41:55.734117
+Epoch Accuracy: 0.887333329519
+Epoch 4040, batch 14, Minibatch Loss= 0.0627    2017-11-01 19:42:05.664347
+Epoch Accuracy: 0.887333337466
+Epoch 4050, batch 14, Minibatch Loss= 0.0627    2017-11-01 19:42:15.578774
+Epoch Accuracy: 0.88800000747
+Epoch 4060, batch 14, Minibatch Loss= 0.0626    2017-11-01 19:42:25.474414
+Epoch Accuracy: 0.88800000747
+Epoch 4070, batch 14, Minibatch Loss= 0.0625    2017-11-01 19:42:35.442853
+Epoch Accuracy: 0.887999999523
+Epoch 4080, batch 14, Minibatch Loss= 0.0624    2017-11-01 19:42:45.403672
+Epoch Accuracy: 0.88800000747
+Epoch 4090, batch 14, Minibatch Loss= 0.0624    2017-11-01 19:42:55.298487
+Epoch Accuracy: 0.888000003497
+Epoch 4100, batch 14, Minibatch Loss= 0.0623    2017-11-01 19:43:05.243597
+Epoch Accuracy: 0.88800000747
+Epoch 4110, batch 14, Minibatch Loss= 0.0622    2017-11-01 19:43:15.193384
+Epoch Accuracy: 0.888666677475
+Epoch 4120, batch 14, Minibatch Loss= 0.0621    2017-11-01 19:43:25.158659
+Epoch Accuracy: 0.888000011444
+Epoch 4130, batch 14, Minibatch Loss= 0.0621    2017-11-01 19:43:35.089268
+Epoch Accuracy: 0.88800000747
+Epoch 4140, batch 14, Minibatch Loss= 0.0620    2017-11-01 19:43:45.028276
+Epoch Accuracy: 0.88800000747
+Epoch 4150, batch 14, Minibatch Loss= 0.0619    2017-11-01 19:43:54.915076
+Epoch Accuracy: 0.888666673501
+Epoch 4160, batch 14, Minibatch Loss= 0.0619    2017-11-01 19:44:04.816001
+Epoch Accuracy: 0.890000005563
+Epoch 4170, batch 14, Minibatch Loss= 0.0618    2017-11-01 19:44:14.711707
+Epoch Accuracy: 0.890666675568
+Epoch 4180, batch 14, Minibatch Loss= 0.0617    2017-11-01 19:44:24.632127
+Epoch Accuracy: 0.890666675568
+Epoch 4190, batch 14, Minibatch Loss= 0.0616    2017-11-01 19:44:34.561285
+Epoch Accuracy: 0.891333333651
+Epoch 4200, batch 14, Minibatch Loss= 0.0616    2017-11-01 19:44:44.518101
+Epoch Accuracy: 0.890666671594
+Epoch 4210, batch 14, Minibatch Loss= 0.0615    2017-11-01 19:44:54.521576
+Epoch Accuracy: 0.891333337625
+Epoch 4220, batch 14, Minibatch Loss= 0.0614    2017-11-01 19:45:04.455222
+Epoch Accuracy: 0.891333341599
+Epoch 4230, batch 14, Minibatch Loss= 0.0613    2017-11-01 19:45:14.419446
+Epoch Accuracy: 0.891333329678
+Epoch 4240, batch 14, Minibatch Loss= 0.0613    2017-11-01 19:45:24.373188
+Epoch Accuracy: 0.892000003656
+Epoch 4250, batch 14, Minibatch Loss= 0.0612    2017-11-01 19:45:34.333963
+Epoch Accuracy: 0.893333339691
+Epoch 4260, batch 14, Minibatch Loss= 0.0611    2017-11-01 19:45:44.331746
+Epoch Accuracy: 0.893333331744
+Epoch 4270, batch 14, Minibatch Loss= 0.0610    2017-11-01 19:45:54.248770
+Epoch Accuracy: 0.893333339691
+Epoch 4280, batch 14, Minibatch Loss= 0.0610    2017-11-01 19:46:04.155417
+Epoch Accuracy: 0.894666671753
+Epoch 4290, batch 14, Minibatch Loss= 0.0609    2017-11-01 19:46:14.144071
+Epoch Accuracy: 0.894666671753
+Epoch 4300, batch 14, Minibatch Loss= 0.0608    2017-11-01 19:46:24.080730
+Epoch Accuracy: 0.894666671753
+Epoch 4310, batch 14, Minibatch Loss= 0.0607    2017-11-01 19:46:34.096803
+Epoch Accuracy: 0.894666671753
+Epoch 4320, batch 14, Minibatch Loss= 0.0606    2017-11-01 19:46:44.061289
+Epoch Accuracy: 0.894666671753
+Epoch 4330, batch 14, Minibatch Loss= 0.0606    2017-11-01 19:46:54.000381
+Epoch Accuracy: 0.894666671753
+Epoch 4340, batch 14, Minibatch Loss= 0.0605    2017-11-01 19:47:03.960364
+Epoch Accuracy: 0.894666671753
+Epoch 4350, batch 14, Minibatch Loss= 0.0604    2017-11-01 19:47:13.985351
+Epoch Accuracy: 0.895333337784
+Epoch 4360, batch 14, Minibatch Loss= 0.0603    2017-11-01 19:47:23.990217
+Epoch Accuracy: 0.895333341757
+Epoch 4370, batch 14, Minibatch Loss= 0.0602    2017-11-01 19:47:33.969572
+Epoch Accuracy: 0.894666667779
+Epoch 4380, batch 14, Minibatch Loss= 0.0601    2017-11-01 19:47:43.956307
+Epoch Accuracy: 0.894000001748
+Epoch 4390, batch 14, Minibatch Loss= 0.0601    2017-11-01 19:47:53.980781
+Epoch Accuracy: 0.894666671753
+Epoch 4400, batch 14, Minibatch Loss= 0.0600    2017-11-01 19:48:04.013506
+Epoch Accuracy: 0.894666671753
+Epoch 4410, batch 14, Minibatch Loss= 0.0599    2017-11-01 19:48:14.013890
+Epoch Accuracy: 0.894666671753
+Epoch 4420, batch 14, Minibatch Loss= 0.0598    2017-11-01 19:48:24.004198
+Epoch Accuracy: 0.894666671753
+Epoch 4430, batch 14, Minibatch Loss= 0.0597    2017-11-01 19:48:34.032777
+Epoch Accuracy: 0.89533333381
+Epoch 4440, batch 14, Minibatch Loss= 0.0596    2017-11-01 19:48:44.066869
+Epoch Accuracy: 0.896000011762
+Epoch 4450, batch 14, Minibatch Loss= 0.0595    2017-11-01 19:48:54.005154
+Epoch Accuracy: 0.896000011762
+Epoch 4460, batch 14, Minibatch Loss= 0.0595    2017-11-01 19:49:03.969311
+Epoch Accuracy: 0.896666673819
+Epoch 4470, batch 14, Minibatch Loss= 0.0594    2017-11-01 19:49:13.976177
+Epoch Accuracy: 0.896666677793
+Epoch 4480, batch 14, Minibatch Loss= 0.0593    2017-11-01 19:49:24.004196
+Epoch Accuracy: 0.896666677793
+Epoch 4490, batch 14, Minibatch Loss= 0.0592    2017-11-01 19:49:34.064688
+Epoch Accuracy: 0.896666677793
+Epoch 4500, batch 14, Minibatch Loss= 0.0591    2017-11-01 19:49:44.028789
+Epoch Accuracy: 0.897333343824
+Epoch 4510, batch 14, Minibatch Loss= 0.0590    2017-11-01 19:49:54.037439
+Epoch Accuracy: 0.897333347797
+Epoch 4520, batch 14, Minibatch Loss= 0.0589    2017-11-01 19:50:04.057322
+Epoch Accuracy: 0.897333351771
+Epoch 4530, batch 14, Minibatch Loss= 0.0588    2017-11-01 19:50:14.034278
+Epoch Accuracy: 0.897333343824
+Epoch 4540, batch 14, Minibatch Loss= 0.0587    2017-11-01 19:50:24.088803
+Epoch Accuracy: 0.897333347797
+Epoch 4550, batch 14, Minibatch Loss= 0.0586    2017-11-01 19:50:34.110631
+Epoch Accuracy: 0.897333343824
+Epoch 4560, batch 14, Minibatch Loss= 0.0585    2017-11-01 19:50:44.108615
+Epoch Accuracy: 0.897333343824
+Epoch 4570, batch 14, Minibatch Loss= 0.0584    2017-11-01 19:50:54.198970
+Epoch Accuracy: 0.898666667938
+Epoch 4580, batch 14, Minibatch Loss= 0.0583    2017-11-01 19:51:04.275117
+Epoch Accuracy: 0.900000011921
+Epoch 4590, batch 14, Minibatch Loss= 0.0582    2017-11-01 19:51:14.310534
+Epoch Accuracy: 0.900000007947
+Epoch 4600, batch 14, Minibatch Loss= 0.0581    2017-11-01 19:51:24.284036
+Epoch Accuracy: 0.900000003974
+Epoch 4610, batch 14, Minibatch Loss= 0.0580    2017-11-01 19:51:34.343970
+Epoch Accuracy: 0.900666673978
+Epoch 4620, batch 14, Minibatch Loss= 0.0579    2017-11-01 19:51:44.414580
+Epoch Accuracy: 0.900666677952
+Epoch 4630, batch 14, Minibatch Loss= 0.0578    2017-11-01 19:51:54.451299
+Epoch Accuracy: 0.900666666031
+Epoch 4640, batch 14, Minibatch Loss= 0.0577    2017-11-01 19:52:04.524654
+Epoch Accuracy: 0.901333343983
+Epoch 4650, batch 14, Minibatch Loss= 0.0576    2017-11-01 19:52:14.520959
+Epoch Accuracy: 0.901333340009
+Epoch 4660, batch 14, Minibatch Loss= 0.0575    2017-11-01 19:52:24.625118
+Epoch Accuracy: 0.901333343983
+Epoch 4670, batch 14, Minibatch Loss= 0.0574    2017-11-01 19:52:34.631633
+Epoch Accuracy: 0.901333340009
+Epoch 4680, batch 14, Minibatch Loss= 0.0572    2017-11-01 19:52:44.717382
+Epoch Accuracy: 0.902000013987
+Epoch 4690, batch 14, Minibatch Loss= 0.0571    2017-11-01 19:52:54.719947
+Epoch Accuracy: 0.902666676044
+Epoch 4700, batch 14, Minibatch Loss= 0.0570    2017-11-01 19:53:04.788680
+Epoch Accuracy: 0.904000004133
+Epoch 4710, batch 14, Minibatch Loss= 0.0569    2017-11-01 19:53:14.814164
+Epoch Accuracy: 0.904666674137
+Epoch 4720, batch 14, Minibatch Loss= 0.0568    2017-11-01 19:53:24.935237
+Epoch Accuracy: 0.904666670163
+Epoch 4730, batch 14, Minibatch Loss= 0.0567    2017-11-01 19:53:34.940192
+Epoch Accuracy: 0.905333340168
+Epoch 4740, batch 14, Minibatch Loss= 0.0565    2017-11-01 19:53:45.019303
+Epoch Accuracy: 0.905333328247
+Epoch 4750, batch 14, Minibatch Loss= 0.0564    2017-11-01 19:53:55.123689
+Epoch Accuracy: 0.906000002225
+Epoch 4760, batch 14, Minibatch Loss= 0.0563    2017-11-01 19:54:05.132370
+Epoch Accuracy: 0.907333338261
+Epoch 4770, batch 14, Minibatch Loss= 0.0562    2017-11-01 19:54:15.228566
+Epoch Accuracy: 0.907333338261
+Epoch 4780, batch 14, Minibatch Loss= 0.0560    2017-11-01 19:54:25.304983
+Epoch Accuracy: 0.907333338261
+Epoch 4790, batch 14, Minibatch Loss= 0.0559    2017-11-01 19:54:35.341683
+Epoch Accuracy: 0.906666676203
+Epoch 4800, batch 14, Minibatch Loss= 0.0558    2017-11-01 19:54:45.467200
+Epoch Accuracy: 0.908000012239
+Epoch 4810, batch 14, Minibatch Loss= 0.0557    2017-11-01 19:54:55.507349
+Epoch Accuracy: 0.908000012239
+Epoch 4820, batch 14, Minibatch Loss= 0.0555    2017-11-01 19:55:05.604801
+Epoch Accuracy: 0.908000008265
+Epoch 4830, batch 14, Minibatch Loss= 0.0554    2017-11-01 19:55:15.641928
+Epoch Accuracy: 0.908666674296
+Epoch 4840, batch 14, Minibatch Loss= 0.0553    2017-11-01 19:55:25.788318
+Epoch Accuracy: 0.90866667827
+Epoch 4850, batch 14, Minibatch Loss= 0.0551    2017-11-01 19:55:35.928998
+Epoch Accuracy: 0.90866667827
+Epoch 4860, batch 14, Minibatch Loss= 0.0550    2017-11-01 19:55:45.977178
+Epoch Accuracy: 0.909333344301
+Epoch 4870, batch 14, Minibatch Loss= 0.0549    2017-11-01 19:55:56.080877
+Epoch Accuracy: 0.908666674296
+Epoch 4880, batch 14, Minibatch Loss= 0.0547    2017-11-01 19:56:06.150791
+Epoch Accuracy: 0.90866667827
+Epoch 4890, batch 14, Minibatch Loss= 0.0546    2017-11-01 19:56:16.219997
+Epoch Accuracy: 0.908666674296
+Epoch 4900, batch 14, Minibatch Loss= 0.0544    2017-11-01 19:56:26.295253
+Epoch Accuracy: 0.910000002384
+Epoch 4910, batch 14, Minibatch Loss= 0.0543    2017-11-01 19:56:36.399087
+Epoch Accuracy: 0.910000010331
+Epoch 4920, batch 14, Minibatch Loss= 0.0541    2017-11-01 19:56:46.430589
+Epoch Accuracy: 0.910000010331
+Epoch 4930, batch 14, Minibatch Loss= 0.0540    2017-11-01 19:56:56.572041
+Epoch Accuracy: 0.910000010331
+Epoch 4940, batch 14, Minibatch Loss= 0.0539    2017-11-01 19:57:06.740973
+Epoch Accuracy: 0.910000002384
+Epoch 4950, batch 14, Minibatch Loss= 0.0537    2017-11-01 19:57:16.899276
+Epoch Accuracy: 0.910666672389
+Epoch 4960, batch 14, Minibatch Loss= 0.0536    2017-11-01 19:57:27.030087
+Epoch Accuracy: 0.910666680336
+Epoch 4970, batch 14, Minibatch Loss= 0.0534    2017-11-01 19:57:37.109855
+Epoch Accuracy: 0.910000006358
+Epoch 4980, batch 14, Minibatch Loss= 0.0533    2017-11-01 19:57:47.292808
+Epoch Accuracy: 0.910000010331
+Epoch 4990, batch 14, Minibatch Loss= 0.0531    2017-11-01 19:57:57.483769
+Epoch Accuracy: 0.910000006358
+Epoch 5000, batch 14, Minibatch Loss= 0.0529    2017-11-01 19:58:07.606482
+Epoch Accuracy: 0.91066668431
+Optimization Finisihed!
+Validation Accuracy= 0.632857131107 2017-11-01 19:58:08.654082
