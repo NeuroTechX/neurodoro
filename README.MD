@@ -33,8 +33,10 @@ In addition to the data files in `muse-data`, we are trying to keep all new data
 
 ## Setup
 
-1. Install and setup React Native from the [Source website](https://facebook.github.io/react-native/docs/getting-started.html). We recommend setting up the [Gradle Daemon](https://docs.gradle.org/2.9/userguide/gradle_daemon.html) as well
-2. Install [yarn](https://github.com/yarnpkg/yarn) and run `yarn install`. npm might work as well.
-3. Connect an Android device with USB debug mode enabled. There can be issues running this app on a virtual device, so we recommend real hardware.
-4. run `react-native start` to start React packager
-5. In new terminal, `adb reverse tcp:8081 tcp:8081` to ensure debug server is connected to the device and `react-native run-android` to install
+1. Install and setup [React Native](https://facebook.github.io/react-native/docs/getting-started.html). Note: Neurodoro uses lots of native code, so create-react-native-app and Expo are not an option. Follow the instructions for "Building Apps with Native Code." You may also need to install the [JDK](https://www3.ntu.edu.sg/home/ehchua/programming/howto/JDK_Howto.html), [Node](https://nodejs.org/en/download/package-manager/), [Watchman](https://medium.com/@vonchristian/how-to-setup-watchman-on-ubuntu-16-04-53196cc0227c), and the [Gradle Daemon](https://docs.gradle.org/2.9/userguide/gradle_daemon.html) as well
+2. Install [yarn](https://github.com/yarnpkg/yarn)
+3. Clone this repo `git clone https://github.com/NeuroTechX/neurodoro.git`
+4. run `yarn install` in the neurodoro folder
+5. Connect an Android device with USB debug mode enabled. Because the LibMuse library depends on an ARM architecture, emulators are not an option
+6. Run `react-native start` to start React packager
+7. In new terminal, run `adb reverse tcp:8081 tcp:8081` to ensure debug server is connected to your device and then `react-native run-android` to install neurodoro
