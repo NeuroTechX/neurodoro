@@ -1,13 +1,3 @@
-""" Recurrent Neural Network.
-Recurrent Neural Network (LSTM) implementation example using TensorFlow library.
-This example is using the MNIST database of handwritten digits (http://yann.lecun.com/exdb/mnist/)
-Links:
-    [Long Short Term Memory](http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf)
-    [MNIST Dataset](http://yann.lecun.com/exdb/mnist/).
-Author: Aymeric Damien
-Project: https://github.com/aymericdamien/TensorFlow-Examples/
-"""
-
 from __future__ import print_function
 
 from datetime import datetime
@@ -20,6 +10,7 @@ import os
 
 import logging
 
+# intialize logger
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, filename="training_log", filemode="a+",
                         format="%(message)s")
@@ -37,8 +28,11 @@ num_features = 10 # Number of dimensions in tangent space produced by pyriemann
 timesteps = 6 # Number of eeg epochs per sequence
 num_hidden = 2048 # hidden layer num of neurons
 num_classes = 2 # distracted or concentrated
+num_layers = 1 # number of hidden layers
+input_keep_prob = 1 # portion of incoming connections to keep
+output_keep_prob = 1 # portion of outgoing connections to keep
 
-logging.info("LR = " + learning_rate + " Epochs = " + epochs)
+logging.info("LR = " + str(learning_rate) + " Epochs = " + str(epochs))
 
 # Initialize data feed
 train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps, num_features, num_classes)
@@ -57,7 +51,7 @@ biases = {
 }
 
 
-def RNN(x, weights, biases):
+def RNN(x, weights, biases, num_layers, input_keep_prob, output_keep_prob):
 
     # Prepare data shape to match `rnn` funtion requirements
     # Current data input shape: (batch_size, timesteps, n_input)
@@ -66,16 +60,25 @@ def RNN(x, weights, biases):
     # Unsatck to get a list of 'timesteps' tensors of shape (batch_size, n_input)
     x = tf.unstack(x, timesteps, 1)
 
-    # Define a lstm cell with tensorflow
-    lstm_cell = rnn.BasicLSTMCell(num_hidden, forget_bias=0.1)
+    # Define layers of neurons
+    cells = []
+    for _ in range(num_layers):
+        cell = rnn.BasicLSTMCell(num_hidden, forget_bias=0.1)
+        if output_keep_prob < 1.0 or input_keep_prob < 1.0:
+            cell = rnn.DropoutWrapper(cell,
+                                      input_keep_prob=input_keep_prob,
+                                      output_keep_prob=output_keep_prob)
+        cells.append(cell)
+
+    layers = rnn.MultiRNNCell(cells, state_is_tuple=True)
 
     # Get lstm cell output
-    outputs, states = rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
+    outputs, states = rnn.static_rnn(layers, x, dtype=tf.float32)
     
     # Linear activation, using rnn inner loop last output
     return tf.matmul(outputs[-1], weights['out']) + biases['out']
 
-logits = RNN(X, weights, biases)
+logits = RNN(X, weights, biases, num_layers, input_keep_prob, output_keep_prob)
 prediction = tf.nn.softmax(logits)
 
 # Define loss and optimizer
@@ -115,7 +118,8 @@ with tf.Session() as sess:
                         ", Minibatch Loss= " + \
                         "{:.4f}".format(loss) +  "    " + 
                         str(datetime.now()))
-                logging.info("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))   
+                logging.info("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))  
+                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches)) 
  
                 # intrument for tensorboard
 
