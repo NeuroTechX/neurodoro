@@ -163,7 +163,7 @@ public class EEGFileWriter {
                 dir.mkdir();
             }
             final File file = new File(dir,
-
+                            instanceID +
                             ".csv");
             fileWriter = new java.io.FileWriter(file);
 
