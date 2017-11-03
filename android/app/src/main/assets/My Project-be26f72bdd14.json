@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "euphoric-coral-122514",
+  "private_key_id": "be26f72bdd1488e0a2ba8272462e042de30a41ac",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCopW47TVdPfIHh\nm+aw0TWVEzU2dbug2gkvvvOb6NxCXBULz7nkQncOd9TeqJ4S5hLLctU5QoMWMBH3\n9aPDJt2l0rpKM/cae3+Gs+S9Iqxhcf71Yv2sA9DYs0LYxoP2cdJ9PhU8Rkx8kmC3\njqjQij1MFSnd/rg5yVPKWvHUkUpkJZVaG05vhOyTHcUfpUc2pldr33etPOGUXQcK\nOC2gk5vZnLm6lulk/eQbPDLrgpAypnbN+2Bm9drsJcLbSmI81f1M2CiwylZQDuEQ\n8kz4dxl+wzPsfLBeAjE9hKJtTRNmiegoCYJKmDbNjvGRgTR8fU1MdaL5A8DjpVJS\nAYlMh5FvAgMBAAECggEAActEuW0bXSqaEnAp9j6Q1IWlnsSGMEdcKqhcMg/k6/B2\nftorrucaxMoh4b58c/9Y5YDSuNm2yEZ5onV3/lb3APvADz2vRsECkchvH1NI7ykb\nHmQlBllCCv7D2sd91uIjbEFRUNip7qH7VRM3mNmnnka+sRsJEwBLxmQiR3HGOft8\nnVlJ/Z3+sQZGQrW0QMA9ai1nixmeidX/haU52+fWEawHnsL6NbIis9bzClHBX9kI\nMdIfDSeivmvnM+czL4oAXwWJXqW2xwge4TO/wvaukVFT0XMNxo6x7MDm7/o56O/7\n0cz07BtjiGVSGI+BFhyYOL1K4f28Jzfr9GE8Um/zBQKBgQDRAwsh8MGHOSvMLPnf\n4brBnZ3trujpejJr8eNAyGl+j9gyV5+2mBBatjz3RU8cgKjRGzLAtuqiDcWP+pGW\nlsa6aO/1vpZP5bSuyumfByDb01xVBJ7TNyfrBYpQDuvFQAgwrNl2WnKoLiHzlXpp\ng8kJQWyVE7A31U9PG8ogglOBNQKBgQDOj0e9weeyVX13Fk0L+frDXnLYsfOmifcw\nTzLGHhsRiOPRNZSdl55COliRag4cJCnRcwUDllUREU0uW+RmB6qPE26iYpjZZ4Nq\npIpv3nJhp8SzqHL8sK+f1aGx8j2bFH3jn94UPOZY6C9tiN9Td2IS9drdUjggPMJl\nRBmnNi7gkwKBgC3051u9HjBnZ7PrJ74MWg38ZB9A2EGN9sw5UWiLKHcFldnr3lg9\ns0reyyTrfmub9oKT4mLxVUHwmUIBLEXaPTP7otd74n0K2uGcCCZJYPY00RZ4f5ud\ngw9wFmtn/HtQivx45Q/a717/VcPDWDkfGvMICaH1xEdihZ+1Uoo3XbkJAoGAN8Iv\nsIaWX+p56tqnQ7NgQLrPL7WhuvQFORI394kK74nPTZs0GfJisygC3oYNdwVAEJ0G\n3ngHUIsmFXySxAQPw32QYN9SuWUa8X+nKxmWMMxT6ddv6sxbLD9D3cAxZxp5/Scb\nkMT7vUY3/05yUpqoa8vYH+Rg6Dreku12K1ASCWcCgYB3eZ62CU43F0IHSmQuks6d\ntG4rI4pB2qbAVrMxjBMWuxkCMblYSFn3J4teejPPqWNixyC7jZzV3Bg/rhFydbxI\n4B2eiSR2OAzH7bLOQ6A/4A+eYu1J8BO8SA1KAxfDjZRIGfIQGkuyB8lUuTwA0sDL\nFHM0c9we5Hl8avqIMI4pPA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dano-neurotechx-com@euphoric-coral-122514.iam.gserviceaccount.com",
+  "client_id": "109239485430033482383",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dano-neurotechx-com%40euphoric-coral-122514.iam.gserviceaccount.com"
+}

@@ -132,8 +132,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
             data = new PSDDataSource();
         } else {
             Log.w("Listener", "EEG datatype detected");
-            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType, fileNum);
-            fileWriter.updateUserName(userName);
+            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType);
 
             // If data will be filtered, create filters
             if(recorderDataType.contains("FILTERED")) {
@@ -240,7 +239,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         public double[][] smoothLogPower = new double[nbChannels][nbFreqBins];
 
         public PSDDataSource() {
-            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType, fileNum, nbFreqBins);
+            fileWriter = new EEGFileWriter(getCurrentActivity(), recorderDataType, nbFreqBins);
             fileWriter.updateUserName(userName);
             noiseDetector = new NoiseDetector(600.0);
         }

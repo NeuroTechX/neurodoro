@@ -3,10 +3,7 @@ import { WebView, Text, View, Picker, Dimensions } from "react-native";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { MediaQueryStyleSheet } from "react-native-responsive";
-import Prompt from "react-native-prompt";
-
 import Button from "../components/Button";
-
 import config from "../redux/config";
 import * as colors from "../styles/colors";
 
@@ -21,14 +18,13 @@ function mapStateToProps(state) {
   };
 }
 
-const width = Dimensions.get('window').width;
+const width = Dimensions.get("window").width;
 
 class Recorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataType: config.dataType.RAW_EEG,
-      promptVisible: true,
       userName: "",
       isRecording: false
     };
@@ -47,33 +43,30 @@ class Recorder extends Component {
         </Button>
       );
     }
-      return (
-        <Button
-          onPress={() => {
-            this.setState({ isRecording: true });
-            MuseRecorder.startRecording(this.state.dataType);
-          }}
-        >
-          Start recording
-        </Button>
-      );
-    }
-
+    return (
+      <Button
+        onPress={() => {
+          this.setState({ isRecording: true });
+          MuseRecorder.startRecording(this.state.dataType);
+        }}
+      >
+        Start recording
+      </Button>
+    );
+  }
 
   onMessage = event => {
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
     if (_.isNaN(difficulty)) {
-      console.log("nan detected");
       difficulty = 0;
     }
     if (_.isNaN(performance)) {
-      console.log("nan detected");
       performance = 0;
     }
-    if(this.state.isRecording){
-    MuseRecorder.sendTaskInfo(difficulty, performance);
-  }
+    if (this.state.isRecording) {
+      MuseRecorder.sendTaskInfo(difficulty, performance);
+    }
   };
 
   render() {
@@ -82,7 +75,7 @@ class Recorder extends Component {
         <View style={styles.webviewContainer}>
           <WebView
             source={{ uri: "https://daos-84628.firebaseapp.com" }}
-            style={{ width: width, backgroundColor: 'black' }}
+            style={{ width: width, backgroundColor: "black" }}
             scalePageToFit={true}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
@@ -110,25 +103,12 @@ class Recorder extends Component {
           </View>
           <View
             style={{
-              alignItems: "center",
+              alignItems: "center"
             }}
           >
             {this.renderRecordingButton()}
           </View>
         </View>
-
-        <Prompt
-          title="Enter the name you would like your data to be stored under"
-          placeholder="Enter name here..."
-          defaultValue=""
-          visible={this.state.promptVisible}
-          onCancel={() => this.setState({ promptVisible: false })}
-          onSubmit={value => {
-            this.setState({ promptVisible: false });
-            MuseRecorder.setUserName(value);
-          }}
-        />
-
       </View>
     );
   }
@@ -167,7 +147,7 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     webviewContainer: {
-      backgroundColor: 'purple',
+      backgroundColor: "purple",
       alignItems: "center",
       justifyContent: "center",
       flex: 3

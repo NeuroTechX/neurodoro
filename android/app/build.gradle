@@ -102,6 +102,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        multiDexEnabled  true
+
         //Todo finish the signing config process
         signingConfigs {
                     release {
@@ -146,6 +148,10 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
 }
 
 dependencies {
@@ -157,6 +163,9 @@ dependencies {
     compile files('libs/libmuse_android.jar')
     compile "com.android.support:appcompat-v7:25.1.1"
     compile 'org.apache.commons:commons-lang3:3.4'
+    compile ('com.google.cloud:gcloud-java-bigquery:0.2.1') {
+        exclude group: 'com.google.api-client', module: 'google-api-client-appengine'
+    }
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -166,3 +175,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+

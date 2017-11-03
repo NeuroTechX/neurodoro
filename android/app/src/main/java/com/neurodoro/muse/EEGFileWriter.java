@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.iid.InstanceID;
+import com.neurodoro.cloud.CloudStorageHelper;
 //import com.neurodoro.cloud.CloudStorageHelper;
 
 import java.io.BufferedWriter;
@@ -38,25 +39,29 @@ public class EEGFileWriter {
     private int performance = 0;
     private String userName = "";
     private boolean firstLine;
+    private String instanceID;
+    private String sessionId;
 
     // ---------------------------------------------------------------------------
     // Constructor
 
-    public EEGFileWriter(Context context, String title, int fileNum) {
+    public EEGFileWriter(Context context, String title) {
         Log.w("MuseDataSource", "Abstract constructor called");
         this.context = context;
         isRecording = false;
         this.title = getTitleFromDataType(title);
-        this.fileNum = fileNum;
+        instanceID = InstanceID.getInstance(context).getId();
+        sessionId = instanceID.substring(7) + Long.toString(System.currentTimeMillis()).substring(9);
     }
 
-    public EEGFileWriter(Context context, String title, int fileNum, int nbFreqBins) {
+    public EEGFileWriter(Context context, String title, int nbFreqBins) {
         Log.w("MuseDataSource", "Abstract constructor called");
         this.context = context;
         this.nbFreqBins = nbFreqBins;
         isRecording = false;
         this.title = getTitleFromDataType(title);
-        this.fileNum = fileNum;
+        instanceID = InstanceID.getInstance(context).getId();
+        sessionId = instanceID.substring(7) + Long.toString(System.currentTimeMillis()).substring(9);
     }
 
     // ---------------------------------------------------------------------------
@@ -81,7 +86,14 @@ public class EEGFileWriter {
         }
 
         // Create unique Instance ID column
-        builder.append("Instance ID");
+        builder.append("Instance ID,");
+
+        // Create unique Session ID column;
+        builder.append("Session ID,");
+
+        // Create dataType column
+        builder.append("Data Type,");
+
 
         builder.append("\n");
         makeToast();
@@ -107,7 +119,8 @@ public class EEGFileWriter {
             }
         }
         if(firstLine == true){
-            builder.append("," + InstanceID.getInstance(context).getId());
+            builder.append("," + instanceID + "," + sessionId + "," + title);
+            firstLine = false;
         }
         builder.append("\n");
     }
@@ -136,7 +149,8 @@ public class EEGFileWriter {
             }
 
             if(firstLine == true){
-                builder.append("," + InstanceID.getInstance(context).getId());
+                builder.append("," + instanceID + "," + sessionId + "," + title);
+                firstLine = false;
             }
             builder.append("\n");
         }
@@ -149,7 +163,7 @@ public class EEGFileWriter {
                 dir.mkdir();
             }
             final File file = new File(dir,
-                    userName+title+fileNum+
+
                             ".csv");
             fileWriter = new java.io.FileWriter(file);
 
@@ -200,15 +214,16 @@ public class EEGFileWriter {
         sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(sendIntent, "Export " +
                 "data to..."));
-
-        /*CloudStorageHelper cloudHelper = new CloudStorageHelper();
+        /*
+        CloudStorageHelper cloudHelper = new CloudStorageHelper();
         try {
-            cloudHelper.uploadFile("neurodoro-data", userName, Uri.fromFile(dataCSV));
+            cloudHelper.uploadData();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        */
+*/
     }
+
 
     public boolean isRecording() {
         return isRecording;
