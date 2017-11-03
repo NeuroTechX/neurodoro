@@ -18,15 +18,15 @@ if __name__ == "__main__":
 sess = tf.InteractiveSession()
 
 # Training Parameters
-learning_rate = 0.005
+learning_rate = 0.01
 epochs = 5000
-batch_size = 100
+batch_size = 150
 display_step = 10
 
 # Network Parameters
 num_features = 10 # Number of dimensions in tangent space produced by pyriemann
 timesteps = 6 # Number of eeg epochs per sequence
-num_hidden = 128 # hidden layer num of neurons
+num_hidden = 2048 # hidden layer num of neurons
 num_classes = 2 # distracted or concentrated
 num_layers = 3 # number of hidden layers
 input_keep_prob = 1 # portion of incoming connections to keep
@@ -44,18 +44,14 @@ Y = tf.placeholder("float", [batch_size, num_classes])
 
 # Define weights
 weights = {
-    'out': tf.Variable(tf.zeros([num_hidden, num_classes]))
+    'out': tf.Variable(tf.random_normal([num_hidden, num_classes]))
 }
 biases = {
-    'out': tf.Variable(tf.zeros([num_classes]))
+    'out': tf.Variable(tf.random_normal([num_classes]))
 }
 
 
 def RNN(x, weights, biases, num_layers, input_keep_prob, output_keep_prob):
-
-    # Prepare data shape to match `rnn` funtion requirements
-    # Current data input shape: (batch_size, timesteps, n_input)
-    # Required shape: 'timesteps' tensors list of shape (batch_size, n_input)
 
     # Unsatck to get a list of 'timesteps' tensors of shape (batch_size, n_input)
     x = tf.unstack(x, timesteps, 1)
@@ -119,7 +115,7 @@ with tf.Session() as sess:
                         "{:.4f}".format(loss) +  "    " + 
                         str(datetime.now()))
                 logging.info("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))  
-                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches) 
+                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches)) 
  
                 # intrument for tensorboard
 

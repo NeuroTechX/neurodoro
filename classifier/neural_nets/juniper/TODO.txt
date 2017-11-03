@@ -1,8 +1,11 @@
 TODO
- 
- - Add LSTM layers 
- - will we need droupout? probably will help
- - choose best initilaization scheme
+
+ - faster CPU instructions
+ - train / validate / test control flow
+     - validate while training
+     - run training op on validation set every X epochs?
+ - batch norm?
+ - Adaptive learning rate
  - be able to create model checkpoints
  - quantizing the model, make sit smaller for mobile
  - make tensorboard useful?
