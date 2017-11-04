@@ -25,16 +25,17 @@ class BatchLoader():
     def sequence_windows(self):
         xdata = []
         ydata = []
+        label_width = self.num_classes - 1 
         # For each eeg epoch, get seq_length previous epochs and store current label
         for i in range(len(self.tensor)):
             if i + self.seq_length < len(self.tensor):
                 t = i + self.seq_length
-                x = self.tensor[i:t,self.num_classes:self.num_classes + self.num_features]
-                y = self.tensor[t,0:self.num_classes]
+                x = self.tensor[i:t,label_width:label_width + self.num_features]
+                y = self.tensor[t,0:label_width]
                 xdata.append(x)
                 ydata.append(y)
         self.xdata = np.array(xdata)
-        self.ydata = np.array(ydata)
+        self.ydata = np.array(ydata).reshape((-1,))
         print("x: " + str(self.xdata.shape) +  "    y: " + str(self.ydata.shape))
 
     def create_batches(self):

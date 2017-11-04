@@ -38,7 +38,7 @@ valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps, num_feat
 
 # tf Graph input
 X = tf.placeholder("float", [batch_size, timesteps, num_features])
-Y = tf.placeholder("float", [batch_size, num_classes])
+Y = tf.placeholder("int64", [batch_size])
 
 # Define weights
 weights = {
@@ -82,7 +82,7 @@ optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
 train_op = optimizer.minimize(loss_op)
 
 # Evaluate model 
-correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
+correct_pred = tf.equal(tf.argmax(prediction, 1), Y)
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 # Initialize the variable (i.e. assign their default value)
