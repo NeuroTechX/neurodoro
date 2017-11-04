@@ -84,15 +84,15 @@ def difficulty_class(diff_perf):
     # This was our distracted criteria
     if diff_perf[0] < 50 and diff_perf[1] < 60:
     # if diff_perf[0] > 60:
-        return [1,0]
+        return [1]
     else:
-        return [0,1]
+        return [0]
 
 X = epochs.copy().pick_types(eeg=True).get_data()
 
 diff_perf = epochs.copy().pick_types(eeg=False, stim=True).get_data().mean(axis=2)
 y = np.apply_along_axis(difficulty_class, 1, diff_perf)
-y = np.reshape(y, (len(y),2))
+y = np.reshape(y, (len(y),1))
 print(X.shape, y.shape)
 
 # Let's transform our data into a covariance matrix and a tangentspace
