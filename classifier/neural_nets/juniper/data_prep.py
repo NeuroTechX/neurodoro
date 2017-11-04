@@ -99,6 +99,7 @@ print(X.shape, y.shape)
 covs = Covariances(estimator='lwf').fit_transform(X)
 tans = TangentSpace().fit_transform(covs)
 
+print(tans.shape, y.shape)
 output_data = np.concatenate((y, tans), axis=1)
 
 split = int(len(output_data) / 3)
