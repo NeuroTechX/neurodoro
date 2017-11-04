@@ -51,3 +51,7 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
+classifier/neural_nets/juniper/tensorboard/
+classifier/neural_nets/juniper/training_log
+classifier/neural_nets/juniper/data/

@@ -1,10 +1,16 @@
 TODO
 
+ - compare riemannian embedded data against
+    - random
+    - raw
+    - filtered
  - faster CPU instructions
+ - add precision and recall metrics
  - train / validate / test control flow
      - validate while training
      - run training op on validation set every X epochs?
  - batch norm?
+ - try a second order optimizer
  - Adaptive learning rate
  - be able to create model checkpoints
  - quantizing the model, make sit smaller for mobile

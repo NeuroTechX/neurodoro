@@ -6,12 +6,13 @@ import numpy as np
 
 
 class BatchLoader():
-    def __init__(self, input_file, batch_size, seq_length, num_features, num_classes):
+    def __init__(self, input_file, batch_size, seq_length, num_features, num_classes, train):
         self.input_file = input_file
         self.batch_size = batch_size
         self.seq_length = seq_length
         self.num_features = num_features
         self.num_classes = num_classes
+        self.train = train
         
         self.preprocess(input_file)
         self.sequence_windows()
@@ -51,12 +52,17 @@ class BatchLoader():
         self.y_batches = np.array_split(self.ytrimmed, self.num_batches, 0)
         
     def next_batch(self):
-        x, y = self.x_batches[self.pointer], self.y_batches[self.pointer]
-        self.pointer += 1
+        if self.train == True:
+            x, y = self.x_batches[self.train_pointer], self.y_batches[self.train_pointer]
+            self.train_pointer += 1
+        else:
+            x, y = self.x_batches[self.valid_pointer], self.y_batches[self.valid_pointer]
+            self.valid_pointer += 1
         return x, y
 
     def reset_batch_pointer(self):
-        self.pointer = 0
+        self.train_pointer = 0
+        self.valid_pointer = 0
 
     def get_x_and_y(self):
         x, y = self.xdata, self.ydata
