@@ -17,14 +17,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import accuracy_score
-from tpot import TPOTRegressor
 from math import sqrt
 import pyriemann
 from mne import create_info, concatenate_raws
 from mne.io import RawArray
 from mne.channels import read_montage
 from glob import glob
-from pyriemann.utils.viz import plt, plot_confusion_matrix, plot_embedding
+# from pyriemann.utils.viz import plt, plot_confusion_matrix, plot_embedding
 from pyriemann.estimation import Covariances, HankelCovariances
 from pyriemann.tangentspace import TangentSpace
 from pyriemann.clustering import Potato
@@ -56,54 +55,55 @@ ch_types = ['stim'] * 2 + ['eeg'] * 4
 montage = read_montage('standard_1005')
 
 # get data and exclude Aux channel
-data = data.values[:,-6:].T
-data
+#data = data.values[:,-6:].T
+print(data.shape)
 
 # convert in Volts (from uVolts)
 #data[:-1] *= 1e-6
 
 # create mne objects
-info = create_info(ch_names=ch_names, ch_types=ch_types, sfreq=sfreq, montage=montage)
-raw = (RawArray(data=data, info=info))
+#info = create_info(ch_names=ch_names, ch_types=ch_types, sfreq=sfreq, montage=montage)
+#raw = (RawArray(data=data, info=info))
 
 # Setting up band-pass filter from 2 - 50 Hz
-raw.filter(2, 50, method='iir')
+#raw.filter(2, 50, method='iir')
 
 ## Plot the PSD of the EEG data just to make sure it looks alright
 #raw.plot_psd(picks=[2]);
 
-from mne import make_fixed_length_events, Epochs
+#from mne import make_fixed_length_events, Epochs
 
 # Make an events array with epoch times every .5 seconds
-event = make_fixed_length_events(raw, 1, duration=0.5)
+#event = make_fixed_length_events(raw, 1, duration=0.5)
 
 # Make an epochs array object from the raw dataset with events array event, length of 2 seconds
-epochs = Epochs(raw, event, tmin=0, tmax=4, preload=True)
+#epochs = Epochs(raw, event, tmin=0, tmax=4, preload=True)
 
 def difficulty_class(diff_perf):
     # This was our distracted criteria
     if diff_perf[0] < 50 and diff_perf[1] < 60:
     # if diff_perf[0] > 60:
-        return [1,0]
+        return [1]
     else:
-        return [0,1]
+        return [0]
 
-X = epochs.copy().pick_types(eeg=True).get_data()
-
-diff_perf = epochs.copy().pick_types(eeg=False, stim=True).get_data().mean(axis=2)
+#X = raw.copy().pick_types(eeg=True).get_data()
+#diff_perf = raw.copy().pick_types(eeg=False, stim=True).get_data().mean(axis=1)
+X = data.values[:,2:6]
+diff_perf = data.values[:,0:2]
 y = np.apply_along_axis(difficulty_class, 1, diff_perf)
-y = np.reshape(y, (len(y),2))
+#y = np.reshape(y, (len(y),1))
 print(X.shape, y.shape)
 
 # Let's transform our data into a covariance matrix and a tangentspace
-covs = Covariances(estimator='lwf').fit_transform(X)
-tans = TangentSpace().fit_transform(covs)
+# covs = Covariances(estimator='lwf').fit_transform(X)
+# tans = TangentSpace().fit_transform(covs)
 
-output_data = np.concatenate((y, tans), axis=1)
+output_data = np.concatenate((y, X), axis=1)
 
 split = int(len(output_data) / 3)
 train = pd.DataFrame(output_data[:len(output_data)-split,:])
 valid = pd.DataFrame(output_data[len(output_data)-split:,:])
 
-train.to_csv('/Users/joshharris/neurodoro/classifier/neural_nets/juniper/data/training_eeg.csv', header=False, index=False)
-valid.to_csv('/Users/joshharris/neurodoro/classifier/neural_nets/juniper/data/valid_eeg.csv', header=False, index=False)
+train.to_csv('~/neurodoro/classifier/neural_nets/juniper/data/training_eeg.csv', header=False, index=False)
+valid.to_csv('~/neurodoro/classifier/neural_nets/juniper/data/valid_eeg.csv', header=False, index=False)
