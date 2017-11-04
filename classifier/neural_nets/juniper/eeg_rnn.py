@@ -16,19 +16,19 @@ if __name__ == "__main__":
                         format="%(message)s")
 
 # Training Parameters
-learning_rate = 0.0001
+learning_rate = 0.005
 epochs = 10000
-batch_size = 75
+batch_size = 100
 display_step = 10
 
 # Network Parameters
 num_features = 10 # Number of dimensions in tangent space produced by pyriemann
 timesteps = 6 # Number of eeg epochs per sequence
-num_hidden = 256 # hidden layer num of neurons
+num_hidden = 2048 # hidden layer num of neurons
 num_classes = 2 # distracted or concentrated
-num_layers = 3 # number of hidden layers
-input_keep_prob = 0.1 # portion of incoming connections to keep
-output_keep_prob = 0.1 # portion of outgoing connections to keep
+num_layers = 1 # number of hidden layers
+input_keep_prob = 1 # portion of incoming connections to keep
+output_keep_prob = 0.5 # portion of outgoing connections to keep
 
 logging.info("LR = " + str(learning_rate) + " Epochs = " + str(epochs))
 
