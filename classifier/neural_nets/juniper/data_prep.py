@@ -31,11 +31,11 @@ from pyriemann.clustering import Potato
 
 # Here are the good raw datasets
 
-a = pd.read_csv("data/muse-data/Dano-08-11-RawEEG3.csv", header=0, index_col=False)
-b = pd.read_csv("data/muse-data/Dano-08-11-RawEEG0.csv", header=0, index_col=False)
-c = pd.read_csv("data/muse-data/josh_sep_21RawEEG2.csv", header=0, index_col=False)
-d = pd.read_csv("data/muse-data/josh_sep_21_distracted_RawEEG0.csv", header=0, index_col=False)
-e = pd.read_csv("data/muse-data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
+a = pd.read_csv("data/muse_data/Dano-08-11-RawEEG3.csv", header=0, index_col=False)
+b = pd.read_csv("data/muse_data/Dano-08-11-RawEEG0.csv", header=0, index_col=False)
+c = pd.read_csv("data/muse_data/josh_sep_21RawEEG2.csv", header=0, index_col=False)
+d = pd.read_csv("data/muse_data/josh_sep_21_distracted_RawEEG0.csv", header=0, index_col=False)
+e = pd.read_csv("data/muse_data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
 
 # Add them all together
 data = [a,b,c,d,e]
