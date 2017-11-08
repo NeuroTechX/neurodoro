@@ -56,6 +56,7 @@ class Recorder extends Component {
   }
 
   onMessage = event => {
+    console.log(event.nativeEvent.data)
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
     if (_.isNaN(difficulty)) {
@@ -76,10 +77,10 @@ class Recorder extends Component {
           <WebView
             source={{ uri: "https://daos-84628.firebaseapp.com" }}
             style={{ width: width, backgroundColor: "black" }}
-            scalePageToFit={true}
+            scalesPageToFit={true}
             onMessage={this.onMessage}
             javaScriptEnabled={true}
-            domStorageEnabled={true}
+            domStorageEnabled={false}
           />
         </View>
         <View style={styles.buttonContainer}>

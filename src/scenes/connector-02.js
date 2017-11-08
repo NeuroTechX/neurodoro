@@ -3,13 +3,12 @@ import { Text, View } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
 import { MediaQueryStyleSheet } from "react-native-responsive";
-import config from '../redux/config';
+import config from "../redux/config";
 import * as colors from "../styles/colors";
 
 // Components. For JS UI elements
 import Button from "../components/Button";
 import ConnectorWidget from "../components/ConnectorWidget";
-
 
 function mapStateToProps(state) {
   return {

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { connectAndGo } from "../redux/actions";
 import * as colors from "../styles/colors";
+import config from "../redux/config";
 
 // Components. For JS UI elements
 import BigButton from "../components/BigButton";
@@ -13,7 +14,8 @@ import WhiteButton from "../components/WhiteButton";
 
 function mapStateToProps(state) {
   return {
-    destination: state.destination
+    destination: state.destination,
+    connectionStatus: state.connectionStatus
   };
 }
 
@@ -21,7 +23,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      connectAndGo,
+      connectAndGo
     },
     dispatch
   );
@@ -47,20 +49,30 @@ class Landing extends Component {
         </View>
         <View style={styles.buttonContainer}>
           <BigButton
-            fontSize={30}
-            onPress={() =>
-              Alert.alert(
-                "You down with EEG?",
-                "Would you like to use the Muse to try and recommend when to take a break?",
-                [
-                  {
-                    text: "No EEG, just the timer",
-                    onPress: Actions.Timer
-                  },
-                  { text: "OK", onPress: () => this.props.connectAndGo("TIMER") }
-                ],
-                { cancelable: true }
-              )}
+            fontSize={25}
+            onPress={() => {
+              if (
+                this.props.connectionStatus == config.connectionStatus.CONNECTED
+              ) {
+                Actions.Timer;
+              } else {
+                Alert.alert(
+                  "You down with EEG?",
+                  "Would you like to use the Muse to try and recommend when to take a break?",
+                  [
+                    {
+                      text: "No EEG, just the timer",
+                      onPress: Actions.Timer
+                    },
+                    {
+                      text: "OK",
+                      onPress: () => this.props.connectAndGo("TIMER")
+                    }
+                  ],
+                  { cancelable: true }
+                );
+              }
+            }}
           >
             Use the timer
           </BigButton>

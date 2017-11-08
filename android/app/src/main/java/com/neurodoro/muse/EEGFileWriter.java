@@ -101,6 +101,9 @@ public class EEGFileWriter {
     }
 
     public void addEEGDataToFile(double[] data) {
+        if(firstLine == false){
+            return;
+        }
 
         // Append timestamp
         Long tsLong = System.currentTimeMillis();
@@ -206,7 +209,7 @@ public class EEGFileWriter {
     }
 
     public void sendData(File dataCSV) {
-
+        /*
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.setType("application/csv");
@@ -214,14 +217,13 @@ public class EEGFileWriter {
         sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(sendIntent, "Export " +
                 "data to..."));
-        /*
+        */
         CloudStorageHelper cloudHelper = new CloudStorageHelper();
         try {
-            cloudHelper.uploadData();
+            cloudHelper.uploadData(builder.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-*/
     }
 
 
