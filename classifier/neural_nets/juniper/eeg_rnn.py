@@ -12,15 +12,13 @@ import logging
 
 # intialize logger
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, filename="training_log", filemode="a+",
+    logging.basicConfig(level=logging.DEBUG, filename="training_log", filemode="w",
                         format="%(message)s")
 
-sess = tf.InteractiveSession()
-
 # Training Parameters
-learning_rate = 0.01
-epochs = 5000
-batch_size = 150
+learning_rate = 0.005
+epochs = 10000
+batch_size = 100
 display_step = 10
 
 # Network Parameters
@@ -28,19 +26,19 @@ num_features = 10 # Number of dimensions in tangent space produced by pyriemann
 timesteps = 6 # Number of eeg epochs per sequence
 num_hidden = 2048 # hidden layer num of neurons
 num_classes = 2 # distracted or concentrated
-num_layers = 3 # number of hidden layers
+num_layers = 1 # number of hidden layers
 input_keep_prob = 1 # portion of incoming connections to keep
-output_keep_prob = 1 # portion of outgoing connections to keep
+output_keep_prob = 0.5 # portion of outgoing connections to keep
 
 logging.info("LR = " + str(learning_rate) + " Epochs = " + str(epochs))
 
 # Initialize data feed
-train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps, num_features, num_classes)
-valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps, num_features, num_classes)
+train_loader = BatchLoader('data/training_eeg.csv', batch_size, timesteps, num_features, num_classes, train=True)
+valid_loader = BatchLoader('data/valid_eeg.csv', batch_size, timesteps, num_features, num_classes, train=False)
 
 # tf Graph input
 X = tf.placeholder("float", [batch_size, timesteps, num_features])
-Y = tf.placeholder("float", [batch_size, num_classes])
+Y = tf.placeholder("int64", [batch_size])
 
 # Define weights
 weights = {
@@ -59,7 +57,7 @@ def RNN(x, weights, biases, num_layers, input_keep_prob, output_keep_prob):
     # Define layers of neurons
     cells = []
     for _ in range(num_layers):
-        cell = rnn.BasicLSTMCell(num_hidden, forget_bias=0.1)
+        cell = rnn.BasicLSTMCell(num_hidden, forget_bias=1, state_is_tuple=True, activation=tf.nn.relu)
         if output_keep_prob < 1.0 or input_keep_prob < 1.0:
             cell = rnn.DropoutWrapper(cell,
                                       input_keep_prob=input_keep_prob,
@@ -78,17 +76,32 @@ logits = RNN(X, weights, biases, num_layers, input_keep_prob, output_keep_prob)
 prediction = tf.nn.softmax(logits)
 
 # Define loss and optimizer
-loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
+loss_op = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
     logits=logits, labels=Y))
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
 train_op = optimizer.minimize(loss_op)
 
 # Evaluate model 
-correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
+correct_pred = tf.equal(tf.argmax(prediction, 1), Y)
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 # Initialize the variable (i.e. assign their default value)
 init = tf.global_variables_initializer()
+
+# Run validation set
+
+def validate():
+    valid_loader.valid_pointer = 0
+    validation_accuracy = []
+    input_keep_prob = 1
+    output_keep_prob = 1
+    for v in range(valid_loader.num_batches):
+        valid_x, valid_y = valid_loader.next_batch()
+        valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
+        validation_accuracy.append(valid_acc)
+
+    logging.info("Validation Accuracy: " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
+    print("Validation Accuracy: " + str(sum(validation_accuracy) / valid_loader.num_batches))
 
 # Start training
 with tf.Session() as sess:
@@ -107,7 +120,7 @@ with tf.Session() as sess:
             batch_x, batch_y = train_loader.next_batch()
             loss, acc, _ = sess.run([loss_op, accuracy, train_op], feed_dict={X: batch_x, Y: batch_y})
             epoch_accuracy.append(acc)
-            if b == train_loader.num_batches-1  and (e + 1) % display_step == 0:        
+            if b == train_loader.num_batches-1  and (e + 1) % display_step == 0:      
                 # Calculate epoch loss and accuracy
                 logging.info("Epoch " + str(e + 1) + 
                         ", batch " + str(b) +
@@ -115,12 +128,12 @@ with tf.Session() as sess:
                         "{:.4f}".format(loss) +  "    " + 
                         str(datetime.now()))
                 logging.info("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches))  
-                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches)) 
+                print("Epoch Accuracy: " + str(sum(epoch_accuracy) / train_loader.num_batches) + "    Batch Loss: " +str( loss)) 
  
-                # intrument for tensorboard
+                # check validation accuracy
+                validate()
 
-                tf.add_to_collection('loss', loss)
-                tf.add_to_collection('accuracy', acc)
+                # intrument for tensorboard
                 tf.summary.scalar('loss', loss)    
                 tf.summary.scalar('accuracy', acc)
                 summaries = tf.summary.merge_all()
@@ -130,13 +143,4 @@ with tf.Session() as sess:
 
     logging.info("Optimization Finisihed!")
 
-    # Calculate validation accuracy
-    
-    validation_accuracy = []
-    for v in range(valid_loader.num_batches):
-        valid_x, valid_y = valid_loader.next_batch()
-        valid_acc = sess.run(accuracy, feed_dict={X:valid_x, Y:valid_y})
-        validation_accuracy.append(valid_acc)
-    
-    logging.info("Validation Accuracy= " + str(sum(validation_accuracy) / valid_loader.num_batches) + " " + str(datetime.now()))
-
+    validate()

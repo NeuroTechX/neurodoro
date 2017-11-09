@@ -31,11 +31,11 @@ from pyriemann.clustering import Potato
 
 # Here are the good raw datasets
 
-a = pd.read_csv("data/muse-data/Dano-08-11-RawEEG3.csv", header=0, index_col=False)
-b = pd.read_csv("data/muse-data/Dano-08-11-RawEEG0.csv", header=0, index_col=False)
-c = pd.read_csv("data/muse-data/josh_sep_21RawEEG2.csv", header=0, index_col=False)
-d = pd.read_csv("data/muse-data/josh_sep_21_distracted_RawEEG0.csv", header=0, index_col=False)
-e = pd.read_csv("data/muse-data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
+a = pd.read_csv("data/muse_data/Dano-08-11-RawEEG3.csv", header=0, index_col=False)
+b = pd.read_csv("data/muse_data/Dano-08-11-RawEEG0.csv", header=0, index_col=False)
+c = pd.read_csv("data/muse_data/josh_sep_21RawEEG2.csv", header=0, index_col=False)
+d = pd.read_csv("data/muse_data/josh_sep_21_distracted_RawEEG0.csv", header=0, index_col=False)
+e = pd.read_csv("data/muse_data/josh-raw-aug11RawEEG2.csv", header=0, index_col=False)
 
 # Add them all together
 data = [a,b,c,d,e]
@@ -84,21 +84,22 @@ def difficulty_class(diff_perf):
     # This was our distracted criteria
     if diff_perf[0] < 50 and diff_perf[1] < 60:
     # if diff_perf[0] > 60:
-        return [1,0]
+        return [1]
     else:
-        return [0,1]
+        return [0]
 
 X = epochs.copy().pick_types(eeg=True).get_data()
 
 diff_perf = epochs.copy().pick_types(eeg=False, stim=True).get_data().mean(axis=2)
 y = np.apply_along_axis(difficulty_class, 1, diff_perf)
-y = np.reshape(y, (len(y),2))
+y = np.reshape(y, (len(y),1))
 print(X.shape, y.shape)
 
 # Let's transform our data into a covariance matrix and a tangentspace
 covs = Covariances(estimator='lwf').fit_transform(X)
 tans = TangentSpace().fit_transform(covs)
 
+print(tans.shape, y.shape)
 output_data = np.concatenate((y, tans), axis=1)
 
 split = int(len(output_data) / 3)
