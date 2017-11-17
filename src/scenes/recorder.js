@@ -25,7 +25,6 @@ class Recorder extends Component {
     super(props);
     this.state = {
       dataType: config.dataType.RAW_EEG,
-      userName: "",
       isRecording: false
     };
   }
@@ -37,6 +36,14 @@ class Recorder extends Component {
           onPress={() => {
             this.setState({ isRecording: false });
             MuseRecorder.stopRecording();
+            MuseRecorder.getCORVOSession(
+              msg => {
+                console.log(msg);
+              },
+              msg => {
+                console.log(msg);
+              }
+            );
           }}
         >
           Stop recording
@@ -47,7 +54,11 @@ class Recorder extends Component {
       <Button
         onPress={() => {
           this.setState({ isRecording: true });
-          MuseRecorder.startRecording(this.state.dataType);
+          // TODO: Make CORVO squirt a testType into here
+          MuseRecorder.startRecording(
+            this.state.dataType,
+            "non-symbolic attention"
+          );
         }}
       >
         Start recording
@@ -56,7 +67,7 @@ class Recorder extends Component {
   }
 
   onMessage = event => {
-    console.log(event.nativeEvent.data)
+    console.log(event.nativeEvent.data);
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
     if (_.isNaN(difficulty)) {
@@ -66,7 +77,7 @@ class Recorder extends Component {
       performance = 0;
     }
     if (this.state.isRecording) {
-      MuseRecorder.sendTaskInfo(difficulty, performance);
+      MuseRecorder.updateScore(difficulty, performance);
     }
   };
 
