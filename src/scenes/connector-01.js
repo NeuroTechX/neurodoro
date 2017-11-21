@@ -67,6 +67,14 @@ const styles = MediaQueryStyleSheet.create(
       justifyContent: 'center',
     },
 
+    pageStyle: {
+      padding: 20,
+      alignItems: "stretch",
+      justifyContent: "space-around",
+      backgroundColor: colors.white,
+      borderRadius: 50,
+    },
+
     spacerContainer: {
       justifyContent: 'center',
       flex: 1,

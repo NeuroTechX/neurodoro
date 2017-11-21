@@ -5,7 +5,8 @@ import {
   SET_CONNECTION_STATUS,
   SET_MUSE_INFO,
   SET_AVAILABLE_MUSES,
-  SET_DESTINATION
+  SET_DESTINATION,
+  UPDATE_PUB_SUB_CLIENT
 } from "./actionTypes.js";
 import config from "./config";
 import { Actions } from "react-native-router-flux";
@@ -37,6 +38,17 @@ return ({
   payload,
   type: SET_DESTINATION
 });
+}
+
+export const updatePubSubClientAction = payload => ({
+  payload,
+  type: UPDATE_PUB_SUB_CLIENT
+});
+
+export function updatePubSubClient(pubSubClient) {
+  return dispatch => {
+    dispatch(updatePubSubClientAction(pubSubClient))
+  }
 }
 
 export function getMuses() {

@@ -28,7 +28,7 @@ function mapStateToProps(state) {
 
   render() {
     console.log(this.props.destination);
-  
+
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -37,7 +37,7 @@ function mapStateToProps(state) {
         </View>
         <View style={styles.spacerContainer}/>
         <View style={styles.buttonContainer}>
-          <Button onPress={this.props.destination == config.destinations.TIMER ? Actions.Timer : Actions.Recorder}>Let's get started</Button>
+          <Button onPress={this.props.destination == config.destinations.TIMER ? Actions.Timer : Actions.CORVOTest}>Let's get started</Button>
         </View>
       </View>
     );

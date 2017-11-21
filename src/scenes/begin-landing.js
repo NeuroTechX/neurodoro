@@ -76,7 +76,7 @@ class Landing extends Component {
           >
             Use the timer
           </BigButton>
-          <WhiteButton onPress={() => this.props.connectAndGo("RECORDER")}>
+          <WhiteButton onPress={Actions.DataLanding}>
             Collect data{" "}
             <Image
               source={require("../assets/beaker2.png")}

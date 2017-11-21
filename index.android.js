@@ -10,7 +10,6 @@ import{
 import{ Provider, connect }from 'react-redux';
 import{ createStore, applyMiddleware }from 'redux';
 import thunk from 'redux-thunk';
-
 import config from './src/redux/config';
 import { setConnectionStatus } from './src/redux/actions';
 
@@ -20,7 +19,9 @@ import ConnectorOne from './src/scenes/connector-01';
 import ConnectorTwo from './src/scenes/connector-02';
 import ConnectorThree from './src/scenes/connector-03';
 import Timer from './src/scenes/timer';
-import Recorder from './src/scenes/recorder';
+import DataLanding from './src/scenes/data-landing';
+import CORVOTest from './src/scenes/corvo-test';
+import DataSummary from './src/scenes/data-summary';
 
 // reducer is a function
 import reducer from './src/redux/reducer';
@@ -32,6 +33,7 @@ const RouterWithRedux = connect()(Router);
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default class Neurodoro extends Component {
+
 
   componentDidMount() {
     // This creates a persistent listener that will update connectionStatus when connection events are broadcast in Java
@@ -55,7 +57,9 @@ export default class Neurodoro extends Component {
             <Scene component={ConnectorTwo} key='ConnectorTwo' hideNavBar={true}/>
             <Scene component={ConnectorThree} key='ConnectorThree' hideNavBar={true}/>
             <Scene component={Timer} key='Timer' hideNavBar={true}/>
-            <Scene component={Recorder} key='Recorder' hideNavBar={true}/>
+            <Scene component={DataLanding} key='DataLanding' hideNavBar={true}/>
+            <Scene component={CORVOTest} key='CORVOTest' hideNavBar={true}/>
+            <Scene component={DataSummary} key='DataSummary' hideNavBar={true}/>
           </Scene>
         </RouterWithRedux>
       </Provider>

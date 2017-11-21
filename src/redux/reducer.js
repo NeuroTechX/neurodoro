@@ -6,14 +6,16 @@ import {
   SET_CONNECTION_STATUS,
   SET_MUSE_INFO,
   SET_AVAILABLE_MUSES,
-  SET_DESTINATION
+  SET_DESTINATION,
+  UPDATE_PUB_SUB_CLIENT
 } from './actionTypes';
 
 const initialState = {
   connectionStatus: config.connectionStatus.NOT_YET_CONNECTED,
   availableMuses: [],
   museInfo: {},
-  destination: ''
+  destination: '',
+  pubSubClient: {},
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -44,7 +46,13 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         destination: action.payload
-      }
+      };
+
+      case UPDATE_PUB_SUB_CLIENT:
+      return {
+        ...state,
+        pubSubClient: action.payload
+      };
 
     // ...other actions
 

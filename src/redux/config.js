@@ -20,6 +20,6 @@ export default {
   },
   destinations: {
     TIMER: "TIMER",
-    RECORDER: "RECORDER",
+    CORVO: "CORVO",
   }
 }
