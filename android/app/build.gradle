@@ -121,7 +121,12 @@ android {
         }
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "PROJECT_ID", '"daos-84628"'
+            buildConfigField "String", "PUBSUB_TOPIC", '"corvo"'
+        }
         release {
+            initWith(buildTypes.debug)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -165,6 +170,13 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile 'com.google.code.gson:gson:2.2.4' // Dat sweet Gson
+
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-pubsub:v1-rev12-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 
 }
 

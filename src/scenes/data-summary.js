@@ -15,7 +15,7 @@ import Button from "../components/Button";
 import MuseRecorder from "../modules/MuseRecorder";
 import PubSubClient from "../pub_sub_clients/GCPClient";
 import config from "../redux/config";
-import actions from "../redux/actions";
+import { publishCORVOSession } from "../redux/actions";
 import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
@@ -41,17 +41,20 @@ class DataSummary extends Component {
   }
 
   finishRecording() {
-    MuseRecorder.stopRecording;
+    MuseRecorder.stopRecording();
     MuseRecorder.getCORVOSession(
-      msg => {
-        console.log(msg);
-        //this.props.getCORVOsession(msg);
+      errorCallback => {
+        console.log('error: ', errorCallback);
       },
-      msg => {
-        console.log(msg);
-        //this.props.getCORVOsession(msg);
+      successCallback => {
+        console.log('good JSON: ', successCallback);
+        this.props.pubSubClient.publish(successCallback);
       }
     );
+  }
+
+  componentWillUnmount(){
+    this.props.pubSubClient.stop();
   }
 
   render() {
@@ -147,7 +150,7 @@ const styles = MediaQueryStyleSheet.create(
 
     logoBox: {
       borderRadius: 20,
-      alignSelf: 'center',
+      alignSelf: "center",
       opacity: 1,
       width: 200,
       marginBottom: 100,

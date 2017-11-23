@@ -1,8 +1,12 @@
 package com.neurodoro.cloud;
 
+import android.util.Log;
+
 import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
 import com.neurodoro.MainApplication;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -11,31 +15,32 @@ import java.util.LinkedList;
  * A Java Object that can be converted to an LSL-ish data format for our DB
  */
 public class CORVOSession {
-    StreamInfo info;
-    LinkedList<StreamDataChunk> samples = new LinkedList<>();
+    public StreamInfo info;
+    public LinkedList<StreamDataChunk> samples;
 
     public CORVOSession(String testType, String dataType) {
-        //String uniqueID = "sadhkjlfgh";
         String uniqueID = InstanceID.getInstance(MainApplication.getInstance()).getId();
         String version = "1.0";
         Date createdAt = new Date(System.currentTimeMillis());
         String sessionID =
                 uniqueID.substring(7) + Long.toString(System.currentTimeMillis()).substring(6, 11);
 
+        samples = new LinkedList<StreamDataChunk>();
         info = new StreamInfo(testType, dataType, version, createdAt, uniqueID, sessionID);
     }
 
     // -------------------------------------------------------
     // Methods
 
-    public void addSample(double[] data, int[] scores, int timestamp) {
-        samples.add(new StreamDataChunk(data, scores, timestamp));
+    public void addSample(double[] data, int[] scores, long timestamp) {
+        StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), timestamp);
+        samples.add(newChunk);
     }
 
     // -------------------------------------------------------
     // Subclasses (for nested data)
 
-    private class StreamInfo {
+    protected class StreamInfo {
         private final String name; // Test Type (i.e. CORVO)
         private final String type; // DataTyoe (i.e. raw EEG)
         private final String version; // Which release of the app
@@ -67,12 +72,12 @@ public class CORVOSession {
         }
     }
 
-    private class StreamDataChunk {
+    protected class StreamDataChunk {
         double[] data;
         int[] scores;
-        int timestamp;
+        long timestamp;
 
-        public StreamDataChunk(double[] data, int[] scores, int timestamp) {
+        public StreamDataChunk(double[] data, int[] scores, long timestamp) {
             this.data = data;
             this.scores = scores;
             this.timestamp = timestamp;

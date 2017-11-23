@@ -4,10 +4,12 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.neurodoro.cloud.PubSubPublisher;
 import com.neurodoro.muse.ConnectorModule;
 import com.neurodoro.muse.MuseConcentrationTracker;
 import com.neurodoro.muse.MuseRecorder;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,10 +18,15 @@ public class NeurodoroPackage implements com.facebook.react.ReactPackage {
   @Override
   // Register Native Modules to JS
   public List<NativeModule> createNativeModules(ReactApplicationContext reactApplicationContext) {
-    return Arrays.<NativeModule>asList(
-        new ConnectorModule(reactApplicationContext),
-        new MuseRecorder(reactApplicationContext),
-        new MuseConcentrationTracker(reactApplicationContext));
+    try {
+      return Arrays.<NativeModule>asList(
+          new ConnectorModule(reactApplicationContext),
+          new MuseRecorder(reactApplicationContext), new PubSubPublisher(reactApplicationContext),
+          new MuseConcentrationTracker(reactApplicationContext));
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   @Override

@@ -23,6 +23,8 @@ import com.neurodoro.signal.Filter;
 import com.neurodoro.signal.NoiseDetector;
 import com.neurodoro.signal.PSDBuffer2D;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /** Streams data from Muses and performs preprocessing functions */
 public class MuseRecorder extends ReactContextBaseJavaModule {
 
@@ -65,20 +67,11 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     return "MuseRecorder";
   }
 
-  // Called to emit events to event listeners in JS
-  private void sendEvent(
-      ReactContext reactContext, String eventName, @Nullable WritableMap params) {
-    reactContext
-        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-        .emit(eventName, params);
-  }
-
   // ---------------------------------------------------------
   // Bridged methods
 
   @ReactMethod
   public void startRecording(String dataType, String testType) {
-    Log.w("Listener", "Start Listening Called");
     this.dataType = dataType;
     this.testType = testType;
     initListener();
@@ -87,7 +80,6 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void stopRecording() {
-    Log.w("Listener", "Stop Listening Called");
     if (dataListener != null) {
       appState.connectedMuse.unregisterDataListener(dataListener, MuseDataPacketType.EEG);
     }
@@ -177,6 +169,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         bandPassFiltState = bandPassFilter.transform(newData, bandPassFiltState);
         newData = bandPassFilter.extractFilteredSamples(bandPassFiltState);
       }
+
 
       fileWriter.addSample(newData);
     }

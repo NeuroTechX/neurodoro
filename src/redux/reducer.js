@@ -15,7 +15,7 @@ const initialState = {
   availableMuses: [],
   museInfo: {},
   destination: '',
-  pubSubClient: {},
+  pubSubClient: null,
 };
 
 export default function reducer(state = initialState, action = {}) {

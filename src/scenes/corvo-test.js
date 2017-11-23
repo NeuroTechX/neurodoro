@@ -26,11 +26,7 @@ function mapStateToProps(state) {
 
 // Binds actions to component's props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-    },
-    dispatch
-  );
+  return bindActionCreators({}, dispatch);
 }
 
 class CORVOTest extends Component {
@@ -57,6 +53,7 @@ class CORVOTest extends Component {
     }
   };
 
+
   render() {
     if (this.state.isRecording) {
       return (
@@ -72,11 +69,7 @@ class CORVOTest extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button
-              onPress={Actions.DataSummary}
-            >
-              End Test
-            </Button>
+            <Button onPress={Actions.DataSummary}>End Test</Button>
           </View>
         </View>
       );

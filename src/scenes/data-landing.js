@@ -44,16 +44,15 @@ class DataCollection extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.initializePubSubClient(nextProps);
+    if (this.props.pubSubClient && this.props.pubSubClient._name != nextProps.pubSubClient._name) {
+      this.initializePubSubClient(nextProps);
+    }
   }
 
   initializePubSubClient = props => {
-    if (!props.pubSubClient) {
-      const pubSubClient = new PubSubClient();
-      pubSubClient.connect(() => {
-        props.updatePubSubClient(pubSubClient);
-      });
-    }
+    console.log("creating pubsubclient");
+    const pubSubClient = new PubSubClient('CORVO');
+    this.props.updatePubSubClient(pubSubClient);
   };
 
   render() {
@@ -132,8 +131,8 @@ const styles = MediaQueryStyleSheet.create(
 
     textContainer: {
       justifyContent: "center",
-      flex: 4,
-    },
+      flex: 4
+    }
   },
   // Responsive styles
   {

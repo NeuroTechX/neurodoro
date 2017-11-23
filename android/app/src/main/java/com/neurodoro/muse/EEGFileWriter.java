@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -51,19 +52,12 @@ public class EEGFileWriter {
   // Internal methods
 
   public void initFile() {
-    Log.w("FileWriter", "init file called");
     session = new CORVOSession(testType, dataType);
     isRecording = true;
   }
 
   public void addSample(double[] data) {
-    // Get relative timestamp
-    session.addSample(data, scores, (int)System.currentTimeMillis()); // Topic of bikeshedding discussion
-  }
-
-  public void addPSDToFile(double[][] data) {
-    // How about let's not right now
-    return;
+   session.addSample(data, scores, System.currentTimeMillis()); // Topic of bikeshedding discussion
   }
 
   public void stopRecording() {

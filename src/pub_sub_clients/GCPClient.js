@@ -1,38 +1,33 @@
-"use strict";
+ "use strict";
+
+ import PubSubPublisher from '../modules/PubSubPublisher';
 
 class GCPlient {
-  constructor(vhost, idToken, bufferSize) {
-    this._vhost = vhost;
-    this._idToken = idToken;
-    this._username = `${this._vhost}:${this._idToken}`;
-    this._password = "JWT";
-    this._host = RABBITMQ_DOMAIN;
-    this._port = 12345;
-    this._url = `https://${this._host}:${this._port}/ws`;
-    this._client = mqtt.connect(this._url, {
-      username: this._username,
-      password: this._password,
-      protocol: "mqtts"
-    });
-    this.bufferSize = bufferSize || 10;
-    this.buffer = [];
-    this._connected = false;
+  constructor(name) {
+    this._name = name;
   }
 
   connect(callback) {
-    console.log('connect');
+    console.log("connect");
   }
 
   disconnect(callback) {
-    console.log('disconnect');
+    console.log("disconnect");
   }
 
   getConnected() {
-    return this._connected;
+    return false;
   }
 
-  publish(routingKey, body) {
-    console.log('publish');
+  publish(sessionData) {
+    console.log("publish");
+    PubSubPublisher.setSessionData(sessionData);
+    PubSubPublisher.start();
+  }
+
+  stop() {
+    PubSubPublisher.stop();
+    PubSubPublisher.close();
   }
 
   /**
@@ -56,7 +51,7 @@ class GCPlient {
      **/
 
   subscribe(routingKey, callback) {
-    console.log('subscribe');
+    console.log("subscribe");
   }
 }
 
