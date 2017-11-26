@@ -10,6 +10,7 @@ import {
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
 import * as Animatable from "react-native-animatable";
+import Svg, { Circle, Rect } from "react-native-svg";
 import { connect } from "react-redux";
 import _ from "lodash";
 import config from "../redux/config";
@@ -17,6 +18,7 @@ import Clock from "../components/Clock";
 import StartButton from "../components/StartButton";
 import MenuIcon from "../components/MenuIcon";
 import ModalMenu from "../components/ModalMenu";
+
 
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import * as colors from "../styles/colors";
@@ -52,7 +54,7 @@ const ENCOURAGEMENTS = [
   "Intense concentration!",
   "Such work ethic",
   "You are strong and bright",
-  "Look at that",
+  "Send it",
   "Unreal!"
 ];
 
@@ -63,7 +65,7 @@ class Timer extends Component {
     this.PLAYING = "playing";
     this.PAUSED = "paused";
     this.RESET = "reset";
-    this.animatedScore = new Animated.Value(0);
+    this.animatedScore = new Animated.Value(50);
 
     this.state = {
       scoreBuffer: [],
@@ -88,11 +90,11 @@ class Timer extends Component {
         score => {
           this.animatedScore.setValue(score);
           if (this.state.timeOnClock >= 15 * MINUTE) {
-            this.setState({ scoreBuffer: this.state.scoreBuffer.push(score) });
+            this.setState({ scoreBuffer: this.state.scoreBuffer.push(score)});
             if (this.state.scoreBuffer.length >= 30) {
               this.state.scoreBuffer.shift();
             }
-            if (this.state.scoreBuffer.reduce((a, b) => a + b) <= 75); // mean
+            if (this.state.scoreBuffer.reduce((a, b) => a + b) <= 75); // mean of scoreBuffer <= 75
             this.setState({ workTime: this.state.workTime - 2 * MINUTE });
           }
         }
@@ -259,14 +261,21 @@ class Timer extends Component {
         outputRange: [20, 40, 200]
       });
       return (
-        <Animated.View
-          style={{
-            opacity,
-            height: size,
-            width: size,
-            backgroundColor: colors.tomato
-          }}
-        />
+        <View style={{height: 200, width: 200}}>
+          <Svg height="200" width = "300">
+            <Circle cx="50" cy="50" r="50" />
+            <Rect x="50" y="50" width="50" height="50" />
+          </Svg>
+          <Animated.View
+            style={{
+              opacity,
+              height: size,
+              width: size,
+              backgroundColor: colors.tomato
+            }}
+          />
+        </View>
+
       );
     }
   }

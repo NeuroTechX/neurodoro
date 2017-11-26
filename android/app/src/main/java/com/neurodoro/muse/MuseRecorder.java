@@ -170,7 +170,6 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         newData = bandPassFilter.extractFilteredSamples(bandPassFiltState);
       }
 
-
       fileWriter.addSample(newData);
     }
 
