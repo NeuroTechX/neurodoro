@@ -6,6 +6,7 @@ import {
   SET_MUSE_INFO,
   SET_AVAILABLE_MUSES,
   SET_DESTINATION,
+  SET_ENCOURAGEMENT_ENABLED,
   UPDATE_PUB_SUB_CLIENT
 } from "./actionTypes.js";
 import config from "./config";
@@ -30,6 +31,11 @@ export const setAvailableMuses = payload => ({
 export const setDestination = payload => ({
   payload,
   type: SET_DESTINATION
+});
+
+export const setEncouragementEnabled = payload => ({
+  payload,
+  type: SET_ENCOURAGEMENT_ENABLED
 });
 
 export const connectAndGo = payload => {

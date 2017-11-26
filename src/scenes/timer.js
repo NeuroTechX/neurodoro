@@ -5,12 +5,12 @@ import {
   View,
   NativeEventEmitter,
   NativeModules,
-  Animated
+  Animated,
+  Image
 } from "react-native";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
 import * as Animatable from "react-native-animatable";
-import Svg, { Circle, Rect } from "react-native-svg";
 import { connect } from "react-redux";
 import _ from "lodash";
 import config from "../redux/config";
@@ -18,7 +18,6 @@ import Clock from "../components/Clock";
 import StartButton from "../components/StartButton";
 import MenuIcon from "../components/MenuIcon";
 import ModalMenu from "../components/ModalMenu";
-
 
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import * as colors from "../styles/colors";
@@ -29,7 +28,8 @@ import MuseConcentrationTracker from "../modules/MuseConcentrationTracker";
 // Sets isVisible prop by comparing state.scene.key (active scene) to the key of the wrapped scene
 function mapStateToProps(state) {
   return {
-    connectionStatus: state.connectionStatus
+    connectionStatus: state.connectionStatus,
+    encouragementEnabled: state.encouragementEnabled
   };
 }
 
@@ -90,7 +90,7 @@ class Timer extends Component {
         score => {
           this.animatedScore.setValue(score);
           if (this.state.timeOnClock >= 15 * MINUTE) {
-            this.setState({ scoreBuffer: this.state.scoreBuffer.push(score)});
+            this.setState({ scoreBuffer: this.state.scoreBuffer.push(score) });
             if (this.state.scoreBuffer.length >= 30) {
               this.state.scoreBuffer.shift();
             }
@@ -231,7 +231,8 @@ class Timer extends Component {
       case false:
         if (
           this.state.timeOnClock > 0 &&
-          this.state.timeOnClock % ENCOURAGEMENT_INTERVAL === 0
+          this.state.timeOnClock % ENCOURAGEMENT_INTERVAL === 0 &&
+          this.props.encouragementEnabled
         ) {
           return (
             <Animatable.Text
@@ -252,30 +253,30 @@ class Timer extends Component {
 
   renderScore() {
     if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
-      const opacity = this.animatedScore.interpolate({
-        inputRange: [0, 75, 110],
-        outputRange: [0, .25, 1]
-      });
-      const size = this.animatedScore.interpolate({
-        inputRange: [0, 75, 110],
-        outputRange: [20, 40, 200]
+      const track = this.animatedScore.interpolate({
+        inputRange: [0, 130],
+        outputRange: ["-90deg", "90deg"]
       });
       return (
-        <View style={{height: 200, width: 200}}>
-          <Svg height="200" width = "300">
-            <Circle cx="50" cy="50" r="50" />
-            <Rect x="50" y="50" width="50" height="50" />
-          </Svg>
-          <Animated.View
-            style={{
-              opacity,
-              height: size,
-              width: size,
-              backgroundColor: colors.tomato
-            }}
+        <View style={styles.scoreContainer}>
+          <Image
+            source={require("../assets/conc_meter.png")}
+            style={styles.logo}
+            resizeMode="stretch"
           />
+          <Animated.Image
+            style={{
+              bottom: 25,
+              left: 75,
+              resizeMode: "contain",
+              position: "absolute",
+              height: 100,
+              transform: [{ rotate: track }]
+            }}
+            source={require("../assets/conc_pointer.png")}
+          />
+          <Text style={styles.meterTitle}>Focus Meter</Text>
         </View>
-
       );
     }
   }
@@ -306,9 +307,12 @@ class Timer extends Component {
         <View style={styles.titleContainer}>
           {this.renderDisplay()}
         </View>
-        {this.renderScore()}
         <View style={styles.spacerContainer}>
           {this.renderText()}
+        </View>
+
+        <View style={styles.spacerContainer}>
+          {this.renderScore()}
         </View>
 
         <ModalMenu
@@ -356,7 +360,7 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     titleContainer: {
-      flex: 3,
+      flex: 2,
       justifyContent: "center"
     },
 
@@ -370,9 +374,23 @@ const styles = MediaQueryStyleSheet.create(
       flex: 1
     },
 
+    scoreContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+      width: 200,
+      height: 220
+    },
+
     logo: {
       width: 200,
-      height: 200
+      height: 110
+    },
+
+    meterTitle: {
+      fontFamily: "YanoneKaffeesatz-Regular",
+      fontSize: 24,
+      marginTop: 5,
+      color: colors.black,
     }
   },
   // Responsive styles

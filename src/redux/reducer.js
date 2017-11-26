@@ -7,7 +7,8 @@ import {
   SET_MUSE_INFO,
   SET_AVAILABLE_MUSES,
   SET_DESTINATION,
-  UPDATE_PUB_SUB_CLIENT
+  SET_ENCOURAGEMENT_ENABLED,
+  UPDATE_PUB_SUB_CLIENT,
 } from './actionTypes';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   museInfo: {},
   destination: '',
   pubSubClient: null,
+  encouragementEnabled: true,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -42,10 +44,15 @@ export default function reducer(state = initialState, action = {}) {
       };
 
       case SET_DESTINATION:
-      console.log('setting destination to ' + action.payload)
       return {
         ...state,
         destination: action.payload
+      };
+
+      case SET_ENCOURAGEMENT_ENABLED:
+      return {
+        ...state,
+        encouragementEnabled: action.payload
       };
 
       case UPDATE_PUB_SUB_CLIENT:
