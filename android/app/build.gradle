@@ -100,18 +100,20 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        multiDexEnabled  true
-
-        //Todo finish the signing config process
-        signingConfigs {
-                    release {
-                        //storeFile file(NEURODORO_RELEASE_STORE_FILE)
-                        //storePassword NEURODORO_RELEASE_STORE_PASSWORD
-                       // keyAlias NEURODORO_RELEASE_KEY_ALIAS
-                        //keyPassword NEURODORO_RELEASE_KEY_PASSWORD
-                    }
-                }
+        multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            if (project.hasProperty('NEURODORO_RELEASE_STORE_FILE')) {
+                storeFile file(NEURODORO_RELEASE_STORE_FILE)
+                storePassword NEURODORO_RELEASE_STORE_PASSWORD
+                keyAlias NEURODORO_RELEASE_KEY_ALIAS
+                keyPassword NEURODORO_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
     splits {
         abi {
             reset()
@@ -120,6 +122,7 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+
     buildTypes {
         debug {
             buildConfigField "String", "PROJECT_ID", '"daos-84628"'
@@ -127,7 +130,9 @@ android {
         }
         release {
             initWith(buildTypes.debug)
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
+            debuggable false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -136,7 +141,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -186,5 +191,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
-
-
