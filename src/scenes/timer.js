@@ -41,6 +41,8 @@ const workSound = new Sound("level_up.mp3", Sound.MAIN_BUNDLE, error => {
   console.log("sound error: ", error);
 });
 
+let expected = 0;
+
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 const ENCOURAGEMENT_INTERVAL = SECOND * 10;
@@ -67,6 +69,9 @@ class Timer extends Component {
     this.RESET = "reset";
     this.animatedScore = new Animated.Value(50);
 
+    this.timerTick = this.timerTick.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+
     this.state = {
       scoreBuffer: [],
       menuVisible: false,
@@ -88,6 +93,10 @@ class Timer extends Component {
       this.predictSubscription = scoreListener.addListener(
         "CONCENTRATION_SCORE",
         score => {
+          console.log(
+            "predictSubscription called with timeOnClock ",
+            this.state.timeOnClock
+          );
           this.animatedScore.setValue(score);
           if (this.state.timeOnClock >= 15 * MINUTE) {
             this.setState({ scoreBuffer: this.state.scoreBuffer.push(score) });
@@ -100,69 +109,79 @@ class Timer extends Component {
         }
       );
     }
-    this.configureTimer();
+    this.initTracker();
   }
 
   componentWillUnmount() {
+    console.log('willUnMount')
     AppState.removeEventListener("change", this.handleAppStateChange);
-    BackgroundTimer.clearInterval(this.TIMER_ID);
+    this.stopTimer();
+    expected = 0;
+    BackgroundTimer.clearTimeout(this.TIMER_ID);
     if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
       this.predictSubscription.cancel();
     }
   }
 
   handleAppStateChange = nextState => {
-    console.log("appState change detected");
     this.setState({ appState: nextState });
   };
 
+  timerTick() {
+    let { timeOnClock, timer, onBreak, appState } = this.state,
+      drift = new Date().getTime() - expected; // time drift. positive with overshoot
+
+    if (_.isEqual(timer, this.PLAYING)) {
+      let nextTime = timeOnClock + SECOND;
+      if (
+        (nextTime >= this.state.workTime && !onBreak) ||
+        (nextTime >= this.state.breakTime && onBreak)
+      ) {
+        timer = this.PAUSED;
+        nextTime = 0;
+        onBreak = !onBreak;
+        if (onBreak) {
+          breakSound.play();
+        } else {
+          workSound.play();
+        }
+
+        if (!_.isEqual(appState, "active")) {
+          let details = {
+            message: onBreak
+              ? "Take a break you genius!"
+              : "Re-orient and settle in for more work.",
+            playSound: true
+          };
+          PushNotification.localNotification(details);
+        }
+      }
+
+      this.setState({
+        timeOnClock: nextTime,
+        timer: timer,
+        onBreak
+      });
+
+      // HACK: set expected to 0 to cancel timer
+      if(expected != 0){
+        expected = expected + SECOND;
+        setTimeout(this.timerTick, Math.max(0, SECOND - drift));
+      }
+    }
+  }
+
   // Instantiates a timer that will update the timeOnClock state every 1 second
-  configureTimer() {
+  initTracker() {
     if (this.props.connectionStatus == config.connectionStatus.CONNECTED) {
       MuseConcentrationTracker.init();
     }
-
-    this.TIMER_ID = BackgroundTimer.setInterval(() => {
-      let { timeOnClock, timer, onBreak, appState } = this.state;
-      if (_.isEqual(timer, this.PLAYING)) {
-        let nextTime = timeOnClock + SECOND;
-        const timerState = (() => {
-          if (
-            (nextTime >= this.state.workTime && !onBreak) ||
-            (nextTime >= this.state.breakTime && onBreak)
-          ) {
-            timer = this.PAUSED;
-            nextTime = 0;
-            onBreak = !onBreak;
-            if (onBreak) {
-              breakSound.play();
-            } else {
-              workSound.play();
-            }
-
-            if (!_.isEqual(appState, "active")) {
-              let details = {
-                message: onBreak
-                  ? "Take a break you genius!"
-                  : "Re-orient and settle in for more work.",
-                playSound: true
-              };
-              PushNotification.localNotification(details);
-            }
-          }
-          return timer;
-        })();
-
-        this.setState({
-          timeOnClock: nextTime,
-          timer: timerState,
-          onBreak
-        });
-      }
-    }, SECOND);
   }
 
   startTimer = () => {
+    expected = new Date().getTime() + SECOND;
+
+    this.TIMER_ID = BackgroundTimer.setTimeout(this.timerTick, SECOND);
     if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
       MuseConcentrationTracker.startTracking();
     }
@@ -189,9 +208,9 @@ class Timer extends Component {
         seconds: -1
       };
     }
-    const date = new Date(ms);
-    const m = date.getMinutes();
-    const s = date.getSeconds();
+    const displayDate = new Date(ms);
+    const m = displayDate.getMinutes();
+    const s = displayDate.getSeconds();
 
     let minutes = `${m}`;
     if (m < 10) {
@@ -282,38 +301,24 @@ class Timer extends Component {
   }
 
   closeMenu(workTime, breakTime) {
-    BackgroundTimer.clearInterval(this.TIMER_ID);
     this.setState({
-      timer: this.PAUSED,
       menuVisible: false,
-      timeOnClock: 0,
       workTime: workTime * MINUTE,
       breakTime: breakTime * MINUTE
     });
-
-    this.configureTimer();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.menuContainer}>
-          <MenuIcon
-            onPress={() =>
-              this.setState({ menuVisible: true, timer: this.PAUSED })}
-          />
+          <MenuIcon onPress={() => this.setState({ menuVisible: true })} />
         </View>
 
-        <View style={styles.titleContainer}>
-          {this.renderDisplay()}
-        </View>
-        <View style={styles.spacerContainer}>
-          {this.renderText()}
-        </View>
+        <View style={styles.titleContainer}>{this.renderDisplay()}</View>
+        <View style={styles.spacerContainer}>{this.renderText()}</View>
 
-        <View style={styles.spacerContainer}>
-          {this.renderScore()}
-        </View>
+        <View style={styles.spacerContainer}>{this.renderScore()}</View>
 
         <ModalMenu
           onClose={(workTime, breakTime) => this.closeMenu(workTime, breakTime)}
@@ -390,7 +395,7 @@ const styles = MediaQueryStyleSheet.create(
       fontFamily: "YanoneKaffeesatz-Regular",
       fontSize: 24,
       marginTop: 5,
-      color: colors.black,
+      color: colors.black
     }
   },
   // Responsive styles
