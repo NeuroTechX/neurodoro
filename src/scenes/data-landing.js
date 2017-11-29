@@ -102,7 +102,7 @@ const styles = MediaQueryStyleSheet.create(
     // Base styles
     body: {
       fontFamily: "OpenSans-Regular",
-      fontSize: 14,
+      fontSize: 12,
       marginLeft: 15,
       margin: 5,
       marginRight: 15,
@@ -131,7 +131,7 @@ const styles = MediaQueryStyleSheet.create(
 
     textContainer: {
       justifyContent: "center",
-      flex: 4
+      flex: 5
     }
   },
   // Responsive styles

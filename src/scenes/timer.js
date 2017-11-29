@@ -166,7 +166,7 @@ class Timer extends Component {
       // HACK: set expected to 0 to cancel timer
       if(expected != 0){
         expected = expected + SECOND;
-        setTimeout(this.timerTick, Math.max(0, SECOND - drift));
+        this.TIMER_ID = BackgroundTimer.setTimeout(this.timerTick, Math.max(0, SECOND - drift));
       }
     }
   }

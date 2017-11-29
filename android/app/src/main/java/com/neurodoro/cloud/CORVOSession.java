@@ -1,15 +1,14 @@
 package com.neurodoro.cloud;
 
-import android.util.Log;
+import android.content.Context;
 
 import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
 import com.neurodoro.MainApplication;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.stream.Stream;
 
 /**
  * A Java Object that can be converted to an LSL-ish data format for our DB
@@ -17,23 +16,25 @@ import java.util.LinkedList;
 public class CORVOSession {
     public StreamInfo info;
     public LinkedList<StreamDataChunk> samples;
+    private String uid;
+    private String sessionID;
 
     public CORVOSession(String testType, String dataType) {
-        String uniqueID = InstanceID.getInstance(MainApplication.getInstance()).getId();
+        this.uid = InstanceID.getInstance(MainApplication.getInstance()).getId();
         String version = "1.0";
         Date createdAt = new Date(System.currentTimeMillis());
-        String sessionID =
-                uniqueID.substring(7) + Long.toString(System.currentTimeMillis()).substring(6, 11);
+        this.sessionID =
+                uid.substring(7) + Long.toString(System.currentTimeMillis()).substring(6, 11);
 
         samples = new LinkedList<StreamDataChunk>();
-        info = new StreamInfo(testType, dataType, version, createdAt, uniqueID, sessionID);
+        info = new StreamInfo(testType, dataType, version, createdAt, uid, sessionID);
     }
 
     // -------------------------------------------------------
     // Methods
 
     public void addSample(double[] data, int[] scores, long timestamp) {
-        StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), timestamp);
+        StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), timestamp, uid, sessionID);
         samples.add(newChunk);
     }
 
@@ -45,8 +46,8 @@ public class CORVOSession {
         private final String type; // DataTyoe (i.e. raw EEG)
         private final String version; // Which release of the app
         private final Date created_at; // Start time in nice date format
-        private final String uid;
-        private final String session_id;
+        public  String uid; // Instance ID
+        public  String session_id;
         private final int channel_count;
         private final int nominal_srate;
         private final String source_id;
@@ -76,11 +77,15 @@ public class CORVOSession {
         double[] data;
         int[] scores;
         long timestamp;
+        public  String uid; // Instance ID
+        public  String session_id;
 
-        public StreamDataChunk(double[] data, int[] scores, long timestamp) {
+        public StreamDataChunk(double[] data, int[] scores, long timestamp, String uid, String session_id) {
             this.data = data;
             this.scores = scores;
             this.timestamp = timestamp;
+            this.uid = uid;
+            this.session_id = session_id;
         }
     }
 

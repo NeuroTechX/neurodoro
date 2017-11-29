@@ -33,9 +33,8 @@ const styles = StyleSheet.create({
   clock: {
     textAlign: 'center',
     margin: 15,
-    lineHeight: 50,
     color: colors.tomato,
     fontFamily: 'YanoneKaffeesatz-Regular',
-    fontSize: 50,
+    fontSize: 60,
   },
 });
