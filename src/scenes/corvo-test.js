@@ -68,7 +68,10 @@ class CORVOTest extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button onPress={Actions.DataSummary}>End Test</Button>
+            <Button onPress={()=>{
+              MuseRecorder.stopRecording();
+              Actions.DataSummary()
+            }}>End Test</Button>
           </View>
         </View>
       );

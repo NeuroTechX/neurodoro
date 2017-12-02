@@ -21,9 +21,9 @@ public class NeurodoroPackage implements com.facebook.react.ReactPackage {
     try {
       return Arrays.<NativeModule>asList(
           new ConnectorModule(reactApplicationContext),
-          new MuseRecorder(reactApplicationContext), new PubSubPublisher(reactApplicationContext),
+          new MuseRecorder(reactApplicationContext),
           new MuseConcentrationTracker(reactApplicationContext));
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return null;
     }

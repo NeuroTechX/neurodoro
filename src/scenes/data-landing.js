@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import Button from "../components/Button";
-import PubSubClient from "../pub_sub_clients/GCPClient";
 import config from "../redux/config";
-import { updatePubSubClient, connectAndGo } from "../redux/actions";
+import { connectAndGo } from "../redux/actions";
 import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
@@ -17,14 +16,12 @@ function mapStateToProps(state) {
   return {
     connectionStatus: state.connectionStatus,
     session: state.session,
-    pubSubClient: state.pubSubClient
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      updatePubSubClient: updatePubSubClient,
       connectAndGo: connectAndGo
     },
     dispatch
@@ -34,26 +31,11 @@ function mapDispatchToProps(dispatch) {
 class DataCollection extends Component {
   constructor(props) {
     super(props);
-    this.initializePubSubClient(props);
     this.state = {
       dataType: config.dataType.RAW_EEG,
       isRecording: false
     };
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.pubSubClient &&
-      this.props.pubSubClient._name != nextProps.pubSubClient._name
-    ) {
-      this.initializePubSubClient(nextProps);
-    }
-  }
-
-  initializePubSubClient = props => {
-    const pubSubClient = new PubSubClient("CORVO");
-    this.props.updatePubSubClient(pubSubClient);
-  };
 
   render() {
     return (

@@ -8,6 +8,7 @@ import {
   Animated,
   Image
 } from "react-native";
+import Actions from "react-native-router-flux";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
 import * as Animatable from "react-native-animatable";
@@ -18,6 +19,7 @@ import Clock from "../components/Clock";
 import StartButton from "../components/StartButton";
 import MenuIcon from "../components/MenuIcon";
 import ModalMenu from "../components/ModalMenu";
+import PopUp from "../components/PopUp";
 
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import * as colors from "../styles/colors";
@@ -113,12 +115,15 @@ class Timer extends Component {
   }
 
   componentWillUnmount() {
-    console.log('willUnMount')
+    console.log("willUnMount");
     AppState.removeEventListener("change", this.handleAppStateChange);
     this.stopTimer();
     expected = 0;
     BackgroundTimer.clearTimeout(this.TIMER_ID);
-    if (this.props.connectionStatus === config.connectionStatus.CONNECTED) {
+    if (
+      this.props.connectionStatus === config.connectionStatus.CONNECTED &&
+      this.predictSubscription != null
+    ) {
       this.predictSubscription.cancel();
     }
   }
@@ -164,9 +169,12 @@ class Timer extends Component {
       });
 
       // HACK: set expected to 0 to cancel timer
-      if(expected != 0){
+      if (expected != 0) {
         expected = expected + SECOND;
-        this.TIMER_ID = BackgroundTimer.setTimeout(this.timerTick, Math.max(0, SECOND - drift));
+        this.TIMER_ID = BackgroundTimer.setTimeout(
+          this.timerTick,
+          Math.max(0, SECOND - drift)
+        );
       }
     }
   }
@@ -324,6 +332,15 @@ class Timer extends Component {
           onClose={(workTime, breakTime) => this.closeMenu(workTime, breakTime)}
           visible={this.state.menuVisible}
         />
+        <PopUp
+          onClose={Actions.ConnectorOne}
+          visible={
+            this.props.connectionStatus === config.connectionStatus.DISCONNECTED
+          }
+          title={"Muse Disconnected"}
+        >
+          The Muse has disconnected. Please re-connect if you wish to continue
+        </PopUp>
       </View>
     );
   }

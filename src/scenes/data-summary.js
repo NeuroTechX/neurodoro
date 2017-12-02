@@ -21,7 +21,6 @@ function mapStateToProps(state) {
   return {
     connectionStatus: state.connectionStatus,
     session: state.session,
-    pubSubClient: state.pubSubClient
   };
 }
 
@@ -37,18 +36,8 @@ class DataSummary extends Component {
 
   finishRecording() {
     MuseRecorder.stopRecording();
-    MuseRecorder.getCORVOSession(
-      errorCallback => {
-      },
-      successCallback => {
-        this.props.pubSubClient.publish(successCallback);
-      }
-    );
   }
 
-  componentWillUnmount(){
-    this.props.pubSubClient.stop();
-  }
 
   render() {
     return (
