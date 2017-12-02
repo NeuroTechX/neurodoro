@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Text, View, ViewPagerAndroid } from "react-native";
+import { Text, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Actions } from "react-native-router-flux";
-import _ from "lodash";
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import Button from "../components/Button";
 import PubSubClient from "../pub_sub_clients/GCPClient";
@@ -44,14 +42,16 @@ class DataCollection extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pubSubClient && this.props.pubSubClient._name != nextProps.pubSubClient._name) {
+    if (
+      this.props.pubSubClient &&
+      this.props.pubSubClient._name != nextProps.pubSubClient._name
+    ) {
       this.initializePubSubClient(nextProps);
     }
   }
 
   initializePubSubClient = props => {
-    console.log("creating pubsubclient");
-    const pubSubClient = new PubSubClient('CORVO');
+    const pubSubClient = new PubSubClient("CORVO");
     this.props.updatePubSubClient(pubSubClient);
   };
 
@@ -102,7 +102,7 @@ const styles = MediaQueryStyleSheet.create(
     // Base styles
     body: {
       fontFamily: "OpenSans-Regular",
-      fontSize: 14,
+      fontSize: 12,
       marginLeft: 15,
       margin: 5,
       marginRight: 15,
@@ -131,7 +131,7 @@ const styles = MediaQueryStyleSheet.create(
 
     textContainer: {
       justifyContent: "center",
-      flex: 4
+      flex: 5
     }
   },
   // Responsive styles

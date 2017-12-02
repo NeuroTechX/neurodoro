@@ -131,7 +131,7 @@ const styles = MediaQueryStyleSheet.create(
 
     buttonContainer: {
       justifyContent: "space-between",
-      flex: 1.5
+      flex: 1
     },
 
     logo: {

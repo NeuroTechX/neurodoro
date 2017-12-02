@@ -4,18 +4,13 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ViewPagerAndroid,
   Linking
 } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import _ from "lodash";
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import Button from "../components/Button";
 import MuseRecorder from "../modules/MuseRecorder";
-import PubSubClient from "../pub_sub_clients/GCPClient";
-import config from "../redux/config";
-import { publishCORVOSession } from "../redux/actions";
 import * as colors from "../styles/colors";
 
 // Modules for bridged Java methods
@@ -44,10 +39,8 @@ class DataSummary extends Component {
     MuseRecorder.stopRecording();
     MuseRecorder.getCORVOSession(
       errorCallback => {
-        console.log('error: ', errorCallback);
       },
       successCallback => {
-        console.log('good JSON: ', successCallback);
         this.props.pubSubClient.publish(successCallback);
       }
     );
@@ -65,20 +58,20 @@ class DataSummary extends Component {
             Thanks for Contributing to Neurodoro!
           </Text>
           <Text style={styles.body}>
-            With your data we'll hopefully be able to create the best free,
+            With your data we'll hopefully be able to create the best open-source
             brain-sensing productivity tool the world has ever seen!
           </Text>
           <Text style={styles.body}>
             You can follow our progress or get involved yourself on GitHub and
             the NeuroTechX Slack. We're currently looking for JS developers,
-            data/AI scientists, and UX designers interested in joining this fun
+            ML/data scientists, and UX designers interested in joining this fun
             little side project.
           </Text>
         </View>
         <View style={styles.logoBox}>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL("https://github.com/NeuroTechX/eeg-101");
+              Linking.openURL("https://github.com/NeuroTechX/neurodoro");
             }}
           >
             <Image
@@ -153,13 +146,13 @@ const styles = MediaQueryStyleSheet.create(
       alignSelf: "center",
       opacity: 1,
       width: 200,
-      marginBottom: 100,
-      marginTop: 0,
-      flex: 0.5,
+      flex: .5,
+      margin: 20,
       backgroundColor: colors.tomato,
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-around"
+      justifyContent: "space-around",
+      elevation: 2,
     },
 
     logo: {

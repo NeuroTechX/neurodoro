@@ -30,27 +30,17 @@ import com.neurodoro.signal.PSDBuffer2D;
 public class MuseConcentrationTracker extends ReactContextBaseJavaModule implements BufferListener {
     private static final int NUM_CHANNELS = 4;
     private static final int FFT_LENGTH = 256;
-    private static final int EPOCHS_PER_SECOND = 1;
+    private static final int EPOCHS_PER_SECOND = 4;
 
     // ----------------------------------------------------------
     // Variables
 
-    public NoiseDetector noiseDetector = new NoiseDetector(500);
+    public NoiseDetector noiseDetector = new NoiseDetector(900);
     public ClassifierDataListener dataListener;
     public EpochBuffer eegBuffer;
-    public String userName = "";
-    public int fileNum = 0;
-    public EEGFileWriter fileWriter;
     private HandlerThread dataThread;
     private Handler dataHandler;
 
-
-    // Filter variables
-    public Filter bandPassFilter;
-    public double[][] bandPassFiltState;
-
-    // Bridged props
-    public String recorderDataType;
 
     // Reference to global Muse
     MainApplication appState;
@@ -124,7 +114,7 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
     }
 
     // ---------------------------------------------------------
-    // Thread management functions
+    // Thread management methods
 
     public void startThread() {
         Log.w("Tracker", "startthread");
@@ -144,11 +134,16 @@ public class MuseConcentrationTracker extends ReactContextBaseJavaModule impleme
         }
     }
 
+    // -----------------------------------------------------------
+    // Other methods
+
     @Override
     public void getEpoch(double[][] buffer) {
         dataHandler.post(new TrackerRunnable(buffer));
     }
 
+
+    // Currently, just takes ratio of beta/theta power and makes it a percentage
     public int measureConcentration(double[] means){
         return (int) ((means[3] / means[1]) * 100) ;
     }

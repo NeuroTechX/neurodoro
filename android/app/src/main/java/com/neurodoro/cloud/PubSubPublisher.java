@@ -23,7 +23,6 @@ import com.google.api.services.pubsub.model.PublishRequest;
 import com.google.api.services.pubsub.model.PubsubMessage;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.neurodoro.MainApplication;
 
 import org.apache.commons.lang3.ArrayUtils;

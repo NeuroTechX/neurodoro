@@ -40,9 +40,6 @@ public class NoiseDetector {
 
         for (int c = 0; c < epoch.length; c++) {
             decisions[c] = detectArtefact(epoch[c]);
-            if (c==0) {
-                Log.w("variance", "" + variance(epoch[c]));
-            }
         }
 
         return decisions;

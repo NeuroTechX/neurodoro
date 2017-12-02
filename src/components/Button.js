@@ -43,7 +43,8 @@ const styles = MediaQueryStyleSheet.create(
       alignItems: "center",
       padding: 15,
       paddingLeft: 30,
-      paddingRight: 30
+      paddingRight: 30,
+      elevation: 2,
     },
 
     disabled: {
@@ -53,7 +54,8 @@ const styles = MediaQueryStyleSheet.create(
       alignItems: "center",
       padding: 15,
       paddingLeft: 25,
-      paddingRight: 25
+      paddingRight: 25,
+      elevation: 2,
     },
 
     text: {

@@ -39,7 +39,6 @@ class CORVOTest extends Component {
   }
 
   onMessage = event => {
-    console.log(event.nativeEvent.data);
     let difficulty = Number(event.nativeEvent.data.split("&")[0].substring(2));
     let performance = Number(event.nativeEvent.data.split("&")[1].substring(2));
     if (_.isNaN(difficulty)) {

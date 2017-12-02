@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 5,
     padding: 5,
-    padding: 5,
     borderRadius: 10,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: colors.black
+    borderColor: colors.black,
+    elevation: 2,
   },
 
   disabled: {
@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 5,
     padding: 5,
-    padding: 5,
     borderRadius: 10,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: colors.black
+    borderColor: colors.black,
+    elevation: 2,
   },
 
   text: {
