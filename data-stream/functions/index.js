@@ -5,13 +5,10 @@ const bigquery = require("@google-cloud/bigquery")();
 /**
  * Triggered from a message on a Cloud Pub/Sub topic.
  *
- * @param {!Object} event The Cloud Functions event.
- * @param {!Function} The callback function.
  */
 exports.corvoSamples = functions.pubsub.topic('corvo').onPublish(event => {
   // The Cloud Pub/Sub Message object.
   const pubsubMessage = event.data
-  console.log(pubsubMessage)
   const stringMessage = Buffer.from(pubsubMessage.data, "base64").toString();
   const jsonMessage = JSON.parse(stringMessage);
   // Our BigQuery dataset
@@ -41,7 +38,7 @@ exports.corvoSamples = functions.pubsub.topic('corvo').onPublish(event => {
   // Insert array of rows
   table.insert(rows).then(
       function(success) {
-        callback();
+        console.log('Insert Success')
       },
       function(err) {
         if (err.name === 'PartialFailureError') {
@@ -52,7 +49,6 @@ exports.corvoSamples = functions.pubsub.topic('corvo').onPublish(event => {
           } else {
             console.log(err);
           }
-          callback();
       }
     );
 });
