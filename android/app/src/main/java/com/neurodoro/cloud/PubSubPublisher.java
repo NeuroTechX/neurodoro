@@ -133,7 +133,6 @@ public class PubSubPublisher {
           return;
         }
         String messagePayload = gson.toJson(info);
-        Log.d(TAG, "publishing message: " + messagePayload);
         PubsubMessage m = new PubsubMessage();
         m.setData(Base64.encodeToString(messagePayload.getBytes(), Base64.NO_WRAP));
         PublishRequest request = new PublishRequest();
@@ -164,7 +163,6 @@ public class PubSubPublisher {
           return;
         }
         String messagePayload = gson.toJson(samples);
-        Log.d(TAG, "publishing message: " + messagePayload);
         PubsubMessage m = new PubsubMessage();
         m.setData(Base64.encodeToString(messagePayload.getBytes(), Base64.NO_WRAP));
         PublishRequest request = new PublishRequest();
