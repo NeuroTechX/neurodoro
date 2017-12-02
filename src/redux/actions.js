@@ -46,17 +46,6 @@ return ({
 });
 }
 
-export const updatePubSubClientAction = payload => ({
-  payload,
-  type: UPDATE_PUB_SUB_CLIENT
-});
-
-export function updatePubSubClient(pubSubClient) {
-  return dispatch => {
-    dispatch(updatePubSubClientAction(pubSubClient))
-  }
-}
-
 export function getMuses() {
   return dispatch => {
     return Connector.getMuses().then(

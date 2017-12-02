@@ -25,38 +25,29 @@ import com.google.api.services.pubsub.model.PubsubMessage;
 import com.google.gson.Gson;
 import com.neurodoro.MainApplication;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.json.JSONException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class PubSubPublisher extends ReactContextBaseJavaModule {
+
+public class PubSubPublisher {
 
   private static final String TAG = PubSubPublisher.class.getSimpleName();
-  private final ReactApplicationContext mContext;
   private final String mAppname;
-  private final String mTopic;
+  private String mTopic;
   private final Gson gson;
   private CORVOSession.StreamInfo info;
   private LinkedList<CORVOSession.StreamDataChunk> samples;
+  private Context context;
   private Pubsub mPubsub;
   private Handler mHandler;
   private HandlerThread mHandlerThread;
-  private static final long PUBLISH_INTERVAL_MS = 1000;
-  private int CHUNK_SIZE = 768;
   private HttpTransport mHttpTransport;
 
-  public PubSubPublisher(ReactApplicationContext reactContext) throws IOException {
-    super(reactContext);
-    mContext = reactContext;
+  public PubSubPublisher(Context ctxt) throws IOException {
     mAppname = "neurodoro";
-    mTopic = "projects/" + "daos-84628" + "/topics/" + "corvo";
-
+    this.context = ctxt;
     mHandlerThread = new HandlerThread("pubsubPublisherThread");
     mHandlerThread.start();
     mHandler = new Handler(mHandlerThread.getLooper());
@@ -67,8 +58,7 @@ public class PubSubPublisher extends ReactContextBaseJavaModule {
             .getResources()
             .getIdentifier("credentials", "raw", MainApplication.getInstance().getPackageName());
 
-    InputStream jsonCredentials =
-        mContext.getResources().openRawResource(credentialId); // hopefully this works
+    InputStream jsonCredentials = context.getResources().openRawResource(credentialId);
     final GoogleCredential credentials;
     try {
       credentials =
@@ -97,19 +87,16 @@ public class PubSubPublisher extends ReactContextBaseJavaModule {
     gson = new Gson();
   }
 
-  @ReactMethod
-  public void start() {
-    mHandler.post(mPublishRunnable);
+  public void publishInfo(CORVOSession.StreamInfo streamInfo) {
+    mHandler.post(new infoRunnable(streamInfo));
   }
 
-  @ReactMethod
-  public void stop() {
-    mHandler.removeCallbacks(mPublishRunnable);
+  public void publishSamples(LinkedList<CORVOSession.StreamDataChunk> samplesChunk) {
+    mHandler.post(new samplesRunnable(samplesChunk));
   }
 
-  @ReactMethod
   public void close() {
-    mHandler.removeCallbacks(mPublishRunnable);
+    mHandler.removeCallbacksAndMessages(null);
     mHandler.post(
         new Runnable() {
           @Override
@@ -127,75 +114,63 @@ public class PubSubPublisher extends ReactContextBaseJavaModule {
     mHandlerThread.quitSafely();
   }
 
-  @ReactMethod
-  public void setSessionData(String sessionData) {
-    CORVOSession session = gson.fromJson(sessionData, CORVOSession.class);
-    info = session.info;
-    samples = session.samples;
-    Log.w("sampleSample", ArrayUtils.toString(samples.subList(40,45).toArray()));
+  protected class infoRunnable implements Runnable {
+    private CORVOSession.StreamInfo info;
+
+    public infoRunnable(CORVOSession.StreamInfo info) {
+      this.info = info;
+      mTopic = "projects/" + "daos-84628" + "/topics/" + "sessionInfo";
+
+    }
+
+    public void run() {
+      try {
+        ConnectivityManager connectivityManager =
+            (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
+          Log.e(TAG, "no active network");
+          return;
+        }
+        String messagePayload = gson.toJson(info);
+        PubsubMessage m = new PubsubMessage();
+        m.setData(Base64.encodeToString(messagePayload.getBytes(), Base64.NO_WRAP));
+        PublishRequest request = new PublishRequest();
+        request.setMessages(Collections.singletonList(m));
+        mPubsub.projects().topics().publish(mTopic, request).execute();
+      } catch (IOException e) {
+        Log.e(TAG, "Error publishing message", e);
+      }
+    }
   }
 
-  private boolean infoSent = false;
+  protected class samplesRunnable implements Runnable {
+    private LinkedList samples;
 
-  private Runnable mPublishRunnable =
-      new Runnable() {
-        @Override
-        public void run() {
-          Log.w("SamplesLengthRunnable", ""+samples.size());
-          if (samples.size() <= CHUNK_SIZE) { // We'll lose the last chunk but w/e
-            return;
-          }
+    public samplesRunnable(LinkedList<CORVOSession.StreamDataChunk> samples) {
+      this.samples = samples;
+      mTopic = "projects/" + "daos-84628" + "/topics/" + "corvo";
 
-          ConnectivityManager connectivityManager =
-              (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-          NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-          if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
-            Log.e(TAG, "no active network");
-            return;
-          }
+    }
 
-          try {
-            String messagePayload;
-            if (!infoSent) {
-              Log.w("PubSub", "sending info");
-              messagePayload = createInfoPayload();
-              infoSent = true;
-            } else {
-              Log.w("PubSub", "sending chunk");
-              messagePayload = createChunkPayload();
-            }
-
-            Log.d(TAG, "publishing message: " + messagePayload.length());
-            PubsubMessage m = new PubsubMessage();
-            m.setData(Base64.encodeToString(messagePayload.getBytes(), Base64.NO_WRAP));
-            PublishRequest request = new PublishRequest();
-            request.setMessages(Collections.singletonList(m));
-            mPubsub.projects().topics().publish(mTopic, request).execute();
-          } catch (JSONException | IOException e) {
-            Log.e(TAG, "Error publishing message", e);
-          } finally {
-            mHandler.postDelayed(mPublishRunnable, PUBLISH_INTERVAL_MS);
-          }
+    public void run() {
+      try {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
+          Log.e(TAG, "no active network");
+          return;
         }
-
-        private String createInfoPayload() throws JSONException {
-          Log.w("info", gson.toJson(info));
-          return gson.toJson(info);
-        }
-
-        private String createChunkPayload() throws JSONException {
-          LinkedList<CORVOSession.StreamDataChunk> chunk = new LinkedList<>();
-
-          for(int i = 0; i < CHUNK_SIZE; i++){
-            chunk.add(samples.removeFirst());
-          }
-          Log.w("chunk", gson.toJson(chunk));
-          return gson.toJson(chunk);
-        }
-      };
-
-  @Override
-  public String getName() {
-    return "PubSubPublisher";
+        String messagePayload = gson.toJson(samples);
+        PubsubMessage m = new PubsubMessage();
+        m.setData(Base64.encodeToString(messagePayload.getBytes(), Base64.NO_WRAP));
+        PublishRequest request = new PublishRequest();
+        request.setMessages(Collections.singletonList(m));
+        mPubsub.projects().topics().publish(mTopic, request).execute();
+      } catch (IOException e) {
+        Log.e(TAG, "Error publishing message", e);
+      }
+    }
   }
 }

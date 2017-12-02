@@ -1,6 +1,5 @@
 package com.neurodoro.muse;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.choosemuse.libmuse.Eeg;
@@ -11,19 +10,10 @@ import com.choosemuse.libmuse.MuseDataPacket;
 import com.choosemuse.libmuse.MuseDataPacketType;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.neurodoro.MainApplication;
-import com.neurodoro.signal.CircularBuffer;
-import com.neurodoro.signal.FFT;
 import com.neurodoro.signal.Filter;
-import com.neurodoro.signal.NoiseDetector;
-import com.neurodoro.signal.PSDBuffer2D;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 /** Streams data from Muses and performs preprocessing functions */
 public class MuseRecorder extends ReactContextBaseJavaModule {
@@ -35,10 +25,9 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
   public int samplingFreq;
   public int BUFFER_LENGTH;
   public DataListener dataListener;
-  public CircularBuffer eegBuffer;
   public String userName = "";
   public int fileNum = 0;
-  public EEGFileWriter fileWriter;
+  public SessionBuilder sessionBuilder;
   private String testType;
 
   // Filter variables
@@ -75,7 +64,6 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     this.dataType = dataType;
     this.testType = testType;
     initListener();
-    fileWriter.initFile();
   }
 
   @ReactMethod
@@ -83,21 +71,21 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     if (dataListener != null) {
       appState.connectedMuse.unregisterDataListener(dataListener, MuseDataPacketType.EEG);
     }
-    fileWriter.stopRecording();
+    sessionBuilder.stopRecording();
     fileNum++;
   }
 
   @ReactMethod
   public void updateScore(int difficulty, int performance) {
-    if (fileWriter != null) {
-      fileWriter.updateScore(difficulty, performance);
+    if (sessionBuilder != null) {
+      sessionBuilder.updateScore(difficulty, performance);
     }
   }
 
   @ReactMethod
   public void getCORVOSession(Callback errorCallback, Callback successCallback) {
     try {
-      successCallback.invoke(fileWriter.getCORVOSession());
+      successCallback.invoke(sessionBuilder.getCORVOSession());
 
     } catch (Exception e) {
       errorCallback.invoke(e.getMessage());
@@ -118,7 +106,8 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
     }
 
     Log.w("Listener", "EEG datatype detected");
-    fileWriter = new EEGFileWriter(getCurrentActivity(), dataType, testType);
+    sessionBuilder = new SessionBuilder(getCurrentActivity(), dataType, testType);
+    sessionBuilder.initSession();
 
     // If data will be filtered, create filters
     if (dataType.contains("FILTERED")) {
@@ -170,7 +159,7 @@ public class MuseRecorder extends ReactContextBaseJavaModule {
         newData = bandPassFilter.extractFilteredSamples(bandPassFiltState);
       }
 
-      fileWriter.addSample(newData);
+      sessionBuilder.addSample(newData);
     }
 
     private void getEegChannelValues(double[] buffer, MuseDataPacket p) {

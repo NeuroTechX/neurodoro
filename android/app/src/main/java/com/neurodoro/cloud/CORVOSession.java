@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
+import okhttp3.internal.connection.StreamAllocation;
+
 /**
  * A Java Object that can be converted to an LSL-ish data format for our DB
  */
@@ -36,6 +38,10 @@ public class CORVOSession {
     public void addSample(double[] data, int[] scores, long timestamp) {
         StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), timestamp, uid, sessionID);
         samples.add(newChunk);
+    }
+
+    public void clearSamples() {
+        this.samples = new LinkedList<StreamDataChunk>();
     }
 
     // -------------------------------------------------------
