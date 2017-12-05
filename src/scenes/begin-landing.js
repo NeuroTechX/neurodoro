@@ -45,7 +45,8 @@ class Landing extends Component {
             style={styles.logo}
             resizeMode="stretch"
           />
-          <Text style={styles.title}>NEURODORO</Text>
+          <Text style={styles.title}>NEURODORO <Text style={styles.beta}>BETA</Text></Text>
+
         </View>
         <View style={styles.buttonContainer}>
           <BigButton
@@ -104,12 +105,17 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     title: {
+
       textAlign: "center",
       margin: 15,
       lineHeight: 50,
       color: colors.grey,
       fontFamily: "YanoneKaffeesatz-Regular",
       fontSize: 50
+    },
+
+    beta: {
+      color: colors.tomato,
     },
 
     container: {
@@ -121,7 +127,8 @@ const styles = MediaQueryStyleSheet.create(
 
     titleContainer: {
       flex: 2,
-      justifyContent: "flex-start"
+      justifyContent: "flex-start",
+      alignItems: 'center'
     },
 
     spacerContainer: {

@@ -39,23 +39,26 @@ const styles = MediaQueryStyleSheet.create(
     active: {
       justifyContent: "center",
       backgroundColor: colors.tomato,
-      borderRadius: 8,
+      margin: 5,
+      borderRadius: 10,
       alignItems: "center",
       padding: 22,
-      paddingLeft: 50,
-      paddingRight: 50,
+      paddingLeft: 40,
+      paddingRight: 40,
       elevation: 2,
     },
 
     disabled: {
       justifyContent: "center",
       backgroundColor: colors.lightGrey,
-      borderRadius: 8,
+      margin: 5,
+      borderRadius: 10,
       alignItems: "center",
       padding: 25,
-      paddingLeft: 60,
-      paddingRight: 60,
+      paddingLeft: 40,
+      paddingRight: 40,
       elevation: 2,
+
     },
 
     text: {
