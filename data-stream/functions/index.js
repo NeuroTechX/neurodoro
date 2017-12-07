@@ -11,6 +11,7 @@ exports.corvoSamples = functions.pubsub.topic('corvo').onPublish(event => {
   const pubsubMessage = event.data
   const stringMessage = Buffer.from(pubsubMessage.data, "base64").toString();
   const jsonMessage = JSON.parse(stringMessage);
+  console.log(jsonMessage);
   // Our BigQuery dataset
   const dataset = bigquery.dataset("Neurodoro");
 
@@ -36,7 +37,7 @@ exports.corvoSamples = functions.pubsub.topic('corvo').onPublish(event => {
   }
 
   // Insert array of rows
-  table.insert(rows).then(
+  return table.insert(rows).then(
       function(success) {
         console.log('Insert Success')
       },
