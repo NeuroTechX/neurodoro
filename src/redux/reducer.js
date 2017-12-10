@@ -2,6 +2,7 @@
 // Our Redux reducer. Handles the routing actions produced by react-native-router-flux as well as Muse connection actions
 
 import config from './config';
+import { ActionConst } from 'react-native-router-flux';
 import {
   SET_CONNECTION_STATUS,
   SET_MUSE_INFO,
@@ -11,6 +12,7 @@ import {
 } from './actionTypes';
 
 const initialState = {
+  scene: {},
   connectionStatus: config.connectionStatus.NOT_YET_CONNECTED,
   availableMuses: [],
   museInfo: {},
@@ -21,6 +23,11 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // focus action is dispatched when a new screen comes into focus
+    case ActionConst.FOCUS:
+      return {
+        ...state,
+        scene: action.scene
+};
 
     case SET_CONNECTION_STATUS:
       return {

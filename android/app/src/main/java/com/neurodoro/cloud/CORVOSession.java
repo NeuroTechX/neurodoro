@@ -49,7 +49,7 @@ public class CORVOSession {
 
     protected class StreamInfo {
         private final String name; // Test Type (i.e. CORVO)
-        private final String type; // DataTyoe (i.e. raw EEG)
+        private final String type; // DataType (i.e. raw EEG)
         private final String version; // Which release of the app
         private final Date created_at; // Start time in nice date format
         public  String uid; // Instance ID

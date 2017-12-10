@@ -8,7 +8,7 @@ import {
   Animated,
   Image
 } from "react-native";
-import Actions from "react-native-router-flux";
+import { Actions } from "react-native-router-flux";
 import BackgroundTimer from "react-native-background-timer";
 import PushNotification from "react-native-push-notification";
 import * as Animatable from "react-native-animatable";
@@ -31,7 +31,8 @@ import MuseConcentrationTracker from "../modules/MuseConcentrationTracker";
 function mapStateToProps(state) {
   return {
     connectionStatus: state.connectionStatus,
-    encouragementEnabled: state.encouragementEnabled
+    encouragementEnabled: state.encouragementEnabled,
+    scene: state.scene.sceneKey,
   };
 }
 
@@ -70,7 +71,7 @@ class Timer extends Component {
     this.PAUSED = "paused";
     this.RESET = "reset";
     this.animatedScore = new Animated.Value(50);
-
+    this.predictSubscription = {};
     this.timerTick = this.timerTick.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
 
@@ -333,9 +334,9 @@ class Timer extends Component {
           visible={this.state.menuVisible}
         />
         <PopUp
-          onClose={Actions.ConnectorOne}
+          onClose={()=>Actions.ConnectorOne()}
           visible={
-            this.props.connectionStatus === config.connectionStatus.DISCONNECTED
+            this.props.connectionStatus === config.connectionStatus.DISCONNECTED && this.props.scene === 'Timer'
           }
           title={"Muse Disconnected"}
         >
