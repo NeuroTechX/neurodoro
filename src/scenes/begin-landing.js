@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Image, StatusBar, Alert } from "react-native";
+import { Text, View, Image, StatusBar, Mo } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import { connect } from "react-redux";
@@ -32,7 +32,9 @@ function mapDispatchToProps(dispatch) {
 class Landing extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isPopupVisible: false
+    };
   }
 
   render() {
@@ -45,8 +47,9 @@ class Landing extends Component {
             style={styles.logo}
             resizeMode="stretch"
           />
-          <Text style={styles.title}>NEURODORO <Text style={styles.beta}>BETA</Text></Text>
-
+          <Text style={styles.title}>
+            NEURODORO <Text style={styles.beta}>BETA</Text>
+          </Text>
         </View>
         <View style={styles.buttonContainer}>
           <BigButton
@@ -57,21 +60,9 @@ class Landing extends Component {
               ) {
                 Actions.Timer;
               } else {
-                Alert.alert(
-                  "You down with EEG?",
-                  "Would you like to use the Muse to try and recommend when to take a break?",
-                  [
-                    {
-                      text: "No EEG, just the timer",
-                      onPress: Actions.Timer
-                    },
-                    {
-                      text: "OK",
-                      onPress: () => this.props.connectAndGo("TIMER")
-                    }
-                  ],
-                  { cancelable: true }
-                );
+                this.setState({
+                  isPopupVisible: true
+                });
               }
             }}
           >
@@ -86,6 +77,28 @@ class Landing extends Component {
             />
           </WhiteButton>
         </View>
+        <Modal
+          animationType={"fade"}
+          transparent={true}
+          onRequestClose={() => this.setState({ isPopupVisible: false })}
+          visible={this.state.isPopupVisible}
+        >
+          <View style={styles.modalBackground}>
+            <View style={styles.modalInnerContainer}>
+              <Text style={styles.modalTitle}>Use EEG?</Text>
+              <Text style={styles.modalText}>
+                Would you like to use the Muse to track concentration and
+                recommend when to take a break?
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Button onPress={() => this.props.connectAndGo("TIMER")}>
+                  Ok
+                </Button>
+                <Button onPress={Actions.Timer}>No</Button>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -105,7 +118,6 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     title: {
-
       textAlign: "center",
       margin: 15,
       lineHeight: 50,
@@ -115,7 +127,7 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     beta: {
-      color: colors.tomato,
+      color: colors.tomato
     },
 
     container: {
@@ -128,7 +140,7 @@ const styles = MediaQueryStyleSheet.create(
     titleContainer: {
       flex: 2,
       justifyContent: "flex-start",
-      alignItems: 'center'
+      alignItems: "center"
     },
 
     spacerContainer: {
@@ -149,6 +161,36 @@ const styles = MediaQueryStyleSheet.create(
     beaker: {
       width: 55,
       height: 55
+    },
+
+    modalBackground: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "stretch",
+      padding: 20,
+      backgroundColor: colors.tomato
+    },
+
+    modalText: {
+      fontFamily: "Roboto-Light",
+      color: colors.black,
+      fontSize: 15,
+      margin: 5
+    },
+
+    modalTitle: {
+      fontFamily: "Roboto-Bold",
+      color: colors.black,
+      fontSize: 20,
+      margin: 5
+    },
+
+    modalInnerContainer: {
+      alignItems: "stretch",
+      backgroundColor: colors.white,
+      padding: 20,
+      elevation: 5,
+      borderRadius: 4
     }
   },
   // Responsive styles
