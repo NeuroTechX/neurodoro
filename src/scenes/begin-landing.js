@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Image, StatusBar, Mo } from "react-native";
+import { Text, View, Image, StatusBar, Modal } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { MediaQueryStyleSheet } from "react-native-responsive";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import config from "../redux/config";
 // Components. For JS UI elements
 import BigButton from "../components/BigButton";
 import WhiteButton from "../components/WhiteButton";
+import Button from "../components/Button";
 
 function mapStateToProps(state) {
   return {
@@ -90,11 +91,17 @@ class Landing extends Component {
                 Would you like to use the Muse to track concentration and
                 recommend when to take a break?
               </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Button onPress={() => this.props.connectAndGo("TIMER")}>
+              <View style={{ flexDirection: "row", alignSelf: 'center' }}>
+                <Button onPress={() => {
+                  this.setState({ isPopupVisible: false });
+                  this.props.connectAndGo("TIMER");
+                }}>
                   Ok
                 </Button>
-                <Button onPress={Actions.Timer}>No</Button>
+                <Button onPress={()=> {
+                  this.setState({ isPopupVisible: false });
+                  Actions.Timer();
+                }}>No</Button>
               </View>
             </View>
           </View>
@@ -172,14 +179,14 @@ const styles = MediaQueryStyleSheet.create(
     },
 
     modalText: {
-      fontFamily: "Roboto-Light",
+      fontFamily: "OpenSans-Regular'",
       color: colors.black,
       fontSize: 15,
       margin: 5
     },
 
     modalTitle: {
-      fontFamily: "Roboto-Bold",
+      fontFamily: "OpenSans-Bold",
       color: colors.black,
       fontSize: 20,
       margin: 5
