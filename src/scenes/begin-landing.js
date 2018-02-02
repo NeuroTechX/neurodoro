@@ -59,7 +59,7 @@ class Landing extends Component {
               if (
                 this.props.connectionStatus == config.connectionStatus.CONNECTED
               ) {
-                Actions.Timer;
+                Actions.Timer();
               } else {
                 this.setState({
                   isPopupVisible: true
@@ -96,7 +96,7 @@ class Landing extends Component {
                   this.setState({ isPopupVisible: false });
                   this.props.connectAndGo("TIMER");
                 }}>
-                  Ok
+                  Yes
                 </Button>
                 <Button onPress={()=> {
                   this.setState({ isPopupVisible: false });
