@@ -35,8 +35,8 @@ public class CORVOSession {
     // -------------------------------------------------------
     // Methods
 
-    public void addSample(double[] data, int[] scores, long timestamp) {
-        StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), timestamp, uid, sessionID);
+    public void addSample(double[] data, int[] scores, int seqNum) {
+        StreamDataChunk newChunk = new StreamDataChunk(data.clone(), scores.clone(), seqNum, uid, sessionID);
         samples.add(newChunk);
     }
 
@@ -51,7 +51,7 @@ public class CORVOSession {
         private final String name; // Test Type (i.e. CORVO)
         private final String type; // DataType (i.e. raw EEG)
         private final String version; // Which release of the app
-        private final Date created_at; // Start time in nice date format
+        private final long startTime; // Start timestamp
         public  String uid; // Instance ID
         public  String session_id;
         private final int channel_count;
@@ -69,7 +69,7 @@ public class CORVOSession {
             this.name = title;
             this.type = dataType;
             this.version = version;
-            this.created_at = createdAt;
+            this.startTime = System.currentTimeMillis();
             this.uid = uniqueID;
             this.session_id = sessionID;
             this.channel_count = 4;
@@ -82,14 +82,14 @@ public class CORVOSession {
     protected class StreamDataChunk {
         double[] data;
         int[] scores;
-        long timestamp;
+        int seqNum;
         public  String uid; // Instance ID
         public  String session_id;
 
-        public StreamDataChunk(double[] data, int[] scores, long timestamp, String uid, String session_id) {
+        public StreamDataChunk(double[] data, int[] scores, int seqNum, String uid, String session_id) {
             this.data = data;
             this.scores = scores;
-            this.timestamp = timestamp;
+            this.seqNum = seqNum;
             this.uid = uid;
             this.session_id = session_id;
         }
@@ -100,7 +100,6 @@ public class CORVOSession {
 
     // NOTE: this will error out because the InstanceID get doesn't work outside of a phone
     public static void main(String[] args) {
-
         Gson gson = new Gson();
         long startTime = System.currentTimeMillis();
         double[][] testSamples =
@@ -123,9 +122,7 @@ public class CORVOSession {
                 System.out.print("Ya dicked er");
             }
         }
-
         String json = gson.toJson(sesh);
-
         System.out.println(json);
     }
 }

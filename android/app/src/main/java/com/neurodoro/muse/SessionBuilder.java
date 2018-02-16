@@ -22,6 +22,7 @@ public class SessionBuilder {
   private String testType;
   private int sampleCount;
   private PubSubPublisher publisher;
+  private int seqCounter;
 
   private int[] scores;
 
@@ -49,10 +50,11 @@ public class SessionBuilder {
     isRecording = true;
     sampleCount = 0;
     publisher.publishInfo(session.info);
+    seqCounter = 0;
   }
 
   public void addSample(double[] data) {
-   session.addSample(data, scores, System.currentTimeMillis()); // Topic of bikeshedding discussion
+   session.addSample(data, scores, seqCounter++); // Topic of bikeshedding discussion
     if(++sampleCount % 256 == 0) {
       // Send packet from pub sub
       publisher.publishSamples(session.samples);
